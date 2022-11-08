@@ -15,23 +15,77 @@
 		<link rel="apple-touch-icon" href="icon.png" />
 		<!-- Place favicon.ico in the root directory -->
 
-		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="css/style.css" />
 
 		<meta name="theme-color" content="#fafafa" />
+		<script
+			src="https://kit.fontawesome.com/75888dd569.js"
+			crossorigin="anonymous"
+		></script>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 
 	<body>
 		<header>
-			<button>Sortering</button>
-			<button>Varukorg</button>
+			<h1>Gottfrids Munkar</h1>
+			<div>
+				<!-- <button>Sortering</button> -->
+				<!-- <a href="#cart">Ikon</a> -->
+				<button>
+					<i class="fa-solid fa-filter"></i>
+				</button>
+			</div>
+			<div class="menu">
+				<div>
+					<label for="category">Kategori</label>
+					<select name="category">
+						<option value="category1">Kategori 1</option>
+						<option value="category2">Kategori 2</option>
+						<option value="category3">Kategori 3</option>
+					</select>
+				</div>
+				<div>
+					<label for="price-interval">Pris</label>
+					<input type="range" name="price-interval" id="" />
+				</div>
+			</div>
 		</header>
 		<main>
 			<section>
-				<article>
-					<h2>Namnet på munken</h2>
-					<img src="" alt="" />
-					<img src="" alt="" />
-					<p>Pris</p>
+				<article class="donut__item">
+					<h2>Cake Batter Donut</h2>
+					<div>
+						<img
+							src="https://raw.githubusercontent.com/aaronfrost/DonutsApi/main/static/images/cake-batter-doughnut.jpg"
+							alt=""
+						/>
+					</div>
+					<p>Pris <span>25kr</span></p>
+					<div class="quantity">
+						<button>-</button>
+						<input type="text" />
+						<button>+</button>
+					</div>
+					<button>Lägg till</button>
+					<div class="rating">
+						<!-- Rating med stjärnor -->
+					</div>
+				</article>
+				<article class="donut__item">
+					<h2>Cake Batter Donut</h2>
+					<div>
+						<img
+							src="https://raw.githubusercontent.com/aaronfrost/DonutsApi/main/static/images/cake-batter-doughnut.jpg"
+							alt=""
+						/>
+					</div>
+					<p>Pris <span>25kr</span></p>
 					<div class="quantity">
 						<button>-</button>
 						<input type="text" />
@@ -43,7 +97,7 @@
 					</div>
 				</article>
 			</section>
-			<section>
+			<section id="cart">
 				<h2>Beställningssektion</h2>
 				<article>
 					<h2>Varukorg</h2>
