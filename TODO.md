@@ -1,25 +1,13 @@
 # HTML
 
-+ [ ] Header
-    + [ ] Sorteringsknappar
-    + [ ] Knapp till varukorgen med varukorgsikon
-+ [ ] Kanske nav
-+ [ ] Munk
-    + [ ] Bild
-    + [ ] Pris
-    + [ ] Antal (input)
-    + [ ] Plus-/minusknapp
-    + [ ] Lägg till-knapp
-    + [ ] Rating
-+ [ ] Beställningssektion
-    + [ ] Formulär
-        + [ ] Kunduppgifter
-        + [ ] Betalningsalternativ
-        + [ ] Personuppgifter
-        + [ ] Nyhetsbrev
-    + [ ] Beställningsknapp
-    + [ ] Rensa-knapp
-    
++ [ ] Filter-ikon som dropdown-meny
 
 
 # JS
++ [ ] Välja prisintervall
++ [ ] Plus- och minusknapparna ska fungera
++ [ ] Bilder behöver laddas hem
++ [ ] Alla munkar ska skapas och läggas i en array
+
+# Styling
++ [ ] Baslayouten ska göras
