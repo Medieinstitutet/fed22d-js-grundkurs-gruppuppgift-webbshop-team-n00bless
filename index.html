@@ -1,121 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8" />
+		<title>Gottfrids munkar</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8">
-  <title>Gottfrids munkar</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta property="og:title" content="" />
+		<meta property="og:type" content="" />
+		<meta property="og:url" content="" />
+		<meta property="og:image" content="" />
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="apple-touch-icon" href="icon.png" />
+		<!-- Place favicon.ico in the root directory -->
 
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
+		<link rel="stylesheet" href="css/main.css" />
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+		<meta name="theme-color" content="#fafafa" />
+	</head>
 
-  <meta name="theme-color" content="#fafafa">
-</head>
+	<body>
+		<header>
+			<button>Sortering</button>
+			<button>Varukorg</button>
+		</header>
+		<main>
+			<section>
+				<article>
+					<h2>Namnet på munken</h2>
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<p>Pris</p>
+					<div class="quantity">
+						<button>-</button>
+						<input type="text" />
+						<button>+</button>
+					</div>
+					<button>Lägg till</button>
+					<div class="rating">
+						<!-- Rating med stjärnor -->
+					</div>
+				</article>
+			</section>
+			<section>
+				<h2>Beställningssektion</h2>
+				<article>
+					<h2>Varukorg</h2>
+					<ul>
+						<li>
+							<img src="" alt="Bild på munken" />
+							<p>Namnet på munken</p>
+							<p>Antal</p>
+							<p>Rabatt</p>
+							<p>Totalpris</p>
+						</li>
+					</ul>
+				</article>
+				<form action="">
+					<fieldset>
+						<legend>Kontaktuppgifter</legend>
+						<label for="first-name">Förnamn</label>
+						<input type="text" name="first-name" />
+						<label for="last-name">Efternamn</label>
+						<input type="text" name="last-name" />
+						<label for="address">Adress</label>
+						<input type="text" name="address" />
+						<label for="post-code">Postkod</label>
+						<input type="text" name="post-code" />
+						<label for="city">Stad</label>
+						<input type="text" name="city" />
+						<label for="tel">Telefonnummer</label>
+						<input type="tel" name="tel" />
+						<label for="email">Mailadress</label>
+						<input type="email" name="email" />
+					</fieldset>
+					<fieldset>
+						<legend>Betalningssätt</legend>
+						<label for="card">Kort</label>
+						<input type="radio" name="card" />
+						<label for="invoice">Faktura</label>
+						<input type="radio" name="invoice" />
+					</fieldset>
+					<fieldset>
+						<legend>Faktura</legend>
+						<label for="social-security-number">Personnummer</label>
+						<input
+							type="text"
+							inputmode="numeric"
+							name="social-security-number"
+						/>
+					</fieldset>
+					<fieldset>
+						<legend>Kort</legend>
+						<label for="card-number">Kortnummer</label>
+						<input type="text" inputmode="numeric" name="card-number" />
+						<label for="date">Utgångsdatum</label>
+						<input type="text" name="date" />
+						<label for="cvc">CVC</label>
+						<input type="text" name="cvc" />
+					</fieldset>
+					<label for="personuppgifter">Personuppgifter</label>
+					<input type="checkbox" name="personuppgifter" />
+					<label for="newsletter">Prenumerera på nyhetsbrev?</label>
+					<input type="checkbox" name="newsletter" />
+					<button>Beställ</button>
+					<button>Rensa</button>
+				</form>
+			</section>
+		</main>
+		<footer>
+			<p>Justin Thyme AB</p>
+		</footer>
 
-<body>
-  <header>
-    <button>Sortering</button>
-    <button>Varukorg</button>
-  </header>
-  <main>
-    <section>
-      <article>
-        <h2>Namnet på munken</h2>
-        <img src="" alt="">
-        <img src="" alt="">
-        <p>Pris</p>
-        <div class="quantity">
-          <button>-</button>
-          <input type="text">
-          <button>+</button>
-        </div>
-        <button>Lägg till</button>
-        <div class="rating">          
-          <!-- Rating med stjärnor -->
-        </div>        
-      </article>
-    </section>
-    <section>
-      <h2>Beställningssektion</h2>
-      <article>
-        <h2>Varukorg</h2>
-        <ul>
-          <li>
-            <img src="" alt="Bild på munken">
-            <p>Namnet på munken</p>
-            <p>Antal</p>
-            <p>Rabatt</p>
-            <p>Totalpris</p>
-          </li>
-        </ul>
-      </article>
-      <form action="">
-        <fieldset>
-          <legend>Kontaktuppgifter</legend>
-          <label for="first-name">Förnamn</label>
-          <input type="text" name="first-name">
-          <label for="last-name">Efternamn</label>
-          <input type="text" name="last-name">
-          <label for="address">Adress</label>
-          <input type="text" name="address">
-          <label for="post-code">Postkod</label>
-          <input type="text" name="post-code">
-          <label for="city">Stad</label>
-          <input type="text" name="city">
-          <label for="tel">Telefonnummer</label>
-          <input type="tel" name="tel">
-          <label for="email">Mailadress</label>
-          <input type="email" name="email">     
-        </fieldset>
-        <fieldset>
-          <legend>Betalningssätt</legend>
-          <label for="card">Kort</label>
-          <input type="radio" name="card">
-          <label for="invoice">Faktura</label>
-          <input type="radio" name="invoice">
-        </fieldset>
-        <fieldset>
-          <legend>Faktura</legend>
-          <label for="social-security-number">Personnummer</label>
-          <input type="text" inputmode="numeric" name="social-security-number">
-        </fieldset>
-        <fieldset>
-          <legend>Kort</legend>
-          <label for="card-number">Kortnummer</label>
-          <input type="text" inputmode="numeric" name="card-number">
-          <label for="date">Utgångsdatum</label>
-          <input type="text" name="date">
-          <label for="cvc">CVC</label>
-          <input type="text" name="cvc">
-        </fieldset>
-        <label for="personuppgifter">Personuppgifter</label>
-        <input type="checkbox" name="personuppgifter">
-        <label for="newsletter">Prenumerera på nyhetsbrev?</label>
-        <input type="checkbox" name="newsletter">
-        <button>Beställ</button>
-        <button>Rensa</button>        
-      </form>
-    </section>
-  </main>
-  <footer>
-    <p>Justin Thyme AB</p>
-  </footer>
-
-
-  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
-
-</body>
-
+		<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+		<script src="js/plugins.js"></script>
+		<script src="js/main.js"></script>
+	</body>
 </html>
