@@ -85,3 +85,36 @@ const donutsArray = [
 ];
 
 console.log(donutsArray)
+
+/**
+ *  Print donutsArray-items and add to .donut-Section
+ */
+ var x ="", i;
+ for (let i = 0; i < donutsArray.length; i++) {
+    const applyDonut = document.querySelector(".donut-section");
+    x= x + `    
+    <article class="donut__item">
+        <h2>${donutsArray[i].name}</h2>
+        <div>
+            <img
+                src="https://raw.githubusercontent.com/aaronfrost/DonutsApi/main/static/images/cake-batter-doughnut.jpg"
+                alt=""
+            />
+        </div>
+        <p>${donutsArray[i].price} <span>kr</span></p>
+        <div class="quantity">
+            <button>-</button>
+            <input type="text" />
+            <button>+</button>
+        </div>
+        <button>Lägg till</button>
+        <div class="rating">
+            <!-- Rating med stjärnor -->
+        </div>
+    </article>` + i;
+
+
+    console.log(donutsArray[i]);
+    console.log(applyDonut);
+ }
+ document.querySelector(".donut-section").innerHTML = x;
