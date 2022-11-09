@@ -84,20 +84,19 @@ const donutsArray = [
     )
 ];
 
-console.log(donutsArray)
+
 
 /**
- *  Print donutsArray-items and add to .donut-Section
+ *  Print donutsArray-items as an Article and add to .donut-Section
  */
- var x ="", i;
- for (let i = 0; i < donutsArray.length; i++) {
-    const applyDonut = document.querySelector(".donut-section");
-    x= x + `    
+ var donutArticle ="", i;
+ for (let i = 0; i < donutsArray.length; i++) { //loop through the whole array.
+    donutArticle= donutArticle + `    
     <article class="donut__item">
-        <h2>${donutsArray[i].name}</h2>
+        <h2>${donutsArray[i].name}</h2> 
         <div>
             <img
-                src="https://raw.githubusercontent.com/aaronfrost/DonutsApi/main/static/images/cake-batter-doughnut.jpg"
+                src="${donutsArray[i].imgPath[1]}" 
                 alt=""
             />
         </div>
@@ -111,10 +110,9 @@ console.log(donutsArray)
         <div class="rating">
             <!-- Rating med stjärnor -->
         </div>
-    </article>` + i;
+    </article>` + i; // + i kan man ta bort, den displayar bara index på donuten på sidan, nice att ha när man utvecklar
 
 
-    console.log(donutsArray[i]);
-    console.log(applyDonut);
+    console.log(donutsArray[i]); //For development
  }
- document.querySelector(".donut-section").innerHTML = x;
+ document.querySelector(".donut-section").innerHTML = donutArticle;
