@@ -110,9 +110,56 @@ const donutsArray = [
         <div class="rating">
             <!-- Rating med stjärnor -->
         </div>
-    </article>` + i; // + i kan man ta bort, den displayar bara index på donuten på sidan, nice att ha när man utvecklar
+    </article>` + i; // For development, remove "+ i;" to hide item array index on weppage.
 
 
     console.log(donutsArray[i]); //For development
  }
  document.querySelector(".donut-section").innerHTML = donutArticle;
+
+/******************************************************************
+ *  Item Buttons (Ej klar, behöver göras om?)
+ *****************************************************************/
+const decrementItem = document.querySelectorAll(".decrement-item");
+const changeValueOfItem = document.querySelector(".number-of-items");
+const incrementItem = document.querySelectorAll(".increment-item");
+
+
+/**
+ *  Increment item function
+ */
+
+const increaseValueOfItem = function() {
+    if (changeValueOfItem.value != 99) { // To have some control over the order.
+        changeValueOfItem.value++;
+        console.log(changeValueOfItem.value) //For development
+    }
+}
+//Add eventlistener increaseValueOfItem to all increment buttons
+for (let i = 0; i < incrementItem.length; i++) {
+    incrementItem[i].addEventListener("click",increaseValueOfItem);
+}
+
+/**
+ *  Decrement item function
+ */
+ const decreaseValueOfItem = function() {
+    if (changeValueOfItem.value != 0) { // So it's impossible to add negatime number of items to basket
+        changeValueOfItem.value --;
+        console.log(changeValueOfItem.value) //For development
+    } 
+}
+//Add eventlistener decreaseValueOfItem to all decrement buttons
+for (let i = 0; i < decrementItem.length; i++) {
+    decrementItem[i].addEventListener("click",decreaseValueOfItem);
+}
+
+/**
+ *  Add to basket function
+ */
+
+
+
+ /**
+ *  Array sorting (add these functions to an eventlistener)
+ */
