@@ -95,10 +95,8 @@
 				<form action="">
 					<fieldset>
 						<legend>Kontaktuppgifter</legend>
-						<label for="first-name">Förnamn</label>
-						<input type="text" name="first-name" />
-						<label for="last-name">Efternamn</label>
-						<input type="text" name="last-name" />
+						<label for="name">För- och efternamn</label>
+						<input type="text" name="name" pattern="[A-Öa-ö]" title='Endast små och stora bokstäver'/>
 						<label for="address">Adress</label>
 						<input type="text" name="address" />
 						<label for="post-code">Postkod</label>
@@ -139,7 +137,7 @@
 					<input type="checkbox" name="personuppgifter" />
 					<label for="newsletter">Prenumerera på nyhetsbrev?</label>
 					<input type="checkbox" name="newsletter" />
-					<button>Beställ</button>
+					<button disabled id="order-btn">Beställ</button>
 					<button>Rensa</button>
 				</form>
 			</section>
