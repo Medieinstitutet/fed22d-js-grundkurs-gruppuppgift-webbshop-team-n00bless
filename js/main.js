@@ -168,80 +168,76 @@ for (let i = 0; i < decrementItem.length; i++) {
  * Input field validation
 **********************************************************/
 
+const inputForm = document.querySelector('form');
+
 const nameInputField = document.querySelector('[name="name"]');
 const addressInputField = document.querySelector('[name="address"]');
 const postCodeInputField = document.querySelector('[name="post-code"]');
 const cityInputField = document.querySelector('[name="city"]');
 const telInputField = document.querySelector('[name="tel"]');
 const emailInputField = document.querySelector('[name="email"]');
-const cardRadioInput = document.querySelector('[name="card"]');
-const invoiceRadioInput = document.querySelector('[name="invoice"]');
+const cardRadioInput = document.querySelector('#card-radio');
+const invoiceRadioInput = document.querySelector('#invoice-radio');
+const test = document.querySelector('[name="payment-method"]:checked')
 
 const orderButton = document.querySelector('#order-btn')
-
-console.log([nameInputField, addressInputField, postCodeInputField, cityInputField, telInputField, emailInputField, cardRadioInput, invoiceRadioInput, orderButton])
 
 let formValidation = {
     name: false,
     address: false,
-    postCode: true,
+    postCode: false,
     city: true,
     tel: true,
     email: true,
     radio: true
 }
 
-// let nameIsOk = false;
-// let addressIsOk = false;
-// let postCodeIsOk = false;
-// let cityIsOk = false;
-// let telIsOk = false;
-// let emailIsOk = false;
-// let radioEnabled = false;
-
-
 nameInputField.addEventListener('change', () => {
-    formValidation.name = nameInputField.value.indexOf(' ') > -1;
+    formValidation.name = nameInputField.value.indexOf(' ') > 0;
     activateOrderButton();
 })
 
 addressInputField.addEventListener('change', () => {
-    if (/\d/.test(addressInputField.value) && /[A-öa-ö]/.test(addressInputField.value)) {
-        formValidation.address = true;
-        activateOrderButton();
-    }
-    else {
-        console.log('Funkar inte')
-    }
+    formValidation.address = /\d/.test(addressInputField.value) && /[A-Öa-ö]/.test(addressInputField.value);
+    activateOrderButton();
+})
+
+postCodeInputField.addEventListener('change', () => {
+    formValidation.postCode = postCodeInputField.value.length === 5;
+    activateOrderButton();
+})
+
+addressInputField.addEventListener('change', () => {
+    formValidation.address = addressInputField.value !== '';
+})
+
+cardRadioInput.addEventListener('click', () => {
+    console.log(test.value)
+})
+invoiceRadioInput.addEventListener('click', () => {
+    console.log(test.value)
 })
 
 const validateInput = (validatedInputs) => {
     for (const prop in validatedInputs) {
-        console.log(validatedInputs[prop])
         if (!validatedInputs[prop]) {
-            console.log('False från loopen')
             return false
-        }         
+        }
     }
-    console.log('true från loopen')
-    console.log(formValidation)
     return true
 }
 
-const orderFunc = () => {
+const submitOrder = () => {
     console.log('Order lagd!')
 }
 
 const activateOrderButton = () => {
     if (validateInput(formValidation)) {
         orderButton.removeAttribute('disabled');
-        orderButton.addEventListener('click', orderFunc)
+        inputForm.setAttribute('onsubmit', 'submitOrder()')
     }
     else {
         orderButton.setAttribute('disabled', '');
-        orderButton.removeEventListener('click', orderFunc)
-
+        inputForm.removeAttribute('onsubmit');
     }
 }
-
-

@@ -92,28 +92,32 @@
 						</li>
 					</ul>
 				</article>
-				<form action="">
+				<form>
 					<fieldset>
 						<legend>Kontaktuppgifter</legend>
 						<label for="name">För- och efternamn</label>
-						<input type="text" name="name" pattern="[A-Öa-ö]" title='Endast små och stora bokstäver'/>
+						<input type="text" name="name" pattern="[A-Za-zÅåÄäÖö\s]+" title='Endast små och stora bokstäver' required/>						
 						<label for="address">Adress</label>
-						<input type="text" name="address" />
+						<input type="text" name="address" required/>
 						<label for="post-code">Postkod</label>
-						<input type="text" name="post-code" />
+						<input type="text" name="post-code" pattern="[0-9]{5}" title="5 siffror utan mellanslag" required/>
 						<label for="city">Stad</label>
-						<input type="text" name="city" />
+						<input type="text" name="city" required/>
 						<label for="tel">Telefonnummer</label>
-						<input type="tel" name="tel" />
+						<input type="tel" name="tel" required/>
 						<label for="email">Mailadress</label>
-						<input type="email" name="email" />
+						<input type="email" name="email" required/>
 					</fieldset>
 					<fieldset>
 						<legend>Betalningssätt</legend>
-						<label for="card">Kort</label>
-						<input type="radio" name="card" />
-						<label for="invoice">Faktura</label>
-						<input type="radio" name="invoice" />
+						<label>
+							Kort
+							<input type="radio" name="payment-method" id="card-radio" value="card" />
+						</label>
+						<label>
+							Faktura
+							<input type="radio" name="payment-method" id="invoice-radio" value="invoice"/>
+						</label>
 					</fieldset>
 					<fieldset>
 						<legend>Faktura</legend>
@@ -137,7 +141,7 @@
 					<input type="checkbox" name="personuppgifter" />
 					<label for="newsletter">Prenumerera på nyhetsbrev?</label>
 					<input type="checkbox" name="newsletter" />
-					<button disabled id="order-btn">Beställ</button>
+					<button type="submit" disabled id="order-btn">Beställ</button>
 					<button>Rensa</button>
 				</form>
 			</section>
