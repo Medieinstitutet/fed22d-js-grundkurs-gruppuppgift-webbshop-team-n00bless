@@ -3,8 +3,9 @@ class Donut {
         this.name = name,
         this.price = price,
         this.categories = categories,
-        this.imgPath = imgPath
-        this.itemId = itemId
+        this.imgPath = imgPath,
+        this.itemId = itemId,
+        this.quantity = 0
     }
 }
 
@@ -116,9 +117,9 @@ let generateShop = function () {
             </div>
             <p>${donutsArray[i].price} <span>kr</span></p>
             <div class="quantity">
-                <button onclick="decreaseValueOfItem(${donutsArray[i].itemId})">-</button>
+                <button id="dec${i}" onclick="decreaseValueOfItem(${donutsArray[i]})">-</button>
                 <input id="${donutsArray[i].itemId}" type="number"  min="0" max="99"/>
-                <button onclick="increaseValueOfItem(${donutsArray[i].itemId})">+</button>
+                <button id="inc${i}" onclick="increaseValueOfItem(${donutsArray[i].itemId})">+</button>
             </div>
             <button>Lägg till</button>
             <div class="rating">
@@ -126,20 +127,33 @@ let generateShop = function () {
             </div>
         </article>` + i; // "+ i" //For development
         itemIdArray.push`(${donutsArray[i].itemId})`;
-        console.log(donutsArray[i]); //For development
-        
+        console.log(donutsArray[i]); //For development        
     }
     
     document.querySelector(".donut-section").innerHTML = donutArticle;
 }
  generateShop();
 
- increaseValueOfItem = function (){
+ increaseValueOfItem = function (donut){
+    donut.quantity = donut.quantity + 1; 
+    console.log(donut.quantity);
     console.log("increase");
  }
- decreaseValueOfItem = function (){
+ decreaseValueOfItem = function (donut){
+    donut.quantity = donut.quantity - 1;
+    console.log(donut.quantity);
     console.log("decrease");
  }
+console.log(donutsArray)
+ donutsArray.map((donut, i) => {
+    console.log(donut.quantity)
+    const decreaseButton = document.querySelector(`#dec${i}`);
+    console.log(decreaseButton)
+    const increaseButton = document.querySelector(`#inc${i}`);
+
+    decreaseButton.addEventListener('click', decreaseValueOfItem(donut));
+    increaseButton.addEventListener('click', increaseValueOfItem(donut));
+ })
 
 /******************************************************************
  *  Item Buttons (Ej klar, behöver göras om?)
