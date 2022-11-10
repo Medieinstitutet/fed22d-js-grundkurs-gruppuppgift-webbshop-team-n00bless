@@ -1,10 +1,10 @@
 class Donut {
-	constructor(name, price, categories, imgPath) {
-		(this.name = name),
-			(this.price = price),
-			(this.categories = categories),
-			(this.imgPath = imgPath);
-	}
+    constructor(name, price, categories, imgPath) {
+        this.name = name,
+            this.price = price,
+            this.categories = categories,
+            this.imgPath = imgPath
+    }
 }
 
 /* Kategorier: 
@@ -102,13 +102,9 @@ const donutsArray = [
 /**
  *  Print donutsArray-items as an Article and add to .donut-Section
  */
-var donutArticle = '',
-	i;
-for (let i = 0; i < donutsArray.length; i++) {
-	//loop through the whole array.
-	donutArticle =
-		donutArticle +
-		/*html*/ `    
+var donutArticle = "", i;
+for (let i = 0; i < donutsArray.length; i++) { //loop through the whole array.
+    donutArticle = donutArticle + /*html*/ `    
     <article class="donut__item">
         <h2>${donutsArray[i].name}</h2> 
         <div>
@@ -130,9 +126,9 @@ for (let i = 0; i < donutsArray.length; i++) {
     </article>` +
 		i; // For development, remove "+ i;" to hide item array index on weppage.
 
-	console.log(donutsArray[i]); //For development
+    console.log(donutsArray[i]); //For development
 }
-document.querySelector('.donut-section').innerHTML = donutArticle;
+document.querySelector(".donut-section").innerHTML = donutArticle;
 
 /******************************************************************
  *  Item Buttons (Ej klar, behöver göras om?)
@@ -146,62 +142,117 @@ const incrementItem = document.querySelectorAll('.increment-item');
  */
 
 const increaseValueOfItem = function () {
-	if (changeValueOfItem.value != 99) {
-		// To have some control over the order.
-		changeValueOfItem.value++;
-		console.log(changeValueOfItem.value); //For development
-	}
-};
+
+    if (changeValueOfItem.value != 99) { // To have some control over the order.
+        changeValueOfItem.value++;
+        console.log(changeValueOfItem.value) //For development
+    }
+}
 //Add eventlistener increaseValueOfItem to all increment buttons
 for (let i = 0; i < incrementItem.length; i++) {
-	incrementItem[i].addEventListener('click', increaseValueOfItem);
+    incrementItem[i].addEventListener("click", increaseValueOfItem);
 }
 
 /**
  *  Decrement item function
  */
 const decreaseValueOfItem = function () {
-	if (changeValueOfItem.value != 0) {
-		// So it's impossible to add negatime number of items to basket
-		changeValueOfItem.value--;
-		console.log(changeValueOfItem.value); //For development
-	}
-};
+
+    if (changeValueOfItem.value != 0) { // So it's impossible to add negatime number of items to basket
+        changeValueOfItem.value--;
+        console.log(changeValueOfItem.value) //For development
+    }
+}
 //Add eventlistener decreaseValueOfItem to all decrement buttons
 for (let i = 0; i < decrementItem.length; i++) {
-	decrementItem[i].addEventListener('click', decreaseValueOfItem);
+    decrementItem[i].addEventListener("click", decreaseValueOfItem);
 }
 
 /**
  *  Add to basket function
  */
 
+
 /**
- *  Array sorting (add these functions to an eventlistener)
- */
+*  Array sorting (add these functions to an eventlistener)
+*/
 
-const filterButton = document.querySelector('.navbar__menu > button');
-const filterElement = document.querySelector('#filterMenu');
-let filterMenuVisible = false;
+/*********************************************************
+ * Input field validation
+**********************************************************/
 
-filterButton.addEventListener('click', () => {
-	filterButton.setAttribute('aria-expanded', !filterMenuVisible);
-	filterMenuVisible = JSON.parse(filterButton.getAttribute('aria-expanded'));
+const nameInputField = document.querySelector('[name="name"]');
+const addressInputField = document.querySelector('[name="address"]');
+const postCodeInputField = document.querySelector('[name="post-code"]');
+const cityInputField = document.querySelector('[name="city"]');
+const telInputField = document.querySelector('[name="tel"]');
+const emailInputField = document.querySelector('[name="email"]');
+const cardRadioInput = document.querySelector('[name="card"]');
+const invoiceRadioInput = document.querySelector('[name="invoice"]');
 
-	if (filterMenuVisible) {
-		filterElement.style.display = 'flex';
-		window.setTimeout(() => {
-			filterElement.style.opacity = 1;
-			filterElement.style.transform = 'scale(1)';
-		}, 0);
-	} else {
-		filterElement.style.opacity = 0;
-		filterElement.style.transform = 'scale(0)';
+const orderButton = document.querySelector('#order-btn')
 
-		window.setTimeout(() => {
-			filterElement.style.display = 'none';
-		}, 200);
-	}
+console.log([nameInputField, addressInputField, postCodeInputField, cityInputField, telInputField, emailInputField, cardRadioInput, invoiceRadioInput, orderButton])
 
-	if (filterMenuVisible) filterElement.querySelector('select').focus();
-});
+let formValidation = {
+    name: false,
+    address: false,
+    postCode: true,
+    city: true,
+    tel: true,
+    email: true,
+    radio: true
+}
+
+// let nameIsOk = false;
+// let addressIsOk = false;
+// let postCodeIsOk = false;
+// let cityIsOk = false;
+// let telIsOk = false;
+// let emailIsOk = false;
+// let radioEnabled = false;
+
+
+nameInputField.addEventListener('change', () => {
+    formValidation.name = nameInputField.value.indexOf(' ') > -1;
+    activateOrderButton();
+})
+
+addressInputField.addEventListener('change', () => {
+    if (/\d/.test(addressInputField.value) && /[A-öa-ö]/.test(addressInputField.value)) {
+        formValidation.address = true;
+        activateOrderButton();
+    }
+    else {
+        console.log('Funkar inte')
+    }
+})
+
+const validateInput = (validatedInputs) => {
+    for (const prop in validatedInputs) {
+        console.log(validatedInputs[prop])
+        if (!validatedInputs[prop]) {
+            console.log('False från loopen')
+            return false
+        }         
+    }
+    console.log('true från loopen')
+    console.log(formValidation)
+    return true
+}
+
+const orderFunc = () => {
+    console.log('Order lagd!')
+}
+
+const activateOrderButton = () => {
+    if (validateInput(formValidation)) {
+        orderButton.removeAttribute('disabled');
+        orderButton.addEventListener('click', orderFunc)
+    }
+    else {
+        orderButton.setAttribute('disabled', '');
+        orderButton.removeEventListener('click', orderFunc)
+
+    }
+}
