@@ -1,9 +1,10 @@
 class Donut {
-    constructor(name, price, categories, imgPath) {
+    constructor(name, price, categories, imgPath, itemId) {
         this.name = name,
-            this.price = price,
-            this.categories = categories,
-            this.imgPath = imgPath
+        this.price = price,
+        this.categories = categories,
+        this.imgPath = imgPath
+        this.itemId = itemId
     }
 }
 
@@ -22,151 +23,161 @@ strawberry
 // Bilder tagna från https://github.com/aaronfrost/DonutsApi/tree/main/static/images
 
 const donutsArray = [
-	new Donut(
-		'Chokladmunk med vaniljfyllning',
-		23,
-		['chocolate', 'filled'],
-		[
-			'img/chocolate-iced-custard-filled-banner.jpeg',
-			'img/chocolate-iced-custard-filled.jpeg',
-		]
-	),
-	new Donut(
-		'Chokladmunk',
-		18,
-		['chocolate'],
-		['img/chocolate-iced-glazed-banner.jpeg', 'img/chocolate-iced-glazed.jpeg']
-	),
-	new Donut(
-		'Kanelpudrad munk med äppelfyllning',
-		25,
-		['filled', 'apple', 'cinnamon', 'powdered'],
-		['img/cinnamon-apple-filled-banner.jpeg', 'img/cinnamon-apple-filled.jpeg']
-	),
-	new Donut(
-		'Glaserad kanelmunk',
-		13,
-		['glazed', 'cinnamon'],
-		['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg']
-	),
-	new Donut(
-		'Glaserad munk med citronfyllning',
-		23,
-		['glazed', 'lemon'],
-		['img/glazed-lemon-filled-banner.jpeg', 'img/glazed-lemon-filled.jpeg']
-	),
-	new Donut(
-		'Munk med chokladfyllning',
-		16,
-		['chocolate', 'filled'],
-		[
-			'img/original-filled-chocolate-kreme™-banner.jpeg',
-			'img/original-filled-chocolate-kreme™.jpeg',
-		]
-	),
-	new Donut(
-		'Glaserad munk',
-		8,
-		['glazed'],
-		[
-			'img/original-glazed-doughnut-banner.jpeg',
-			'img/original-glazed-doughnut.jpeg',
-		]
-	),
-	new Donut(
-		'Pudrad munk med blåbärsfyllning',
-		25,
-		['powdered', 'blueberry'],
-		[
-			'img/powdered-blueberry-filled-banner.jpeg',
-			'img/powdered-blueberry-filled.jpeg',
-		]
-	),
-	new Donut(
-		'Pudrad munk med jordgubbsfyllning',
-		25,
-		['powdered', 'strawberry'],
-		[
-			'img/powdered-strawberry-filled-banner.jpeg',
-			'img/powdered-strawberry-filled.jpeg',
-		]
-	),
-	new Donut(
-		'Jordgubbsmunk',
-		11,
-		['strawberry'],
-		['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg']
-	),
+    new Donut(
+        'Chokladmunk med vaniljfyllning',
+        23,
+        ['chocolate', 'filled'],
+        ['img/chocolate-iced-custard-filled-banner.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
+        'don1'
+    ),
+    new Donut(
+        'Chokladmunk',
+        18,
+        ['chocolate'],
+        ['img/chocolate-iced-glazed-banner.jpeg', 'img/chocolate-iced-glazed.jpeg'],
+        'don2'
+    ),
+    new Donut(
+        'Kanelpudrad munk med äppelfyllning',
+        25,
+        ['filled', 'apple', 'cinnamon', 'powdered'],
+        ['img/cinnamon-apple-filled-banner.jpeg', 'img/cinnamon-apple-filled.jpeg'],
+        'don3'
+    ),  
+    new Donut(
+        'Glaserad kanelmunk',
+        13,
+        ['glazed', 'cinnamon'],
+        ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
+        'don4'
+    ),
+    new Donut(
+        'Glaserad munk med citronfyllning',
+        23,
+        ['glazed', 'lemon'],
+        ['img/glazed-lemon-filled-banner.jpeg', 'img/glazed-lemon-filled.jpeg'],
+        'don5'
+    ),
+    new Donut(
+        'Munk med chokladfyllning',
+        16,
+        ['chocolate', 'filled'],
+        ['img/original-filled-chocolate-kreme™-banner.jpeg', 'img/original-filled-chocolate-kreme™.jpeg'],
+        'don6'
+    ),
+    new Donut(
+        'Glaserad munk',
+        8,
+        ['glazed'],
+        ['img/original-glazed-doughnut-banner.jpeg', 'img/original-glazed-doughnut.jpeg'],
+        'don7'
+    ),
+    new Donut(
+        'Pudrad munk med blåbärsfyllning',
+        25,
+        ['powdered', 'blueberry'],
+        ['img/powdered-blueberry-filled-banner.jpeg', 'img/powdered-blueberry-filled.jpeg'],
+        'don8'
+    ),
+    new Donut(
+        'Pudrad munk med jordgubbsfyllning',
+        25,
+        ['powdered', 'strawberry'],
+        ['img/powdered-strawberry-filled-banner.jpeg', 'img/powdered-strawberry-filled.jpeg'],
+        'don9'
+    ),
+    new Donut(
+        'Jordgubbsmunk',
+        11,
+        ['strawberry'],
+        ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
+        'don10'
+    )
 ];
+
+
 
 /**
  *  Print donutsArray-items as an Article and add to .donut-Section
  */
-var donutArticle = "", i;
-for (let i = 0; i < donutsArray.length; i++) { //loop through the whole array.
-    donutArticle = donutArticle + /*html*/ `    
-    <article class="donut__item">
-        <h2>${donutsArray[i].name}</h2> 
-        <div>
-            <img
-                src="${donutsArray[i].imgPath[1]}" 
-                alt=""
-            />
-        </div>
-        <p>${donutsArray[i].price} <span>kr</span></p>
-        <div class="quantity">
-            <button>-</button>
-            <input type="text" />
-            <button>+</button>
-        </div>
-        <button>Lägg till</button>
-        <div class="rating">
-            <!-- Rating med stjärnor -->
-        </div>
-    </article>` +
-		i; // For development, remove "+ i;" to hide item array index on weppage.
-
-    console.log(donutsArray[i]); //For development
+var itemIdArray = []; //keep?
+let generateShop = function () {
+    
+    let donutArticle ="", i;
+    for (let i = 0; i < donutsArray.length; i++) { //loop through the whole array.
+        donutArticle= donutArticle + /*html*/ `    
+        <article class="donut__item">
+            <h2>${donutsArray[i].name}</h2> 
+            <div>
+                <img
+                    src="${donutsArray[i].imgPath[1]}" 
+                    alt="A picture of a donut"
+                />
+            </div>
+            <p>${donutsArray[i].price} <span>kr</span></p>
+            <div class="quantity">
+                <button onclick="decreaseValueOfItem(${donutsArray[i].itemId})">-</button>
+                <input id="${donutsArray[i].itemId}" type="number"  min="0" max="99"/>
+                <button onclick="increaseValueOfItem(${donutsArray[i].itemId})">+</button>
+            </div>
+            <button>Lägg till</button>
+            <div class="rating">
+                <!-- Rating med stjärnor -->
+            </div>
+        </article>` + i; // "+ i" //For development
+        itemIdArray.push`(${donutsArray[i].itemId})`;
+        console.log(donutsArray[i]); //For development
+        
+    }
+    
+    document.querySelector(".donut-section").innerHTML = donutArticle;
 }
-document.querySelector(".donut-section").innerHTML = donutArticle;
+ generateShop();
+
+ increaseValueOfItem = function (){
+    console.log("increase");
+ }
+ decreaseValueOfItem = function (){
+    console.log("decrease");
+ }
 
 /******************************************************************
  *  Item Buttons (Ej klar, behöver göras om?)
  *****************************************************************/
-const decrementItem = document.querySelectorAll('.decrement-item');
-const changeValueOfItem = document.querySelector('.number-of-items');
-const incrementItem = document.querySelectorAll('.increment-item');
+// const decrementItem = document.querySelectorAll('.decrement-item');
+// const changeValueOfItem = document.querySelector('.number-of-items');
+// const incrementItem = document.querySelectorAll('.increment-item');
 
-/**
- *  Increment item function
- */
+// /**
+//  *  Increment item function
+//  */
 
-const increaseValueOfItem = function () {
+// const increaseValueOfItem = function () {
 
-    if (changeValueOfItem.value != 99) { // To have some control over the order.
-        changeValueOfItem.value++;
-        console.log(changeValueOfItem.value) //For development
-    }
-}
-//Add eventlistener increaseValueOfItem to all increment buttons
-for (let i = 0; i < incrementItem.length; i++) {
-    incrementItem[i].addEventListener("click", increaseValueOfItem);
-}
+//     if (changeValueOfItem.value != 99) { // To have some control over the order.
+//         changeValueOfItem.value++;
+//         console.log(changeValueOfItem.value) //For development
+//     }
+// }
+// //Add eventlistener increaseValueOfItem to all increment buttons
+// for (let i = 0; i < incrementItem.length; i++) {
+//     incrementItem[i].addEventListener("click", increaseValueOfItem);
+// }
 
-/**
- *  Decrement item function
- */
-const decreaseValueOfItem = function () {
+// /**
+//  *  Decrement item function
+//  */
+// const decreaseValueOfItem = function () {
 
-    if (changeValueOfItem.value != 0) { // So it's impossible to add negatime number of items to basket
-        changeValueOfItem.value--;
-        console.log(changeValueOfItem.value) //For development
-    }
-}
+//     if (changeValueOfItem.value != 0) { // So it's impossible to add negatime number of items to basket
+//         changeValueOfItem.value--;
+//         console.log(changeValueOfItem.value) //For development
+//     }
+// }
 //Add eventlistener decreaseValueOfItem to all decrement buttons
-for (let i = 0; i < decrementItem.length; i++) {
-    decrementItem[i].addEventListener("click", decreaseValueOfItem);
-}
+// for (let i = 0; i < decrementItem.length; i++) {
+//     decrementItem[i].addEventListener("click", decreaseValueOfItem);
+// }
 
 /**
  *  Add to basket function
@@ -254,5 +265,3 @@ const activateOrderButton = () => {
         inputForm.removeAttribute('onsubmit');
     }
 }
-
-
