@@ -1,11 +1,11 @@
 class Donut {
     constructor(name, price, categories, imgPath, itemId) {
         this.name = name,
-        this.price = price,
-        this.categories = categories,
-        this.imgPath = imgPath,
-        this.itemId = itemId,
-        this.quantity = 0
+            this.price = price,
+            this.categories = categories,
+            this.imgPath = imgPath,
+            this.itemId = itemId,
+            this.quantity = 0
     }
 }
 
@@ -44,7 +44,7 @@ const donutsArray = [
         ['filled', 'apple', 'cinnamon', 'powdered'],
         ['img/cinnamon-apple-filled-banner.jpeg', 'img/cinnamon-apple-filled.jpeg'],
         'don3'
-    ),  
+    ),
     new Donut(
         'Glaserad kanelmunk',
         13,
@@ -103,10 +103,10 @@ const donutsArray = [
  */
 var itemIdArray = []; //keep?
 let generateShop = function () {
-    
-    let donutArticle ="", i;
+
+    let donutArticle = "", i;
     for (let i = 0; i < donutsArray.length; i++) { //loop through the whole array.
-        donutArticle= donutArticle + /*html*/ `    
+        donutArticle = donutArticle + /*html*/ `    
         <article class="donut__item">
             <h2>${donutsArray[i].name}</h2> 
             <div>
@@ -117,9 +117,9 @@ let generateShop = function () {
             </div>
             <p>${donutsArray[i].price} <span>kr</span></p>
             <div class="quantity">
-                <button id="dec${i}" onclick="decreaseValueOfItem(${donutsArray[i]})">-</button>
+                <button id="dec${donutsArray[i].itemId}">-</button>
                 <input id="${donutsArray[i].itemId}" type="number"  min="0" max="99"/>
-                <button id="inc${i}" onclick="increaseValueOfItem(${donutsArray[i].itemId})">+</button>
+                <button id="inc${donutsArray[i].itemId}">+</button>
             </div>
             <button>Lägg till</button>
             <div class="rating">
@@ -127,33 +127,35 @@ let generateShop = function () {
             </div>
         </article>` + i; // "+ i" //For development
         itemIdArray.push`(${donutsArray[i].itemId})`;
-        console.log(donutsArray[i]); //For development        
+        // console.log(donutsArray[i]); //For development        
     }
-    
+
     document.querySelector(".donut-section").innerHTML = donutArticle;
 }
- generateShop();
+generateShop();
 
- increaseValueOfItem = function (donut){
-    donut.quantity = donut.quantity + 1; 
+increaseValueOfItem = function (donut, quantityInput) {
+    donut.quantity++;
+    quantityInput.value = donut.quantity
     console.log(donut.quantity);
-    console.log("increase");
- }
- decreaseValueOfItem = function (donut){
-    donut.quantity = donut.quantity - 1;
-    console.log(donut.quantity);
-    console.log("decrease");
- }
-console.log(donutsArray)
- donutsArray.map((donut, i) => {
-    console.log(donut.quantity)
-    const decreaseButton = document.querySelector(`#dec${i}`);
-    console.log(decreaseButton)
-    const increaseButton = document.querySelector(`#inc${i}`);
 
-    decreaseButton.addEventListener('click', decreaseValueOfItem(donut));
-    increaseButton.addEventListener('click', increaseValueOfItem(donut));
- })
+}
+decreaseValueOfItem = function (donut, quantityInput) {
+    donut.quantity > 0 && donut.quantity--;
+    quantityInput.value = donut.quantity
+    console.log(donut.quantity);
+}
+
+donutsArray.map((donut, i) => {
+    const decreaseButton = document.querySelector(`#dec${donutsArray[i].itemId}`);
+    const increaseButton = document.querySelector(`#inc${donutsArray[i].itemId}`);
+    const quantityInput = document.querySelector(`#${donutsArray[i].itemId}`)
+    console.log(quantityInput)
+    quantityInput.value = donut.quantity
+
+    decreaseButton.addEventListener('click', () => { decreaseValueOfItem(donut, quantityInput) });
+    increaseButton.addEventListener('click', () => { increaseValueOfItem(donut, quantityInput) });
+})
 
 /******************************************************************
  *  Item Buttons (Ej klar, behöver göras om?)
