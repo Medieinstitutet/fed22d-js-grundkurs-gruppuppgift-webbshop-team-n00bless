@@ -260,7 +260,7 @@ nameInputField.addEventListener('keyup', () => {
 addressInputField.addEventListener('keyup', () => {
     formValidation.address =
         /\d/.test(addressInputField.value) &&
-        /[A-Öa-ö]/.test(addressInputField.value);
+        /[A-Za-zÅåÄäÖö]/.test(addressInputField.value);
     activateOrderButton();
 });
 
