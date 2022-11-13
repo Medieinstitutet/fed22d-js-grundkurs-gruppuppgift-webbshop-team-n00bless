@@ -331,6 +331,12 @@ const submitOrder = () => {
 	console.log('Order lagd!');
 };
 
+document.querySelector('form').addEventListener('reset', function(event) { //A warning text for accessibility
+	if (!confirm('Är du säker att du vill återställa formuläret?')) {
+	  event.preventDefault();
+	}
+});
+
 const activateOrderButton = () => {
 	if (validateInput(formValidation)) {
 		orderButton.removeAttribute('disabled');
