@@ -1,0 +1,29 @@
+.donuts {
+	&__item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		// height: 80vh;
+		// padding: 2rem;
+
+		h2 {
+			margin-bottom: 0;
+		}
+
+		&_info {
+			display: flex;
+		}
+
+		&_quantity {
+			input {
+				padding: 0.5rem 1rem;
+			}
+		}
+
+		&_addcart {
+			margin-top: 1rem;
+			padding: 1rem 2rem;
+		}
+	}
+}
