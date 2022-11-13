@@ -5,9 +5,9 @@
 		<title>Gottfrids munkar</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Gottfrids Munkar - smaker för alla!">
+		<meta name="description" content="Gottfrids Munkar - smaker för alla!" />
 
-		<meta property="og:title" content="Gottfrids Munkar - smaker för alla!"/>
+		<meta property="og:title" content="Gottfrids Munkar - smaker för alla!" />
 		<meta property="og:type" content="webpage" />
 		<meta property="og:url" content="" />
 		<meta property="og:image" content="" />
@@ -16,7 +16,7 @@
 		<link rel="apple-touch-icon" href="icon.png" />
 		<!-- Place favicon.ico in the root directory -->
 
-		<link rel="stylesheet" href="scss/style.css" />
+		<link rel="stylesheet" href="css/style.css" />
 
 		<meta name="theme-color" content="#fafafa" />
 		<script
@@ -99,8 +99,8 @@
 			</div>
 		</header>
 		<main>
-			<section class="donut-section">
-				<article class="donut__item">
+			<section class="donuts">
+				<!-- <article class="donuts__item">
 					<h2>Cake Batter Donut</h2>
 					<div>
 						<img
@@ -116,9 +116,8 @@
 					</div>
 					<button>Lägg till</button>
 					<div class="rating">
-						<!-- Rating med stjärnor -->
 					</div>
-				</article>
+				</article> -->
 			</section>
 			<section id="cart">
 				<h2>Beställningssektion</h2>
@@ -130,35 +129,58 @@
 							<p>Namnet på munken</p>
 							<p>Antal</p>
 							<p>Rabatt</p>
-							<p id ="cart-sum">Totalpris</p>
+							<p>Pris</p>
 						</li>
 					</ul>
+					<p id ="cart-sum">Totalpris</p>
 				</article>
 				<form>
 					<fieldset>
 						<legend>Kontaktuppgifter</legend>
 						<label for="name">För- och efternamn</label>
-						<input type="text" name="name" pattern="[A-Za-zÅåÄäÖö\s]+" title='Endast små och stora bokstäver' required/>						
+						<input
+							type="text"
+							name="name"
+							pattern="[A-Za-zÅåÄäÖö\s]+"
+							title="Endast små och stora bokstäver"
+							required
+						/>
 						<label for="address">Adress</label>
-						<input type="text" name="address" required/>
+						<input type="text" name="address" required />
 						<label for="post-code">Postkod</label>
-						<input type="text" name="post-code" pattern="[0-9]{5}" title="5 siffror utan mellanslag" required/>
+						<input
+							type="text"
+							name="post-code"
+							pattern="[0-9]{5}"
+							title="5 siffror utan mellanslag"
+							required
+						/>
 						<label for="city">Stad</label>
-						<input type="text" name="city" required/>
+						<input type="text" name="city" required />
 						<label for="tel">Telefonnummer</label>
-						<input type="tel" name="tel" required/>
+						<input type="tel" name="tel" required />
 						<label for="email">Mailadress</label>
-						<input type="email" name="email" required/>
+						<input type="email" name="email" required />
 					</fieldset>
 					<fieldset>
 						<legend>Betalningssätt</legend>
 						<label>
 							Kort
-							<input type="radio" name="payment-method" id="card-radio" value="card" />
+							<input
+								type="radio"
+								name="payment-method"
+								id="card-radio"
+								value="card"
+							/>
 						</label>
 						<label>
 							Faktura
-							<input type="radio" name="payment-method" id="invoice-radio" value="invoice"/>
+							<input
+								type="radio"
+								name="payment-method"
+								id="invoice-radio"
+								value="invoice"
+							/>
 						</label>
 					</fieldset>
 					<fieldset>
