@@ -196,14 +196,18 @@ const donutAddToCart = (id) => {
 };
 
 const updateCartDOM = () => {
-	const CartSum = cartItems.reduce((accumulator, object) => {  //Total price entire Cart, keep?
+	const CartSum = cartItems.reduce((accumulator, object) => {  
 		return accumulator + object.totPrice;
 	  }, 0);
 	let cartSumDisplay = document.getElementById("cart-sum");
 	cartSumDisplay.textContent = `Totalpris ${CartSum} kr.`;
+	if (CartSum >= 800){
+		document.getElementById("invoice-radio").disabled = true; // No invoice alternative above 800kr
+	}
 	console.log(CartSum); 
 	console.log(cartItems);
 };
+
 
 const generateStarRating = (rating) => {
 	const starIcon = '<i class="fa-solid fa-star"></i>';
