@@ -253,7 +253,7 @@ const generateDonuts = () => {
         </div>
         <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
 					donut.id
-				})">Lägg till för <span>${donut.price} kr</span></button>
+				})">Lägg till för <span>${donut.price}</span> kr</button>
       </article>
     `;
 	}
