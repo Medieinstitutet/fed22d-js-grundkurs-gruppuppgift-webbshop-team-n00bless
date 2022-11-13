@@ -140,7 +140,6 @@ const donutIncreaseCount = (id, price) => {
 		currentCountEl.value = currentCountEl.value.slice(0, 2); //remove 3rd digit
 	} else {
 		currentCountEl.value++;
-
 		const donutObj = fetchDonut(id);
 		const currentPriceText = donutEl.querySelector(
 			'.donuts__item_addcart span'
@@ -155,7 +154,6 @@ const donutDecreaseCount = (id, price) => {
 
 	if (currentCountEl.value != 0) {
 		currentCountEl.value--;
-
 		const donutObj = fetchDonut(id);
 		const currentPriceText = donutEl.querySelector(
 			'.donuts__item_addcart span'
@@ -198,6 +196,12 @@ const donutAddToCart = (id) => {
 };
 
 const updateCartDOM = () => {
+	const CartSum = cartItems.reduce((accumulator, object) => {  //Total price entire Cart, keep?
+		return accumulator + object.totPrice;
+	  }, 0);
+	let cartSumDisplay = document.getElementById("cart-sum");
+	cartSumDisplay.textContent = `Totalpris ${CartSum} kr.`;
+	console.log(CartSum); 
 	console.log(cartItems);
 };
 
