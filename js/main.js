@@ -123,29 +123,45 @@ const donutsArray = [
  * Adding to Cart
  **********************************************************/
 const cartItems = [];
-
 const donutListEl = document.querySelector('.donuts');
-const donutIncreaseCount = (id) => {
+
+const fetchDonut = (id) => {
+	for (const donut of donutsArray) {
+		if (donut.id === id) return donut;
+	}
+};
+
+const donutIncreaseCount = (id, price) => {
+	console.log(id, price);
 	const donutEl = document.querySelector(`[data-id="${id}"]`);
 	const currentCountEl = donutEl.querySelector('.donuts__item_quantity input');
-	const currentCount = Number(currentCountEl.value) + 1;
+	// const currentCount = Number(currentCountEl.value) + 1;
 	if (currentCountEl.value >= 99) {
 		currentCountEl.value = currentCountEl.value.slice(0, 2); //remove 3rd digit
 	} else {
 		currentCountEl.value++;
+
+		const donutObj = fetchDonut(id);
+		const currentPriceText = donutEl.querySelector(
+			'.donuts__item_addcart span'
+		);
+		currentPriceText.innerText = donutObj.price * currentCountEl.value;
 	}
-	console.log(Number(currentCountEl.value));
-	console.log(currentCount);
 };
-const donutDecreaseCount = (id) => {
+const donutDecreaseCount = (id, price) => {
 	const donutEl = document.querySelector(`[data-id="${id}"]`);
 	const currentCountEl = donutEl.querySelector('.donuts__item_quantity input');
-	const currentCount = Number(currentCountEl.value) - 1;
+	// const currentCount = Number(currentCountEl.value) - 1;
+
 	if (currentCountEl.value != 0) {
 		currentCountEl.value--;
+
+		const donutObj = fetchDonut(id);
+		const currentPriceText = donutEl.querySelector(
+			'.donuts__item_addcart span'
+		);
+		currentPriceText.innerText = donutObj.price * currentCountEl.value;
 	}
-	console.log(Number(currentCountEl.value));
-	console.log(currentCount);
 };
 
 const donutAddToCart = (id) => {
@@ -237,7 +253,7 @@ const generateDonuts = () => {
         </div>
         <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
 					donut.id
-				})">Lägg till</button>
+				})">Lägg till för <span>${donut.price} kr</span></button>
       </article>
     `;
 	}
