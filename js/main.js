@@ -1,12 +1,3 @@
-class Donut {
-    constructor(name, price, categories, imgPath) {
-        this.name = name,
-        this.price = price,
-        this.categories = categories,
-        this.imgPath = imgPath
-    }
-}
-
 /* Kategorier: 
 chocolate
 filled
@@ -22,97 +13,374 @@ strawberry
 // Bilder tagna från https://github.com/aaronfrost/DonutsApi/tree/main/static/images
 
 const donutsArray = [
-    new Donut(
-        'Chokladmunk med vaniljfyllning',
-        23,
-        ['chocolate', 'filled'],
-        ['img/chocolate-iced-custard-filled-banner.jpeg', 'img/chocolate-iced-custard-filled.jpeg']
-    ),
-    new Donut(
-        'Chokladmunk',
-        18,
-        ['chocolate'],
-        ['img/chocolate-iced-glazed-banner.jpeg', 'img/chocolate-iced-glazed.jpeg']
-    ),
-    new Donut(
-        'Kanelpudrad munk med äppelfyllning',
-        25,
-        ['filled', 'apple', 'cinnamon', 'powdered'],
-        ['img/cinnamon-apple-filled-banner.jpeg', 'img/cinnamon-apple-filled.jpeg']
-    ),
-    new Donut(
-        'Glaserad kanelmunk',
-        13,
-        ['glazed', 'cinnamon'],
-        ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg']
-    ),
-    new Donut(
-        'Glaserad munk med citronfyllning',
-        23,
-        ['glazed', 'lemon'],
-        ['img/glazed-lemon-filled-banner.jpeg', 'img/glazed-lemon-filled.jpeg']
-    ),
-    new Donut(
-        'Munk med chokladfyllning',
-        16,
-        ['chocolate', 'filled'],
-        ['img/original-filled-chocolate-kreme™-banner.jpeg', 'img/original-filled-chocolate-kreme™.jpeg']
-    ),
-    new Donut(
-        'Glaserad munk',
-        8,
-        ['glazed'],
-        ['img/original-glazed-doughnut-banner.jpeg', 'img/original-glazed-doughnut.jpeg']
-    ),
-    new Donut(
-        'Pudrad munk med blåbärsfyllning',
-        25,
-        ['powdered', 'blueberry'],
-        ['img/powdered-blueberry-filled-banner.jpeg', 'img/powdered-blueberry-filled.jpeg']
-    ),
-    new Donut(
-        'Pudrad munk med jordgubbsfyllning',
-        25,
-        ['powdered', 'strawberry'],
-        ['img/powdered-strawberry-filled-banner.jpeg', 'img/powdered-strawberry-filled.jpeg']
-    ),
-    new Donut(
-        'Jordgubbsmunk',
-        11,
-        ['strawberry'],
-        ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg']
-    )
+	{
+		id: 1,
+		name: 'Chokladmunk med vaniljfyllning',
+		price: 23,
+		categories: ['chocolate', 'filled'],
+		images: [
+			'img/chocolate-iced-custard-filled-banner.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
+		],
+		rating: 5,
+	},
+	{
+		id: 2,
+		name: 'Chokladmunk',
+		price: 18,
+		categories: ['chocolate'],
+		images: [
+			'img/chocolate-iced-glazed-banner.jpeg',
+			'img/chocolate-iced-glazed.jpeg',
+		],
+		rating: 4.5,
+	},
+	{
+		id: 3,
+		name: 'Kanelpudrad munk med äppelfyllning',
+		price: 25,
+		categories: ['filled', 'apple', 'cinnamon', 'powdered'],
+		images: [
+			'img/cinnamon-apple-filled-banner.jpeg',
+			'img/cinnamon-apple-filled.jpeg',
+		],
+		rating: 4.5,
+	},
+	{
+		id: 4,
+		name: 'Glaserad kanelmunk',
+		price: 13,
+		categories: ['glazed', 'cinnamon'],
+		images: ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
+		rating: 5,
+	},
+	{
+		id: 5,
+		name: 'Glaserad munk med citronfyllning',
+		price: 23,
+		categories: ['glazed', 'lemon'],
+		images: [
+			'img/glazed-lemon-filled-banner.jpeg',
+			'img/glazed-lemon-filled.jpeg',
+		],
+		rating: 4,
+	},
+	{
+		id: 6,
+		name: 'Munk med chokladfyllning',
+		price: 16,
+		categories: ['chocolate', 'filled'],
+		images: [
+			'img/original-filled-chocolate-kreme™-banner.jpeg',
+			'img/original-filled-chocolate-kreme™.jpeg',
+		],
+		rating: 4,
+	},
+	{
+		id: 7,
+		name: 'Glaserad munk',
+		price: 7,
+		categories: ['glazed'],
+		images: [
+			'img/original-glazed-doughnut-banner.jpeg',
+			'img/original-glazed-doughnut.jpeg',
+		],
+		rating: 5,
+	},
+	{
+		id: 8,
+		name: 'Pudrad munk med blåbärsfyllning',
+		price: 25,
+		categories: ['powdered', 'blueberry'],
+		images: [
+			'img/powdered-blueberry-filled-banner.jpeg',
+			'img/powdered-blueberry-filled.jpeg',
+		],
+		rating: 4.5,
+	},
+	{
+		id: 9,
+		name: 'Pudrad munk med jordgubbsfyllning',
+		price: 25,
+		categories: ['powdered', 'strawberry'],
+		images: [
+			'img/powdered-strawberry-filled-banner.jpeg',
+			'img/powdered-strawberry-filled.jpeg',
+		],
+		rating: 4,
+	},
+	{
+		id: 10,
+		name: 'Jordgubbsmunk',
+		price: 11,
+		categories: ['strawberry'],
+		images: ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
+		rating: 5,
+	},
 ];
 
+/*********************************************************
+ * Adding to Cart
+ **********************************************************/
+const cartItems = [];
+const donutListEl = document.querySelector('.donuts');
+
+const fetchDonut = (id) => {
+	for (const donut of donutsArray) {
+		if (donut.id === id) return donut;
+	}
+};
+
+const donutIncreaseCount = (id, price) => {
+	console.log(id, price);
+	const donutEl = document.querySelector(`[data-id="${id}"]`);
+	const currentCountEl = donutEl.querySelector('.donuts__item_quantity input');
+	// const currentCount = Number(currentCountEl.value) + 1;
+	if (currentCountEl.value >= 99) {
+		currentCountEl.value = currentCountEl.value.slice(0, 2); //remove 3rd digit
+	} else {
+		currentCountEl.value++;
+		const donutObj = fetchDonut(id);
+		const currentPriceText = donutEl.querySelector(
+			'.donuts__item_addcart span'
+		);
+		currentPriceText.innerText = donutObj.price * currentCountEl.value;
+	}
+};
+const donutDecreaseCount = (id, price) => {
+	const donutEl = document.querySelector(`[data-id="${id}"]`);
+	const currentCountEl = donutEl.querySelector('.donuts__item_quantity input');
+	// const currentCount = Number(currentCountEl.value) - 1;
+
+	if (currentCountEl.value != 0) {
+		currentCountEl.value--;
+		const donutObj = fetchDonut(id);
+		const currentPriceText = donutEl.querySelector(
+			'.donuts__item_addcart span'
+		);
+		currentPriceText.innerText = donutObj.price * currentCountEl.value;
+	}
+};
+
+const donutAddToCart = (id) => {
+	const currentCount = Number(
+		document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`)
+			.value
+	);
+
+	if (currentCount > 0) {
+		if (cartItems.length > 0) {
+			for (const item of cartItems) {
+				if (item.id === id) {
+					item.count = item.count + currentCount;
+					item.totPrice = item.totPrice + currentCount * item.price;
+					updateCartDOM();
+					return;
+				}
+			}
+		}
+
+		for (const donut of donutsArray) {
+			if (donut.id === id) {
+				cartItems.push({
+					...donut,
+					count: currentCount,
+					totPrice: currentCount * donut.price,
+				});
+
+				updateCartDOM();
+				return;
+			}
+		}
+	}
+};
+
+const updateCartDOM = () => {
+	const CartSum = cartItems.reduce((accumulator, object) => {  
+		return accumulator + object.totPrice;
+	  }, 0);
+	let cartSumDisplay = document.getElementById("cart-sum");
+	cartSumDisplay.textContent = `Totalpris ${CartSum} kr.`;
+	if (CartSum >= 800){
+		document.getElementById("invoice-radio").disabled = true; // No invoice alternative above 800kr
+	}
+	console.log(CartSum); 
+	console.log(cartItems);
+};
 
 
-/**
- *  Print donutsArray-items as an Article and add to .donut-Section
- */
- var donutArticle ="", i;
- for (let i = 0; i < donutsArray.length; i++) { //loop through the whole array.
-    donutArticle= donutArticle + `    
-    <article class="donut__item">
-        <h2>${donutsArray[i].name}</h2> 
-        <div>
-            <img
-                src="${donutsArray[i].imgPath[1]}" 
-                alt=""
-            />
+const generateStarRating = (rating) => {
+	const starIcon = '<i class="fa-solid fa-star"></i>';
+	const starHalfIcon = '<i class="fa-solid fa-star-half"></i>';
+
+	const splitPoints = rating.toString().split('.');
+	const fullPoints = splitPoints[0];
+	const halfPoint = splitPoints.length > 1 ? splitPoints[1] : 0;
+
+	let ratingEl = '';
+
+	for (let i = 0; i < Number(fullPoints); i++) {
+		ratingEl += starIcon;
+	}
+
+	if (halfPoint) ratingEl += starHalfIcon;
+
+	return ratingEl;
+};
+
+/*********************************************************
+ * Create HTML
+ **********************************************************/
+
+const generateDonuts = () => {
+	let donuts = [];
+	for (const donut of donutsArray) {
+		donuts += /*html*/ `
+      <article class="donuts__item" data-id=${donut.id}>
+        <h2>${donut.name}</h2> 
+        <div class="donuts__item_image">
+          <img
+            src="${donut.images[1]}" 
+            alt="A picture of a donut"
+          />
         </div>
-        <p>${donutsArray[i].price} <span>kr</span></p>
-        <div class="quantity">
-            <button>-</button>
-            <input type="text" />
-            <button>+</button>
+				<div class="donuts__item_info">
+					<p>${donut.price} kr</p>
+					<p>${generateStarRating(donut.rating)}</p>
+				</div>
+        
+        <div class="donuts__item_quantity">
+          <button class="button button--background" onclick="donutDecreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-minus"></i></button>
+          <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value) 
+		  >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
+          <button class="button button--background" onclick="donutIncreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-plus"></i></button>
         </div>
-        <button>Lägg till</button>
-        <div class="rating">
-            <!-- Rating med stjärnor -->
-        </div>
-    </article>` + i; // + i kan man ta bort, den displayar bara index på donuten på sidan, nice att ha när man utvecklar
+        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+					donut.id
+				})">Lägg till för <span>${donut.price}</span> kr</button>
+      </article>
+    `;
+	}
+	donutListEl.innerHTML = donuts;
+};
 
+generateDonuts();
 
-    console.log(donutsArray[i]); //For development
- }
- document.querySelector(".donut-section").innerHTML = donutArticle;
+/*********************************************************
+ * Input field validation
+ **********************************************************/
+
+const inputForm = document.querySelector('form');
+
+const nameInputField = document.querySelector('[name="name"]');
+const addressInputField = document.querySelector('[name="address"]');
+const postCodeInputField = document.querySelector('[name="post-code"]');
+const cityInputField = document.querySelector('[name="city"]');
+const telInputField = document.querySelector('[name="tel"]');
+const emailInputField = document.querySelector('[name="email"]');
+const cardRadioInput = document.querySelector('#card-radio');
+const invoiceRadioInput = document.querySelector('#invoice-radio');
+const test = document.querySelector('[name="payment-method"]:checked');
+
+const orderButton = document.querySelector('#order-btn');
+
+let formValidation = {
+	name: false,
+	address: false,
+	postCode: false,
+	city: true,
+	tel: true,
+	email: true,
+	radio: true,
+};
+
+nameInputField.addEventListener('keyup', () => {
+	formValidation.name = nameInputField.value.indexOf(' ') > 0;
+	activateOrderButton();
+});
+
+addressInputField.addEventListener('keyup', () => {
+	formValidation.address =
+		/\d/.test(addressInputField.value) &&
+		/[A-Za-zÅåÄäÖö]/.test(addressInputField.value);
+	activateOrderButton();
+});
+
+postCodeInputField.addEventListener('keyup', () => {
+	formValidation.postCode = postCodeInputField.value.length === 5;
+	activateOrderButton();
+});
+
+addressInputField.addEventListener('keyup', () => {
+	formValidation.address = addressInputField.value !== '';
+});
+
+cardRadioInput.addEventListener('click', () => {
+	console.log(test.value);
+});
+invoiceRadioInput.addEventListener('click', () => {
+	console.log(test.value);
+});
+
+const validateInput = (validatedInputs) => {
+	for (const prop in validatedInputs) {
+		if (!validatedInputs[prop]) {
+			return false;
+		}
+	}
+	return true;
+};
+
+const submitOrder = () => {
+	console.log('Order lagd!');
+};
+
+document.querySelector('form').addEventListener('reset', function(event) { //A warning text for accessibility
+	if (!confirm('Är du säker att du vill återställa formuläret?')) {
+	  event.preventDefault();
+	}
+});
+
+const activateOrderButton = () => {
+	if (validateInput(formValidation)) {
+		orderButton.removeAttribute('disabled');
+		inputForm.setAttribute('onsubmit', 'submitOrder()');
+	} else {
+		orderButton.setAttribute('disabled', '');
+		inputForm.removeAttribute('onsubmit');
+	}
+};
+
+/*********************************************************
+ * Filter/sorting Menu
+ **********************************************************/
+
+const filterButton = document.querySelector('.navbar__menu > button');
+const filterElement = document.querySelector('#filterMenu');
+let filterMenuVisible = false;
+
+filterButton.addEventListener('click', () => {
+	filterButton.setAttribute('aria-expanded', !filterMenuVisible);
+	filterMenuVisible = JSON.parse(filterButton.getAttribute('aria-expanded'));
+
+	if (filterMenuVisible) {
+		filterElement.style.display = 'flex';
+		window.setTimeout(() => {
+			filterElement.style.opacity = 1;
+			filterElement.style.transform = 'scale(1)';
+		}, 0);
+	} else {
+		filterElement.style.opacity = 0;
+		filterElement.style.transform = 'scale(0)';
+
+		window.setTimeout(() => {
+			filterElement.style.display = 'none';
+		}, 200);
+	}
+
+	if (filterMenuVisible) filterElement.querySelector('select').focus();
+});

@@ -5,9 +5,10 @@
 		<title>Gottfrids munkar</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Gottfrids Munkar - smaker för alla!" />
 
-		<meta property="og:title" content="" />
-		<meta property="og:type" content="" />
+		<meta property="og:title" content="Gottfrids Munkar - smaker för alla!" />
+		<meta property="og:type" content="webpage" />
 		<meta property="og:url" content="" />
 		<meta property="og:image" content="" />
 
@@ -32,33 +33,74 @@
 	</head>
 
 	<body>
-		<header>
-			<h1>Gottfrids Munkar</h1>
-			<div>
-				<!-- <button>Sortering</button> -->
-				<!-- <a href="#cart">Ikon</a> -->
-				<button>
-					<i class="fa-solid fa-filter"></i>
+		<header class="navbar">
+			<div class="navbar__heading">
+				<h1>Gottfrids <span>Munkar</span></h1>
+				<button class="button">
+					<span class="fa-layers fa-fw">
+						<i class="icon fa-solid fa-cart-shopping"></i>
+						<span class="icon__counter fa-layers-counter">3</span>
+					</span>
 				</button>
 			</div>
-			<div class="menu">
-				<div>
-					<label for="category">Kategori</label>
-					<select name="category">
-						<option value="category1">Kategori 1</option>
-						<option value="category2">Kategori 2</option>
-						<option value="category3">Kategori 3</option>
-					</select>
+			<div class="navbar__menu">
+				<div class="navbar__menu_input">
+					<i class="fa-solid fa-magnifying-glass"></i>
+					<input type="text" name="searchQuery" placeholder="Search.." />
 				</div>
-				<div>
-					<label for="price-interval">Pris</label>
-					<input type="range" name="price-interval" id="" />
+				<button class="button" aria-expanded="false" aria-controls="filterMenu">
+					<i class="icon fa-solid fa-sliders"></i>
+				</button>
+			</div>
+			<div class="navbar__dropdown" style="display: none" id="filterMenu">
+				<div class="navbar__dropdown_item">
+					<p>Välj kategorier</p>
+					<ul class="navbar__dropdown_item_categories">
+						<li class="checkbox">
+							<label class="checkbox__input"
+								><input type="checkbox" name="categeory1" />Kategori 1
+							</label>
+						</li>
+						<li class="checkbox">
+							<label class="checkbox__input"
+								><input type="checkbox" name="categeory2" />Kategori 2
+							</label>
+						</li>
+						<li class="checkbox">
+							<label class="checkbox__input">
+								<input type="checkbox" name="categeory3" />
+								Kategori 3
+							</label>
+						</li>
+					</ul>
+					<!-- <label for="category">Välj kategorier</label>
+					<select class="select" name="category">
+						<option class="select__option" value="category0">
+							Alla munkar
+						</option>
+						<option class="select__option" value="category1">Kategori 1</option>
+						<option class="select__option" value="category2">Kategori 2</option>
+						<option class="select__option" value="category3">Kategori 3</option>
+					</select> -->
+				</div>
+				<div class="navbar__dropdown_item">
+					<p>Välj prisspann</p>
+					<div class="navbar__dropdown_item_filter">
+						<div>
+							<p>Från</p>
+							<input type="number" min="0" max="999" placeholder="0" />
+						</div>
+						<div>
+							<p>Till</p>
+							<input type="number" min="0" max="999" placeholder="100" />
+						</div>
+					</div>
 				</div>
 			</div>
 		</header>
 		<main>
-			<section class="donut-section">
-				<article class="donut__item">
+			<section class="donuts">
+				<!-- <article class="donuts__item">
 					<h2>Cake Batter Donut</h2>
 					<div>
 						<img
@@ -74,9 +116,8 @@
 					</div>
 					<button>Lägg till</button>
 					<div class="rating">
-						<!-- Rating med stjärnor -->
 					</div>
-				</article>
+				</article> -->
 			</section>
 			<section id="cart">
 				<h2>Beställningssektion</h2>
@@ -88,34 +129,59 @@
 							<p>Namnet på munken</p>
 							<p>Antal</p>
 							<p>Rabatt</p>
-							<p>Totalpris</p>
+							<p>Pris</p>
 						</li>
 					</ul>
+					<p id ="cart-sum">Totalpris</p>
 				</article>
-				<form action="">
+				<form>
 					<fieldset>
 						<legend>Kontaktuppgifter</legend>
-						<label for="first-name">Förnamn</label>
-						<input type="text" name="first-name" />
-						<label for="last-name">Efternamn</label>
-						<input type="text" name="last-name" />
+						<label for="name">För- och efternamn</label>
+						<input
+							type="text"
+							name="name"
+							pattern="[A-Za-zÅåÄäÖö\s]+"
+							title="Endast små och stora bokstäver"
+							required
+						/>
 						<label for="address">Adress</label>
-						<input type="text" name="address" />
+						<input type="text" name="address" required />
 						<label for="post-code">Postkod</label>
-						<input type="text" name="post-code" />
+						<input
+							type="text"
+							name="post-code"
+							pattern="[0-9]{5}"
+							title="5 siffror utan mellanslag"
+							required
+						/>
 						<label for="city">Stad</label>
-						<input type="text" name="city" />
+						<input type="text" name="city" required />
 						<label for="tel">Telefonnummer</label>
-						<input type="tel" name="tel" />
+						<input type="tel" name="tel" required />
 						<label for="email">Mailadress</label>
-						<input type="email" name="email" />
+						<input type="email" name="email" required />
 					</fieldset>
 					<fieldset>
 						<legend>Betalningssätt</legend>
-						<label for="card">Kort</label>
-						<input type="radio" name="card" />
-						<label for="invoice">Faktura</label>
-						<input type="radio" name="invoice" />
+						<label>
+							Kort
+							<input
+								type="radio"
+								name="payment-method"
+								id="card-radio"
+								value="card"
+							/>
+						</label>
+						<label>
+							Faktura
+							<input
+								type="radio"
+								name="payment-method"
+								id="invoice-radio"
+								value="invoice"
+							/>
+						</label>
 					</fieldset>
 					<fieldset>
 						<legend>Faktura</legend>
@@ -139,8 +205,8 @@
 					<input type="checkbox" name="personuppgifter" />
 					<label for="newsletter">Prenumerera på nyhetsbrev?</label>
 					<input type="checkbox" name="newsletter" />
-					<button>Beställ</button>
-					<button>Rensa</button>
+					<button type="submit" disabled id="order-btn">Beställ</button>
+					<button type ="reset">Rensa</button>
 				</form>
 			</section>
 		</main>

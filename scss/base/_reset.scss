@@ -11,6 +11,10 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
+* {
+	box-sizing: border-box;
+}
+
 html {
 	color: #222;
 	font-size: 1em;

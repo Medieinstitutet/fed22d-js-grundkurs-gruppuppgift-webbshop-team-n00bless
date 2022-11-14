@@ -1,25 +1,97 @@
-header {
-	display: flex;
+@use './functions' as fn;
 
-	& label {
-		padding: 1rem;
+body {
+	padding: 0 1rem;
+}
+
+input {
+	border: none;
+	color: fn.getColor(grey);
+	font-size: 1rem;
+
+	&:focus-visible {
+		outline: none;
 	}
 }
 
-.menu {
-	display: none;
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
-.donut__item {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	height: 100vh;
-	padding: 2rem;
+.checkbox {
+	&__input {
+		display: flex;
+		align-items: center;
+		padding: 0.5rem;
+
+		input[type='checkbox'] {
+			-webkit-appearance: none;
+			appearance: none;
+			background-color: #fff;
+			margin: 0;
+			font: inherit;
+			color: currentColor;
+			width: 1.15em;
+			height: 1.15em;
+			border: 0.15em solid fn.getColor(grey, '200');
+			border-radius: 0.15em;
+			transform: translateY(-0.075em);
+			display: grid;
+			place-content: center;
+			margin-right: 0.25rem;
+
+			&:focus {
+				outline: max(2px, 0.15em) solid fn.getColor(orange);
+				outline-offset: max(2px, 0.15em);
+			}
+
+			&::before {
+				content: '';
+				width: 0.65em;
+				height: 0.65em;
+				transform: scale(0);
+				transition: 120ms transform ease-in-out;
+				box-shadow: inset 1em 1em fn.getColor(orange);
+			}
+
+			&:checked::before {
+				transform: scale(1);
+			}
+		}
+	}
 }
 
-.quantity {
-	display: flex;
-	justify-content: space-between;
+.button {
+	background: unset;
+	border: unset;
+	height: fit-content;
+	padding: 0.5rem;
+
+	&--background {
+		background-color: fn.getColor(orange);
+		color: #fff;
+		border-radius: 0.5rem;
+	}
+}
+
+.icon {
+	font-size: 1.5rem;
+	color: fn.getColor(orange);
+}
+
+.icon__counter {
+	font-size: 2.5rem;
+	background-color: fn.getColor(pink);
+	top: -0.6rem;
+	right: -0.8rem;
+}
+
+.select {
+	background-color: fn.getColor(orange);
+	color: #fff;
+	border: unset;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
 }
