@@ -371,9 +371,7 @@ nameInputField.addEventListener('keyup', () => {
 });
 
 addressInputField.addEventListener('keyup', () => {
-	formValidation.address =
-		/\d/.test(addressInputField.value) ? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value) : false;
-	console.log(/\d/.test(addressInputField.value));
+	formValidation.address = /\d/.test(addressInputField.value) ? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value) : false;
 	activateOrderButton();
 });
 
@@ -381,7 +379,6 @@ postCodeInputField.addEventListener('keyup', () => {
 	formValidation.postCode = postCodeInputField.value.length === 5;
 	activateOrderButton();
 });
-
 
 paymentOptionRadios.map(radio => {
 	radio.addEventListener('click', () => {
@@ -442,10 +439,10 @@ const validatePaymentInputs = () => {
 		formValidation.payment = true;
 	}
 	else if (invoiceRadioInput.checked) {
-		if (socialSecurityInputField.value === ''){
-			formValidation.payment = false; 
+		if (socialSecurityInputField.value === '') {
+			formValidation.payment = false;
 			return false;
-		} 
+		}
 		formValidation.payment = true;
 	}
 }

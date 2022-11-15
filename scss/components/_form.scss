@@ -28,4 +28,10 @@ form {
     .payment-form {
         display: none;
     }
+
+    .payment-method {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+    }
 }
