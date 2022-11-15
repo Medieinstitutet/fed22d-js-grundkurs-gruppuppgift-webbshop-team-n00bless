@@ -285,8 +285,12 @@ const emailInputField = document.querySelector('[name="email"]');
 const cardRadioInput = document.querySelector('#card-radio');
 const invoiceRadioInput = document.querySelector('#invoice-radio');
 const test = document.querySelector('[name="payment-method"]:checked');
+const paymentOptionRadios = Array.from(document.querySelectorAll('[name="payment-method"]'));
 
 const orderButton = document.querySelector('#order-btn');
+
+const cardForm = document.querySelector('#card-payment-form');
+const invoiceForm = document.querySelector('#invoice-payment-form');
 
 let formValidation = {
 	name: false,
@@ -294,8 +298,7 @@ let formValidation = {
 	postCode: false,
 	city: true,
 	tel: true,
-	email: true,
-	radio: true,
+	email: true
 };
 
 nameInputField.addEventListener('keyup', () => {
@@ -305,8 +308,8 @@ nameInputField.addEventListener('keyup', () => {
 
 addressInputField.addEventListener('keyup', () => {
 	formValidation.address =
-		/\d/.test(addressInputField.value) &&
-		/[A-Za-zÅåÄäÖö]/.test(addressInputField.value);
+		/\d/.test(addressInputField.value) ? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value) : false;
+		console.log(/\d/.test(addressInputField.value));
 	activateOrderButton();
 });
 
@@ -319,14 +322,26 @@ addressInputField.addEventListener('keyup', () => {
 	formValidation.address = addressInputField.value !== '';
 });
 
-cardRadioInput.addEventListener('click', () => {
-	console.log(test.value);
-});
-invoiceRadioInput.addEventListener('click', () => {
-	console.log(test.value);
-});
+paymentOptionRadios.map(radio => {
+	radio.addEventListener('click', () => {
 
-const validateInput = (validatedInputs) => {
+		switch(radio.value) {
+			case 'card':
+			cardForm.style.display = 'block'
+			invoiceForm.style.display = 'none'
+			
+			break
+
+			case 'invoice':
+			cardForm.style.display = 'none'
+			invoiceForm.style.display = 'block'
+			
+			break
+		}
+	})
+})
+
+const validateInput = validatedInputs => {
 	for (const prop in validatedInputs) {
 		if (!validatedInputs[prop]) {
 			return false;
@@ -336,6 +351,7 @@ const validateInput = (validatedInputs) => {
 };
 
 const submitOrder = () => {
+	alert('Order lagd!');
 	console.log('Order lagd!');
 };
 
