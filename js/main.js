@@ -1,4 +1,4 @@
-/* Kategorier: 
+/* Kategorier:
 chocolate
 filled
 apple
@@ -119,6 +119,21 @@ const donutsArray = [
 	},
 ];
 
+const donutsArrayLucia = [
+	//placeholder, add 1 to basket free of charge 13/12
+	{
+		id: 11,
+		name: 'Luciamunk',
+		price: 0,
+		categories: ['chocolate', 'filled'],
+		images: [
+			'img/chocolate-iced-custard-filled-banner.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
+		],
+		rating: 5,
+	},
+];
+
 /*********************************************************
  * Adding to Cart
  **********************************************************/
@@ -127,12 +142,13 @@ const donutListEl = document.querySelector('.donuts');
 
 const fetchDonut = (id) => {
 	for (const donut of donutsArray) {
-		if (donut.id === id) return donut;
+		if (donut.id === id) {
+			return donut;
+		}
 	}
 };
 
-const donutIncreaseCount = (id, price) => {
-	console.log(id, price);
+const donutIncreaseCount = (id) => {
 	const donutEl = document.querySelector(`[data-id="${id}"]`);
 	const currentCountEl = donutEl.querySelector('.donuts__item_quantity input');
 	// const currentCount = Number(currentCountEl.value) + 1;
@@ -147,7 +163,7 @@ const donutIncreaseCount = (id, price) => {
 		currentPriceText.innerText = donutObj.price * currentCountEl.value;
 	}
 };
-const donutDecreaseCount = (id, price) => {
+const donutDecreaseCount = (id) => {
 	const donutEl = document.querySelector(`[data-id="${id}"]`);
 	const currentCountEl = donutEl.querySelector('.donuts__item_quantity input');
 	// const currentCount = Number(currentCountEl.value) - 1;
@@ -168,15 +184,13 @@ const donutAddToCart = (id) => {
 			.value
 	);
 
-	if (currentCount > 0) {
-		if (cartItems.length > 0) {
-			for (const item of cartItems) {
-				if (item.id === id) {
-					item.count = item.count + currentCount;
-					item.totPrice = item.totPrice + currentCount * item.price;
-					updateCartDOM();
-					return;
-				}
+	if (currentCount > 0 && cartItems.length > 0) {
+		for (const item of cartItems) {
+			if (item.id === id) {
+				item.count = item.count + currentCount;
+				item.totPrice = item.totPrice + currentCount * item.price;
+				updateCartDOM();
+				return;
 			}
 		}
 
@@ -187,7 +201,7 @@ const donutAddToCart = (id) => {
 					count: currentCount,
 					totPrice: currentCount * donut.price,
 				});
-
+				console.log(cartItems);
 				updateCartDOM();
 				return;
 			}
@@ -195,19 +209,62 @@ const donutAddToCart = (id) => {
 	}
 };
 
+/*********************************************************
+ * Special Rules
+ **********************************************************/
+
 const updateCartDOM = () => {
-	const CartSum = cartItems.reduce((accumulator, object) => {  
+	/*To get total price of cart*/
+	const cartSum = cartItems.reduce((accumulator, object) => {
 		return accumulator + object.totPrice;
-	  }, 0);
-	let cartSumDisplay = document.getElementById("cart-sum");
-	cartSumDisplay.textContent = `Totalpris ${CartSum} kr.`;
-	if (CartSum >= 800){
-		document.getElementById("invoice-radio").disabled = true; // No invoice alternative above 800kr
+	}, 0);
+	/*To check if there is more than 15 donuts in total in cart(not finished)*/
+	const CartCount = cartItems.reduce((accumulator, object) => {
+		return accumulator + object.count;
+	}, 0);
+
+	let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
+	const freightSumDisplay = document.getElementById('freight-sum');
+	const cartSumDisplay = document.getElementById('cart-sum');
+	const CartSumAndFreightSum = CartSum + freightSum;
+
+	cartSumDisplay.textContent = `Totalpris: ${CartSumAndFreightSum} kr.`;
+	freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
+
+	if (cartSum >= 800) {
+		document.getElementById('invoice-radio').disabled = true; // No invoice alternative above 800kr
+	} else {
+		document.getElementById('invoice-radio').disabled = false;
 	}
-	console.log(CartSum); 
-	console.log(cartItems);
+	checkForSpecialRules(CartSumAndFreightSum, cartSumDisplay);
 };
 
+const checkForSpecialRules = (CartSumAndFreightSum, cartSumDisplay) => {
+	const thisDate = new Date();
+	const day = thisDate.getDay();
+	const hour = thisDate.getHours();
+
+	const lucia = {
+		month: 11, //month/date index start at 0, so 11 = 12.
+		date: 13,
+	};
+	/*Lucia donut rule*/
+	if (thisDate.getMonth() == lucia.month && thisDate.getDate() == lucia.date) {
+		cartItems.push(donutsArrayLucia); //Add Lucia donut to cart
+	}
+
+	/*Monday before 10 rule*/
+	if (day === 1 && hour <= 23) {
+		CartSumAndFreightSum = Math.round(CartSumAndFreightSum * 0.9); //10 % discount
+		cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${CartSumAndFreightSum} kr.`;
+	} else {
+		return;
+	}
+};
+
+/*********************************************************
+ * Create HTML output
+ **********************************************************/
 
 const generateStarRating = (rating) => {
 	const starIcon = '<i class="fa-solid fa-star"></i>';
@@ -223,41 +280,38 @@ const generateStarRating = (rating) => {
 		ratingEl += starIcon;
 	}
 
-	if (halfPoint) ratingEl += starHalfIcon;
+	if (halfPoint) {
+		ratingEl += starHalfIcon;
+	}
 
 	return ratingEl;
 };
-
-/*********************************************************
- * Create HTML
- **********************************************************/
-
 const generateDonuts = () => {
 	let donuts = [];
 	for (const donut of donutsArray) {
 		donuts += /*html*/ `
       <article class="donuts__item" data-id=${donut.id}>
-        <h2>${donut.name}</h2> 
+        <h2>${donut.name}</h2>
         <div class="donuts__item_image">
           <img
-            src="${donut.images[1]}" 
+            src="${donut.images[1]}"
             alt="A picture of a donut"
           />
         </div>
-				<div class="donuts__item_info">
-					<p>${donut.price} kr</p>
-					<p>${generateStarRating(donut.rating)}</p>
-				</div>
-        
+                <div class="donuts__item_info">
+                    <p>${donut.price} kr</p>
+                    <p>${generateStarRating(donut.rating)}</p>
+                </div>
+       
         <div class="donuts__item_quantity">
           <button class="button button--background" onclick="donutDecreaseCount(${
 						donut.id
-					})"><i class="fa-solid fa-minus"></i></button>
-          <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value) 
-		  >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
+					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+          <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
+          >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
           <button class="button button--background" onclick="donutIncreaseCount(${
 						donut.id
-					})"><i class="fa-solid fa-plus"></i></button>
+					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
         </div>
         <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
 					donut.id
@@ -355,9 +409,10 @@ const submitOrder = () => {
 	console.log('Order lagd!');
 };
 
-document.querySelector('form').addEventListener('reset', function(event) { //A warning text for accessibility
+document.querySelector('form').addEventListener('reset', function (event) {
+	//A warning text for accessibility
 	if (!confirm('Är du säker att du vill återställa formuläret?')) {
-	  event.preventDefault();
+		event.preventDefault();
 	}
 });
 
