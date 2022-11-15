@@ -268,6 +268,7 @@ const checkForSpecialRules = (cartSum, cartCount) => {
     } else {
         cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
     }
+    
     /*More than 15 donuts in total rule*/
     if (cartCount >= 15) {
         cartSumAndFreightSum = cartSum; //no freight cost added
@@ -277,7 +278,16 @@ const checkForSpecialRules = (cartSum, cartCount) => {
         cartSumAndFreightSum = cartSum + freightSum;
         freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
     }
-    
+
+    /*Free order with coupon rule*/
+    if (checkDiscountCode.value === "a_damn_fine-cup_of-coffee") {
+        cartSumAndFreightSum = 0;
+        cartSumDisplay.textContent = `Din beställning är kostnadsfri!`;
+        freightSumDisplay.textContent = `Fraktfritt.`
+    } else {
+        cartSumAndFreightSum = cartSum + freightSum;
+    }
+
 };
 
 /*********************************************************
