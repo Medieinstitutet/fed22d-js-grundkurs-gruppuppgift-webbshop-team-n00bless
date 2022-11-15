@@ -188,16 +188,7 @@
 							/>
 						</label>
 					</fieldset>
-					<fieldset>
-						<legend>Faktura</legend>
-						<label for="social-security-number">Personnummer</label>
-						<input
-							type="text"
-							inputmode="numeric"
-							name="social-security-number"
-						/>
-					</fieldset>
-					<fieldset>
+					<fieldset id="card-payment-form" class="payment-form">
 						<legend>Kort</legend>
 						<label for="card-number">Kortnummer</label>
 						<input type="text" inputmode="numeric" name="card-number" />
@@ -205,6 +196,15 @@
 						<input type="text" name="date" />
 						<label for="cvc">CVC</label>
 						<input type="text" name="cvc" />
+					</fieldset>
+					<fieldset id="invoice-payment-form" class="payment-form">
+						<legend>Faktura</legend>
+						<label for="social-security-number">Personnummer</label>
+						<input
+							type="text"
+							inputmode="numeric"
+							name="social-security-number"
+						/>
 					</fieldset>
 					<label for="personuppgifter">Personuppgifter</label>
 					<input type="checkbox" name="personuppgifter" />
