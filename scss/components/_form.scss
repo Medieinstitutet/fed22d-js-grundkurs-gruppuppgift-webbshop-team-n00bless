@@ -1,7 +1,27 @@
 form {
+
     fieldset {
+        display: flex;
+        flex-direction: column;
+
+        legend {
+            margin-bottom: 15px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
         input {
             border: 1px black solid;
+            min-width: 200px;
+            width: 30%;
+            margin-bottom: 15px;
+        }
+
+        input[type="radio"] {
+            width: 15px;
+            min-width: 15px;
         }
     }
 

@@ -304,18 +304,15 @@ const generateDonuts = () => {
                 </div>
        
         <div class="donuts__item_quantity">
-          <button class="button button--background" onclick="donutDecreaseCount(${
-						donut.id
-					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+          <button class="button button--background" onclick="donutDecreaseCount(${donut.id
+			})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
           <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
           >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-          <button class="button button--background" onclick="donutIncreaseCount(${
-						donut.id
-					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+          <button class="button button--background" onclick="donutIncreaseCount(${donut.id
+			})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
         </div>
-        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
-					donut.id
-				})">Lägg till för <span>${donut.price}</span> kr</button>
+        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${donut.id
+			})">Lägg till för <span>${donut.price}</span> kr</button>
       </article>
     `;
 	}
@@ -336,9 +333,15 @@ const postCodeInputField = document.querySelector('[name="post-code"]');
 const cityInputField = document.querySelector('[name="city"]');
 const telInputField = document.querySelector('[name="tel"]');
 const emailInputField = document.querySelector('[name="email"]');
+const cardNumberInputField = document.querySelector('[name="card-number"]');
+const cardExpirationInputField = document.querySelector('[name="date"]')
+const cvcInputField = document.querySelector('[name="cvc"]');
+const socialSecurityInputField = document.querySelector('[name="social-security-number"]');
+
+
 const cardRadioInput = document.querySelector('#card-radio');
 const invoiceRadioInput = document.querySelector('#invoice-radio');
-const test = document.querySelector('[name="payment-method"]:checked');
+
 const paymentOptionRadios = Array.from(document.querySelectorAll('[name="payment-method"]'));
 
 const orderButton = document.querySelector('#order-btn');
@@ -352,8 +355,15 @@ let formValidation = {
 	postCode: false,
 	city: true,
 	tel: true,
-	email: true
+	email: true,
+	payment: false
 };
+
+let cardPaymentValidation = {
+	cardNumber: false,
+	expirationDate: false,
+	cvc: false
+}
 
 nameInputField.addEventListener('keyup', () => {
 	formValidation.name = nameInputField.value.indexOf(' ') > 0;
@@ -363,7 +373,7 @@ nameInputField.addEventListener('keyup', () => {
 addressInputField.addEventListener('keyup', () => {
 	formValidation.address =
 		/\d/.test(addressInputField.value) ? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value) : false;
-		console.log(/\d/.test(addressInputField.value));
+	console.log(/\d/.test(addressInputField.value));
 	activateOrderButton();
 });
 
@@ -372,28 +382,45 @@ postCodeInputField.addEventListener('keyup', () => {
 	activateOrderButton();
 });
 
-addressInputField.addEventListener('keyup', () => {
-	formValidation.address = addressInputField.value !== '';
-});
 
 paymentOptionRadios.map(radio => {
 	radio.addEventListener('click', () => {
-
-		switch(radio.value) {
+		activateOrderButton();
+		switch (radio.value) {
 			case 'card':
-			cardForm.style.display = 'block'
-			invoiceForm.style.display = 'none'
-			
-			break
+				cardForm.style.display = 'flex'
+				invoiceForm.style.display = 'none'
+
+				break
 
 			case 'invoice':
-			cardForm.style.display = 'none'
-			invoiceForm.style.display = 'block'
-			
-			break
+				cardForm.style.display = 'none'
+				invoiceForm.style.display = 'flex'
+
+				break
 		}
 	})
 })
+
+cardNumberInputField.addEventListener('keyup', () => {
+	cardPaymentValidation.cardNumber = cardNumberInputField.value !== '';
+	activateOrderButton();
+})
+
+cardExpirationInputField.addEventListener('keyup', () => {
+	cardPaymentValidation.expirationDate = cardExpirationInputField.value !== '';
+	activateOrderButton();
+})
+
+cvcInputField.addEventListener('keyup', () => {
+	cardPaymentValidation.cvc = cvcInputField.value !== '';
+	activateOrderButton();
+})
+
+socialSecurityInputField.addEventListener('keyup', () => {
+	activateOrderButton();
+})
+
 
 const validateInput = validatedInputs => {
 	for (const prop in validatedInputs) {
@@ -402,6 +429,36 @@ const validateInput = validatedInputs => {
 		}
 	}
 	return true;
+};
+
+const validatePaymentInputs = () => {
+	if (cardRadioInput.checked) {
+		for (const prop in cardPaymentValidation) {
+			if (!cardPaymentValidation[prop]) {
+				formValidation.payment = false;
+				return false;
+			}
+		}
+		formValidation.payment = true;
+	}
+	else if (invoiceRadioInput.checked) {
+		if (socialSecurityInputField.value === ''){
+			formValidation.payment = false; 
+			return false;
+		} 
+		formValidation.payment = true;
+	}
+}
+
+const activateOrderButton = () => {
+	validatePaymentInputs();
+	if (validateInput(formValidation)) {
+		orderButton.removeAttribute('disabled');
+		inputForm.setAttribute('onsubmit', 'submitOrder()');
+	} else {
+		orderButton.setAttribute('disabled', '');
+		inputForm.removeAttribute('onsubmit');
+	}
 };
 
 const submitOrder = () => {
@@ -416,15 +473,6 @@ document.querySelector('form').addEventListener('reset', function (event) {
 	}
 });
 
-const activateOrderButton = () => {
-	if (validateInput(formValidation)) {
-		orderButton.removeAttribute('disabled');
-		inputForm.setAttribute('onsubmit', 'submitOrder()');
-	} else {
-		orderButton.setAttribute('disabled', '');
-		inputForm.removeAttribute('onsubmit');
-	}
-};
 
 /*********************************************************
  * Filter/sorting Menu
