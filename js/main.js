@@ -219,7 +219,7 @@ const updateCartDOM = () => {
 		return accumulator + object.totPrice;
 	}, 0);
 	/*To check if there is more than 15 donuts in total in cart*/
-	const CartCount = cartItems.reduce((accumulator, object) => {
+	const cartCount = cartItems.reduce((accumulator, object) => {
 		return accumulator + object.count;
 	}, 0);
     
