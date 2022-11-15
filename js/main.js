@@ -183,8 +183,8 @@ const donutAddToCart = (id) => {
 		document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`)
 			.value
 	);
-
-	if (currentCount > 0 && cartItems.length > 0) {
+    // if (currentCount > 0 && cartItems.length > 0) {
+	if (currentCount > 0 ) {
 		for (const item of cartItems) {
 			if (item.id === id) {
 				item.count = item.count + currentCount;
@@ -218,48 +218,66 @@ const updateCartDOM = () => {
 	const cartSum = cartItems.reduce((accumulator, object) => {
 		return accumulator + object.totPrice;
 	}, 0);
-	/*To check if there is more than 15 donuts in total in cart(not finished)*/
+	/*To check if there is more than 15 donuts in total in cart*/
 	const CartCount = cartItems.reduce((accumulator, object) => {
 		return accumulator + object.count;
 	}, 0);
-
-	let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
-	const freightSumDisplay = document.getElementById('freight-sum');
-	const cartSumDisplay = document.getElementById('cart-sum');
-	const CartSumAndFreightSum = CartSum + freightSum;
-
-	cartSumDisplay.textContent = `Totalpris: ${CartSumAndFreightSum} kr.`;
-	freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
-
-	if (cartSum >= 800) {
-		document.getElementById('invoice-radio').disabled = true; // No invoice alternative above 800kr
-	} else {
-		document.getElementById('invoice-radio').disabled = false;
-	}
-	checkForSpecialRules(CartSumAndFreightSum, cartSumDisplay);
+    
+    checkForSpecialRules( cartSum, cartCount);
 };
 
-const checkForSpecialRules = (CartSumAndFreightSum, cartSumDisplay) => {
+const checkForSpecialRules = (cartSum, cartCount) => {
+    
+    let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
+    const freightSumDisplay = document.getElementById('freight-sum');
+    const cartSumDisplay = document.getElementById('cart-sum');
+    const deliveryTime = document.getElementById('delivery-time');
+    const checkDiscountCode = document.querySelector('[name="discount-code"]');
+    checkDiscountCode.addEventListener('keyup', updateCartDOM);
+    let cartSumAndFreightSum = cartSum + freightSum;
+
+    cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
+    freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
+    deliveryTime.textContent = "Beställningen skickas 30 minuter efter orderläggning.";
+
+    /*No invoice alternative above 800kr rule*/
+    if (cartSum >= 800) {
+        document.getElementById('invoice-radio').disabled = true;
+    } else {
+        document.getElementById('invoice-radio').disabled = false;
+    }
+
 	const thisDate = new Date();
 	const day = thisDate.getDay();
 	const hour = thisDate.getHours();
 
-	const lucia = {
-		month: 11, //month/date index start at 0, so 11 = 12.
-		date: 13,
-	};
-	/*Lucia donut rule*/
+    /*Lucia donut rule*/
+    const lucia = {
+        month: 10, //month/date index start at 0, so 11 = 12.
+        date: 13,
+    };
+	
 	if (thisDate.getMonth() == lucia.month && thisDate.getDate() == lucia.date) {
 		cartItems.push(donutsArrayLucia); //Add Lucia donut to cart
 	}
 
-	/*Monday before 10 rule*/
-	if (day === 1 && hour <= 23) {
-		CartSumAndFreightSum = Math.round(CartSumAndFreightSum * 0.9); //10 % discount
-		cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${CartSumAndFreightSum} kr.`;
-	} else {
-		return;
-	}
+    /*Monday before 10:00 rule*/
+    if (day === 1 && hour <= 10) {
+        cartSumAndFreightSum = Math.round(cartSumAndFreightSum * 0.9); //10 % discount
+        cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${cartSumAndFreightSum} kr.`;
+    } else {
+        cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
+    }
+    /*More than 15 donuts in total rule*/
+    if (cartCount >= 15) {
+        cartSumAndFreightSum = cartSum; //no freight cost added
+        cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
+        freightSumDisplay.textContent = `Fraktfritt.`
+    } else {
+        cartSumAndFreightSum = cartSum + freightSum;
+        freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
+    }
+    
 };
 
 /*********************************************************
