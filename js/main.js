@@ -190,6 +190,7 @@ const donutAddToCart = (id) => {
 				item.count = item.count + currentCount;
 				item.totPrice = item.totPrice + currentCount * item.price;
 				updateCartDOM();
+				renderCart();
 				return;
 			}
 		}
@@ -203,11 +204,29 @@ const donutAddToCart = (id) => {
 				});
 				console.log(cartItems);
 				updateCartDOM();
+				renderCart();
 				return;
 			}
 		}
 	}
 };
+
+const renderCart = () => {
+	let cartItemsToRender = '';
+	for (const donut of cartItems) {
+		let donutElement = /*html*/ `
+		<li>
+		<img src=${donut.images[1]} width="30" height="30"/>
+		<p>${donut.name}</p>
+		<button class="button button--background">-</button>
+		<input type="number" value="${donut.count}"/>
+		<button class="button button--background">+</button>
+		</li>`
+		cartItemsToRender = cartItemsToRender + donutElement
+	}
+	document.querySelector('#cart article ul').innerHTML = cartItemsToRender;
+
+}
 
 /*********************************************************
  * Special Rules
