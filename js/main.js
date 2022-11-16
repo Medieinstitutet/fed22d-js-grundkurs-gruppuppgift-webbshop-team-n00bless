@@ -162,6 +162,14 @@ const donutIncreaseCount = (id) => {
 		);
 		currentPriceText.innerText = donutObj.price * currentCountEl.value;
 	}
+	for (const donut of cartItems) {
+		if (donut.id === id) {
+			donut.count++;
+			donut.totPrice = donut.count * donut.price;
+			console.log(cartItems);
+			renderCart();
+		}
+	}
 };
 const donutDecreaseCount = (id) => {
 	const donutEl = document.querySelector(`[data-id="${id}"]`);
@@ -175,6 +183,15 @@ const donutDecreaseCount = (id) => {
 			'.donuts__item_addcart span'
 		);
 		currentPriceText.innerText = donutObj.price * currentCountEl.value;
+	}
+
+	for (const donut of cartItems) {
+		if (donut.id === id && donut.count > 0) {
+			donut.count--;
+			donut.totPrice = donut.count * donut.price;
+			console.log(cartItems);
+			renderCart();
+		}
 	}
 };
 
@@ -221,9 +238,9 @@ const renderCart = () => {
 			<p>${donut.name}</p>
 		</div>
 		<div className="donuts__item_quantity">			
-			<button class="button button--background" onclick="donutDecreaseCount(${donut.id});decreaseCartInputValue('input-cart-${donut.id}', ${donut.count})">-</button>
+			<button class="button button--background" onclick="donutDecreaseCount(${donut.id});updateCartInputValue('input-cart-${donut.id}', ${donut.count})">-</button>
 			<input type="number" value="${donut.count}" data-id="input-cart-${donut.id}"/>
-			<button class="button button--background" onclick="() => {donutIncreaseCount(${donut.id})}">+</button>
+			<button class="button button--background" onclick="donutIncreaseCount(${donut.id});updateCartInputValue('input-cart-${donut.id}', ${donut.count})">+</button>
 			<p>${donut.totPrice} kr</p>
 		</div>
 		</li>`
@@ -233,10 +250,10 @@ const renderCart = () => {
 
 }
 
-const decreaseCartInputValue = (id, donutCount) => {
-	const cartDonut = document.querySelector(`input[data-id="${id}"]`);
-	console.log(cartDonut.value);
-	cartDonut.value = donutCount;
+const updateCartInputValue = (id, donutCount) => {
+	const cartDonutInput = document.querySelector(`input[data-id="${id}"]`);
+	console.log(cartDonutInput.value);
+	cartDonutInput.value = donutCount;
 	renderCart();
 }
 
