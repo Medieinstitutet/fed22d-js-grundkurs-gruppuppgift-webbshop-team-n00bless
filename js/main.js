@@ -398,9 +398,9 @@ let formValidation = {
 	name: false,
 	address: false,
 	postCode: false,
-	city: true,
-	tel: true,
-	email: true,
+	city: false,
+	tel: false,
+	email: false,
 	payment: false
 };
 
@@ -425,19 +425,44 @@ postCodeInputField.addEventListener('keyup', () => {
 	activateOrderButton();
 });
 
+cityInputField.addEventListener('keyup', () => {
+	formValidation.city = cityInputField.value !== '';
+	activateOrderButton;
+})
+
+telInputField.addEventListener('keyup', () => {
+	formValidation.tel = cityInputField.value !== '';
+	activateOrderButton;
+})
+
+emailInputField.addEventListener('keyup', () => {
+	formValidation.email = cityInputField.value !== '';
+	activateOrderButton;
+})
+
+
+
 paymentOptionRadios.map(radio => {
 	radio.addEventListener('click', () => {
 		activateOrderButton();
 		switch (radio.value) {
 			case 'card':
-				cardForm.style.display = 'flex'
-				invoiceForm.style.display = 'none'
+				cardForm.style.display = 'flex';
+				invoiceForm.style.display = 'none';
+				cardNumberInputField.setAttribute('required', '');
+				cardExpirationInputField.setAttribute('required', '');
+				cvcInputField.setAttribute('required', '');
+				socialSecurityInputField.removeAttribute('required');
 
 				break
 
 			case 'invoice':
 				cardForm.style.display = 'none'
 				invoiceForm.style.display = 'flex'
+				socialSecurityInputField.setAttribute('required', '');
+				cardNumberInputField.removeAttribute('required');
+				cardExpirationInputField.removeAttribute('required');
+				cvcInputField.removeAttribute('required');
 
 				break
 		}
@@ -445,7 +470,8 @@ paymentOptionRadios.map(radio => {
 })
 
 cardNumberInputField.addEventListener('keyup', () => {
-	cardPaymentValidation.cardNumber = cardNumberInputField.value !== '';
+	cardPaymentValidation.cardNumber = /\d/.test(cardNumberInputField.value);
+	console.log(/\d/.test(cardNumberInputField.value));
 	activateOrderButton();
 })
 
@@ -460,6 +486,7 @@ cvcInputField.addEventListener('keyup', () => {
 })
 
 socialSecurityInputField.addEventListener('keyup', () => {
+	formValidation.payment = /\d/.test(socialSecurityInputField.value);
 	activateOrderButton();
 })
 
@@ -478,7 +505,7 @@ const validatePaymentInputs = () => {
 		for (const prop in cardPaymentValidation) {
 			if (!cardPaymentValidation[prop]) {
 				formValidation.payment = false;
-				return false;
+				return;
 			}
 		}
 		formValidation.payment = true;
@@ -486,7 +513,7 @@ const validatePaymentInputs = () => {
 	else if (invoiceRadioInput.checked) {
 		if (socialSecurityInputField.value === '') {
 			formValidation.payment = false;
-			return false;
+			return;
 		}
 		formValidation.payment = true;
 	}
