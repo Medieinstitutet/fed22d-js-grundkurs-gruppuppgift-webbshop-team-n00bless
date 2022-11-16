@@ -385,19 +385,22 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 		cartSumAndFreightSum = cartSum + freightSum;
 	}
 
-	/*Fixa ihop fraktidsregler nedan senare*/
-	/*Weekend deliver time rule*/
-	if (day === 6 || day === 7) {
-		deliveryTime.textContent = "Beställningen skickas 90 minuter efter orderläggning.";
-	}
+    /*Weekend deliver time rule*/
+    if (day === 6 || day === 7) {
+        deliveryTime.textContent = "Beställningen skickas 90 minuter efter orderläggning.";
+    }
 
-	/*Night deliver time rule*/
-	if (hour >= 0 && hour <= 4) {
-		deliveryTime.textContent = "Beställningen skickas 45 minuter efter orderläggning.";
-	}
+    /*Night deliver time rule*/
+    if (day !== 6 || day !== 7 && hour >= 0 && hour <= 5) {
+        deliveryTime.textContent = "Beställningen skickas 45 minuter efter orderläggning.";
+    }
+   
+    /*friday 11-13 rule*/
+    if (day === 5 && hour >= 11 && hour <= 13) {
+        deliveryTime.textContent = "Leveranstiden är beräknad till 15:00";
+    }
 
-	/*friday 11-13 rule*/
-
+	/*thuesday even week rule*/
 };
 
 /*********************************************************
