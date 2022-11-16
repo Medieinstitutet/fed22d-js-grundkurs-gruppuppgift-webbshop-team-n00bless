@@ -216,11 +216,16 @@ const renderCart = () => {
 	for (const donut of cartItems) {
 		let donutElement = /*html*/ `
 		<li>
-		<img src=${donut.images[1]} width="30" height="30"/>
-		<p>${donut.name}</p>
-		<button class="button button--background">-</button>
-		<input type="number" value="${donut.count}"/>
-		<button class="button button--background">+</button>
+		<div className="name">
+			<img src=${donut.images[1]} width="30" height="30"/>
+			<p>${donut.name}</p>
+		</div>
+		<div className="donuts__item_quantity">			
+			<button class="button button--background">-</button>
+			<input type="number" value="${donut.count}"/>
+			<button class="button button--background">+</button>
+			<p>${donut.totPrice} kr</p>
+		</div>
 		</li>`
 		cartItemsToRender = cartItemsToRender + donutElement
 	}

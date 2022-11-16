@@ -1,0 +1,32 @@
+#cart {
+
+    article {
+
+        ul {
+
+            li {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+                justify-content: space-between;
+
+                div {
+                    display: flex;
+                    gap: 20px;
+                }
+
+                .donuts__item_quantity {
+                    p {
+                        width: 55px;
+                    }
+                    
+                    input {
+                        width: 30px;
+                        padding: 0.5rem 1rem;
+
+                    }
+                }
+            }
+        }
+    }
+}
