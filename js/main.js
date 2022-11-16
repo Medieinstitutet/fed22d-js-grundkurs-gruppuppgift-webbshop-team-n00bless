@@ -223,6 +223,10 @@ const updateCartDOM = () => {
 		return accumulator + object.count;
 	}, 0);
     
+    const cartCounterDisplay = document.querySelector('#cart-counter');
+	const cartCounter = cartCount;
+	cartCounterDisplay.textContent = cartCounter;
+    
     checkForSpecialRules( cartSum, cartCount);
 };
 
