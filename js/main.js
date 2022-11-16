@@ -215,15 +215,15 @@ const renderCart = () => {
 	let cartItemsToRender = '';
 	for (const donut of cartItems) {
 		let donutElement = /*html*/ `
-		<li>
+		<li data-id="cart-${donut.id}">
 		<div className="name">
 			<img src=${donut.images[1]} width="30" height="30"/>
 			<p>${donut.name}</p>
 		</div>
 		<div className="donuts__item_quantity">			
-			<button class="button button--background">-</button>
-			<input type="number" value="${donut.count}"/>
-			<button class="button button--background">+</button>
+			<button class="button button--background" onclick="donutDecreaseCount(${donut.id});decreaseCartInputValue('input-cart-${donut.id}', ${donut.count})">-</button>
+			<input type="number" value="${donut.count}" data-id="input-cart-${donut.id}"/>
+			<button class="button button--background" onclick="() => {donutIncreaseCount(${donut.id})}">+</button>
 			<p>${donut.totPrice} kr</p>
 		</div>
 		</li>`
@@ -231,6 +231,13 @@ const renderCart = () => {
 	}
 	document.querySelector('#cart article ul').innerHTML = cartItemsToRender;
 
+}
+
+const decreaseCartInputValue = (id, donutCount) => {
+	const cartDonut = document.querySelector(`input[data-id="${id}"]`);
+	console.log(cartDonut.value);
+	cartDonut.value = donutCount;
+	renderCart();
 }
 
 /*********************************************************
