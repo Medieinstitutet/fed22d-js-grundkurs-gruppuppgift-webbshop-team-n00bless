@@ -134,6 +134,28 @@ const donutsArrayLucia = [
 	},
 ];
 
+const thisDate = new Date();
+
+const countWeekNumber = () => {
+    startDate = new Date(thisDate.getFullYear(), 0, 1);
+    const days = Math.floor((thisDate - startDate) /
+        (24 * 60 * 60 * 1000));  
+    const weekNumber = Math.ceil(days / 7);
+    printWeekNumber(days,weekNumber);
+};
+
+const printWeekNumber = (days, weekNumber) => {
+    console.log(weekNumber);
+    console.log(days);
+}
+
+countWeekNumber();
+
+const day = thisDate.getDay();
+const hour = thisDate.getHours();
+const month = thisDate.getMonth();
+const date = thisDate.getDate();
+
 /*********************************************************
  * Adding to Cart
  **********************************************************/
@@ -269,10 +291,6 @@ const updateCartInputValue = (id, donutCount) => {
 	renderCart();
 }
 
-/*********************************************************
- * Special Rules
- **********************************************************/
-
 const updateCartDOM = () => {
 	/*To get total price of cart*/
 	const cartSum = cartItems.reduce((accumulator, object) => {
@@ -289,6 +307,10 @@ const updateCartDOM = () => {
 
 	checkForSpecialRules(cartSum, cartCount);
 };
+
+/*********************************************************
+ * Special Rules
+ **********************************************************/
 
 const checkForSpecialRules = (cartSum, cartCount) => {
 
@@ -311,18 +333,15 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 		document.getElementById('invoice-radio').disabled = false;
 	}
 
-	const thisDate = new Date();
-	const day = thisDate.getDay();
-	const hour = thisDate.getHours();
-
 	/*Lucia donut rule*/
 	const lucia = {
-		month: 10, //month/date index start at 0, so 11 = 12.
+		month: 11, //month/date index start at 0, so 11 = 12.
 		date: 13,
 	};
 
-	if (thisDate.getMonth() == lucia.month && thisDate.getDate() == lucia.date) {
-		cartItems.push(donutsArrayLucia); //Add Lucia donut to cart
+	if (month == lucia.month && date == lucia.date && cartItems.length >=1) {
+		cartItems.push(...donutsArrayLucia);
+		donutsArrayLucia.pop();
 	}
 
 	/*Monday before 10:00 rule*/
