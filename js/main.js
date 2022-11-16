@@ -259,7 +259,7 @@ const renderCart = () => {
 		cartItemsToRender = cartItemsToRender + donutElement
 	}
 	document.querySelector('#cart article ul').innerHTML = cartItemsToRender;
-
+	updateCartDOM();
 }
 
 const updateCartInputValue = (id, donutCount) => {
