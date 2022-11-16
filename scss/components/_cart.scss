@@ -9,6 +9,9 @@
                 flex-direction: row;
                 gap: 20px;
                 justify-content: space-between;
+                border: 2px grey solid;
+                padding: 5px;
+                margin-bottom: 10px;
 
                 div {
                     display: flex;
@@ -19,7 +22,7 @@
                     p {
                         width: 55px;
                     }
-                    
+
                     input {
                         width: 30px;
                         padding: 0.5rem 1rem;
