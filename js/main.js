@@ -1,122 +1,131 @@
 /* Kategorier:
-chocolate
-filled
-apple
-cinnamon
+filling
 glazed
-lemon
-powdered
-blueberry
-strawberry
+sprinkles
 */
 
 // Bilder tagna från https://github.com/aaronfrost/DonutsApi/tree/main/static/images
 
 const donutsArray = [
-	{
-		id: 1,
-		name: 'Chokladmunk med vaniljfyllning',
-		price: 23,
-		categories: ['chocolate', 'filled'],
-		images: [
-			'img/chocolate-iced-custard-filled-banner.jpeg',
-			'img/chocolate-iced-custard-filled.jpeg',
-		],
-		rating: 5,
-	},
-	{
-		id: 2,
-		name: 'Chokladmunk',
-		price: 18,
-		categories: ['chocolate'],
-		images: [
-			'img/chocolate-iced-glazed-banner.jpeg',
-			'img/chocolate-iced-glazed.jpeg',
-		],
-		rating: 4.5,
-	},
-	{
-		id: 3,
-		name: 'Kanelpudrad munk med äppelfyllning',
-		price: 25,
-		categories: ['filled', 'apple', 'cinnamon', 'powdered'],
-		images: [
-			'img/cinnamon-apple-filled-banner.jpeg',
-			'img/cinnamon-apple-filled.jpeg',
-		],
-		rating: 4.5,
-	},
-	{
-		id: 4,
-		name: 'Glaserad kanelmunk',
-		price: 13,
-		categories: ['glazed', 'cinnamon'],
-		images: ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
-		rating: 5,
-	},
-	{
-		id: 5,
-		name: 'Glaserad munk med citronfyllning',
-		price: 23,
-		categories: ['glazed', 'lemon'],
-		images: [
-			'img/glazed-lemon-filled-banner.jpeg',
-			'img/glazed-lemon-filled.jpeg',
-		],
-		rating: 4,
-	},
-	{
-		id: 6,
-		name: 'Munk med chokladfyllning',
-		price: 16,
-		categories: ['chocolate', 'filled'],
-		images: [
-			'img/original-filled-chocolate-kreme™-banner.jpeg',
-			'img/original-filled-chocolate-kreme™.jpeg',
-		],
-		rating: 4,
-	},
-	{
-		id: 7,
-		name: 'Glaserad munk',
-		price: 7,
-		categories: ['glazed'],
-		images: [
-			'img/original-glazed-doughnut-banner.jpeg',
-			'img/original-glazed-doughnut.jpeg',
-		],
-		rating: 5,
-	},
-	{
-		id: 8,
-		name: 'Pudrad munk med blåbärsfyllning',
-		price: 25,
-		categories: ['powdered', 'blueberry'],
-		images: [
-			'img/powdered-blueberry-filled-banner.jpeg',
-			'img/powdered-blueberry-filled.jpeg',
-		],
-		rating: 4.5,
-	},
-	{
-		id: 9,
-		name: 'Pudrad munk med jordgubbsfyllning',
-		price: 25,
-		categories: ['powdered', 'strawberry'],
-		images: [
-			'img/powdered-strawberry-filled-banner.jpeg',
-			'img/powdered-strawberry-filled.jpeg',
-		],
-		rating: 4,
-	},
-	{
-		id: 10,
-		name: 'Jordgubbsmunk',
-		price: 11,
-		categories: ['strawberry'],
-		images: ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
-		rating: 5,
-	},
+    {
+        id: 1,
+        name:'Chokladmunk med vaniljfyllning',
+        price: 23,
+        categories: ['glazed', 'filled'],
+        images: [
+            'img/chocolate-iced-custard-filled-banner.jpeg',
+            'img/chocolate-iced-custard-filled.jpeg',
+        ],
+        rating: 5,
+    },
+    {
+        id: 2,
+        name: 'Chokladmunk',
+        price: 18,
+        categories: ['glazed'],
+        images: [
+            'img/chocolate-iced-glazed-banner.jpeg',
+            'img/chocolate-iced-glazed.jpeg',
+        ],
+        rating: 4.5,
+    },
+    {
+        id: 3,
+        name: 'Kanelpudrad munk med äppelfyllning',
+        price: 25,
+        categories: ['filled', 'sprinkles'],
+        images: [
+            'img/cinnamon-apple-filled-banner.jpeg',
+            'img/cinnamon-apple-filled.jpeg',
+        ],
+        rating: 4.5,
+    },
+    {
+        id: 4,
+        name: 'Glaserad kanelmunk',
+        price: 13,
+        categories: ['glazed', 'sprinkles'],
+        images: ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
+        rating: 5,
+    },
+    {
+        id: 5,
+        name: 'Glaserad munk med citronfyllning',
+        price: 23,
+        categories: ['glazed', 'filled'],
+        images: [
+            'img/glazed-lemon-filled-banner.jpeg',
+            'img/glazed-lemon-filled.jpeg',
+        ],
+        rating: 4,
+    },
+    {
+        id: 6,
+        name: 'Munk med chokladfyllning',
+        price: 16,
+        categories: ['filled'],
+        images: [
+            'img/original-filled-chocolate-kreme™-banner.jpeg',
+            'img/original-filled-chocolate-kreme™.jpeg',
+        ],
+        rating: 4,
+    },
+    {
+        id: 7,
+        name: 'Glaserad munk',
+        price: 7,
+        categories: ['glazed'],
+        images: [
+            'img/original-glazed-doughnut-banner.jpeg',
+            'img/original-glazed-doughnut.jpeg',
+        ],
+        rating: 5,
+    },
+    {
+        id: 8,
+        name: 'Pudrad munk med blåbärsfyllning',
+        price: 25,
+        categories: ['sprinkles', 'filled'],
+        images: [
+            'img/powdered-blueberry-filled-banner.jpeg',
+            'img/powdered-blueberry-filled.jpeg',
+        ],
+        rating: 4.5,
+    },
+    {
+        id: 9,
+        name: 'Pudrad munk med jordgubbsfyllning',
+        price: 25,
+        categories: ['sprinkles', 'filled'],
+        images: [
+            'img/powdered-strawberry-filled-banner.jpeg',
+            'img/powdered-strawberry-filled.jpeg',
+        ],
+        rating: 4,
+    },
+    {
+        id: 10,
+        name: 'Jordgubbsmunk',
+        price: 11,
+        categories: ['glazed'],
+        images: ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
+        rating: 5,
+    },
+];
+
+const donutsArrayLucia = [
+    //placeholder, add 1 to basket free of charge 13/12
+    {
+        id: 11,
+        name: 'Luciamunk',
+        price: 1,
+        categories: ['sprinkles', 'filled'],
+        images: [
+            'img/chocolate-iced-custard-filled-banner.jpeg',
+            'img/chocolate-iced-custard-filled.jpeg',
+        ],
+        rating: 5,
+    },
 ];
 
 const donutsArrayLucia = [
@@ -145,8 +154,8 @@ const countWeekNumber = () => {
 };
 
 const printWeekNumber = (days, weekNumber) => {
-    console.log(weekNumber);
-    console.log(days);
+    // console.log(weekNumber);
+    // console.log(days);
 }
 
 countWeekNumber();
@@ -461,6 +470,7 @@ const generateDonuts = () => {
 };
 
 generateDonuts();
+christmasCheck(); //Denna ligger här för man kommer behöva stylea texten på munkarna efter de har genererats
 
 /*********************************************************
  * Input field validation
