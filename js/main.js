@@ -200,8 +200,20 @@ const donutAddToCart = (id) => {
 		document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`)
 			.value
 	);
-    // if (currentCount > 0 && cartItems.length > 0) {
-	if (currentCount > 0 ) {
+	let totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0) 
+	let donutsCost;
+	for (const donut of donutsArray) {
+		if (donut.id === id) {
+			donutsCost = donut.price * currentCount;
+		}
+	}
+	console.log(totalCartSum, donutsCost);
+	if (totalCartSum + donutsCost > 2000) {
+		alert('Du kan inte beställa för mer än 2000kr')
+		return;
+	}
+	// if (currentCount > 0 && cartItems.length > 0) {
+	if (currentCount > 0) {
 		for (const item of cartItems) {
 			if (item.id === id) {
 				item.count = item.count + currentCount;
@@ -270,88 +282,88 @@ const updateCartDOM = () => {
 	const cartCount = cartItems.reduce((accumulator, object) => {
 		return accumulator + object.count;
 	}, 0);
-    
-    const cartCounterDisplay = document.querySelector('#cart-counter');
+
+	const cartCounterDisplay = document.querySelector('#cart-counter');
 	const cartCounter = cartCount;
 	cartCounterDisplay.textContent = cartCounter;
-    
-    checkForSpecialRules( cartSum, cartCount);
+
+	checkForSpecialRules(cartSum, cartCount);
 };
 
 const checkForSpecialRules = (cartSum, cartCount) => {
-    
-    let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
-    const freightSumDisplay = document.getElementById('freight-sum');
-    const cartSumDisplay = document.getElementById('cart-sum');
-    const deliveryTime = document.getElementById('delivery-time');
-    const checkDiscountCode = document.querySelector('[name="discount-code"]');
-    checkDiscountCode.addEventListener('keyup', updateCartDOM);
-    let cartSumAndFreightSum = cartSum + freightSum;
 
-    cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
-    freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
-    deliveryTime.textContent = "Beställningen skickas 30 minuter efter orderläggning.";
+	let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
+	const freightSumDisplay = document.getElementById('freight-sum');
+	const cartSumDisplay = document.getElementById('cart-sum');
+	const deliveryTime = document.getElementById('delivery-time');
+	const checkDiscountCode = document.querySelector('[name="discount-code"]');
+	checkDiscountCode.addEventListener('keyup', updateCartDOM);
+	let cartSumAndFreightSum = cartSum + freightSum;
 
-    /*No invoice alternative above 800kr rule*/
-    if (cartSum >= 800) {
-        document.getElementById('invoice-radio').disabled = true;
-    } else {
-        document.getElementById('invoice-radio').disabled = false;
-    }
+	cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
+	freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
+	deliveryTime.textContent = "Beställningen skickas 30 minuter efter orderläggning.";
+
+	/*No invoice alternative above 800kr rule*/
+	if (cartSum >= 800) {
+		document.getElementById('invoice-radio').disabled = true;
+	} else {
+		document.getElementById('invoice-radio').disabled = false;
+	}
 
 	const thisDate = new Date();
 	const day = thisDate.getDay();
 	const hour = thisDate.getHours();
 
-    /*Lucia donut rule*/
-    const lucia = {
-        month: 10, //month/date index start at 0, so 11 = 12.
-        date: 13,
-    };
-	
+	/*Lucia donut rule*/
+	const lucia = {
+		month: 10, //month/date index start at 0, so 11 = 12.
+		date: 13,
+	};
+
 	if (thisDate.getMonth() == lucia.month && thisDate.getDate() == lucia.date) {
 		cartItems.push(donutsArrayLucia); //Add Lucia donut to cart
 	}
 
-    /*Monday before 10:00 rule*/
-    if (day === 1 && hour <= 10) {
-        cartSumAndFreightSum = Math.round(cartSumAndFreightSum * 0.9); //10 % discount
-        cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${cartSumAndFreightSum} kr.`;
-    } else {
-        cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
-    }
-    
-    /*More than 15 donuts in total rule*/
-    if (cartCount >= 15) {
-        cartSumAndFreightSum = cartSum; //no freight cost added
-        cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
-        freightSumDisplay.textContent = `Fraktfritt.`
-    } else {
-        cartSumAndFreightSum = cartSum + freightSum;
-        freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
-    }
+	/*Monday before 10:00 rule*/
+	if (day === 1 && hour <= 10) {
+		cartSumAndFreightSum = Math.round(cartSumAndFreightSum * 0.9); //10 % discount
+		cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${cartSumAndFreightSum} kr.`;
+	} else {
+		cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
+	}
 
-    /*Free order with coupon rule*/
-    if (checkDiscountCode.value === "a_damn_fine-cup_of-coffee") {
-        cartSumAndFreightSum = 0;
-        cartSumDisplay.textContent = `Din beställning är kostnadsfri!`;
-        freightSumDisplay.textContent = `Fraktfritt.`
-    } else {
-        cartSumAndFreightSum = cartSum + freightSum;
-    }
+	/*More than 15 donuts in total rule*/
+	if (cartCount >= 15) {
+		cartSumAndFreightSum = cartSum; //no freight cost added
+		cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
+		freightSumDisplay.textContent = `Fraktfritt.`
+	} else {
+		cartSumAndFreightSum = cartSum + freightSum;
+		freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
+	}
 
-    /*Fixa ihop fraktidsregler nedan senare*/
-    /*Weekend deliver time rule*/
-    if (day === 6 || day === 7) {
-        deliveryTime.textContent = "Beställningen skickas 90 minuter efter orderläggning.";
-    }
-   
-    /*Night deliver time rule*/
-    if (hour >= 0 && hour <= 4) {
-        deliveryTime.textContent = "Beställningen skickas 45 minuter efter orderläggning.";
-    }
+	/*Free order with coupon rule*/
+	if (checkDiscountCode.value === "a_damn_fine-cup_of-coffee") {
+		cartSumAndFreightSum = 0;
+		cartSumDisplay.textContent = `Din beställning är kostnadsfri!`;
+		freightSumDisplay.textContent = `Fraktfritt.`
+	} else {
+		cartSumAndFreightSum = cartSum + freightSum;
+	}
 
-    /*friday 11-13 rule*/
+	/*Fixa ihop fraktidsregler nedan senare*/
+	/*Weekend deliver time rule*/
+	if (day === 6 || day === 7) {
+		deliveryTime.textContent = "Beställningen skickas 90 minuter efter orderläggning.";
+	}
+
+	/*Night deliver time rule*/
+	if (hour >= 0 && hour <= 4) {
+		deliveryTime.textContent = "Beställningen skickas 45 minuter efter orderläggning.";
+	}
+
+	/*friday 11-13 rule*/
 
 };
 
