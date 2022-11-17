@@ -128,28 +128,13 @@ const donutsArrayLucia = [
     },
 ];
 
-const donutsArrayLucia = [
-	//placeholder, add 1 to basket free of charge 13/12
-	{
-		id: 11,
-		name: 'Luciamunk',
-		price: 0,
-		categories: ['chocolate', 'filled'],
-		images: [
-			'img/chocolate-iced-custard-filled-banner.jpeg',
-			'img/chocolate-iced-custard-filled.jpeg',
-		],
-		rating: 5,
-	},
-];
-
 const thisDate = new Date();
 
 const countWeekNumber = () => {
     startDate = new Date(thisDate.getFullYear(), 0, 1);
     const days = Math.floor((thisDate - startDate) /
         (24 * 60 * 60 * 1000));  
-    const weekNumber = Math.ceil(days / 7);
+    const weekNumber = Math.ceil(days / 7);
     printWeekNumber(days,weekNumber);
 };
 
@@ -178,6 +163,16 @@ const christmasCheck = () => {
         document.body.style.backgroundAttachment = "fixed";
     }
 }
+
+/*Weekend rule*/
+const weekendPrice = () => {
+    if (day >= 5 && day <= 7) {
+		for (const obj of donutsArray) {
+			obj.price = Math.round(obj.price * 1.15);
+	  }
+    }
+}
+weekendPrice();
 
 /*********************************************************
  * Adding to Cart
