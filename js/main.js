@@ -156,21 +156,26 @@ const date = thisDate.getDate();
 
 /*Christmas rule*/
 const christmasCheck = () => {
-	if (month === 11 && date == 24) {
-		document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
-		document.body.style.backgroundSize = "cover";
-		document.body.style.backgroundRepeat = "no-repeat";
-		document.body.style.backgroundAttachment = "fixed";
-	}
+    if (month === 10 && date == 18) {
+		
+        document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundAttachment = "fixed";
+		let christmasPrizeColor = document.querySelectorAll('.donuts__item_info p:first-child'), i;
+		for (i = 0; i < christmasPrizeColor.length; ++i) {
+			christmasPrizeColor[i].style.color = "red";
+		}		
+    }
 }
 
 /*Weekend rule*/
 const weekendPrice = () => {
-	if (day >= 5 && day <= 7) {
+    if (day >= 5 && hour >= 15 || day == 6|| day == 1 && hour <= 3) {
 		for (const obj of donutsArray) {
 			obj.price = Math.round(obj.price * 1.15);
-		}
-	}
+	  }
+    }
 }
 weekendPrice();
 
