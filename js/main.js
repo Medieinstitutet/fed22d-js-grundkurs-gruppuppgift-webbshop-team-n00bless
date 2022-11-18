@@ -5,6 +5,15 @@ sprinkles
 */
 
 // Bilder tagna från https://github.com/aaronfrost/DonutsApi/tree/main/static/images
+let isTimerStarted = false;
+let timerInterval = null;
+const categorySet = new Set();
+const filterSet = new Set();
+const translatedCategories = {
+	glazed: 'Glaserad',
+	filled: 'Fylld',
+	sprinkles: 'Strössel',
+};
 
 const donutsArray = [
 	{
@@ -174,9 +183,9 @@ const weekendPrice = () => {
     if (day >= 5 && hour >= 15 || day == 6|| day == 1 && hour <= 3) {
 		for (const obj of donutsArray) {
 			obj.price = Math.round(obj.price * 1.15);
-	  }
-    }
-}
+		}
+	}
+};
 weekendPrice();
 
 /*********************************************************
@@ -241,6 +250,8 @@ const donutDecreaseCount = (id) => {
 };
 
 const donutAddToCart = (id) => {
+	if (!isTimerStarted) startTimer(60 * 15);
+
 	const currentCount = Number(
 		document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`)
 			.value
@@ -254,7 +265,7 @@ const donutAddToCart = (id) => {
 	}
 	document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`).value = '0';
 	if (totalCartSum + donutsCost > 2000) {
-		alert('Du kan inte beställa för mer än 2000kr')
+		alert('Du kan inte beställa för mer än 2000kr');
 		return;
 	}
 	// if (currentCount > 0 && cartItems.length > 0) {
@@ -299,12 +310,12 @@ const renderCart = () => {
 			<button class="button button--background" onclick="updateCartQuantity('cart-${donut.id}', 'inc')">+</button>
 			<p>${donut.totPrice} kr</p>
 		</div>
-		</li>`
-		cartItemsToRender = cartItemsToRender + donutElement
+		</li>`;
+		cartItemsToRender = cartItemsToRender + donutElement;
 	}
 	document.querySelector('#cart article ul').innerHTML = cartItemsToRender;
 	updateCartDOM();
-}
+};
 
 const updateCartQuantity = (id, button) => {
 	const donutInCart = cartItems.find(donut => {
@@ -314,7 +325,7 @@ const updateCartQuantity = (id, button) => {
 	const cartDonutInput = document.querySelector(`input[data-id="${id}"]`);
 	cartDonutInput.value = donutInCart.count;
 	renderCart();
-}
+};
 
 const updateCartDOM = () => {
 	/*To get total price of cart*/
@@ -338,7 +349,6 @@ const updateCartDOM = () => {
  **********************************************************/
 
 const checkForSpecialRules = (cartSum, cartCount) => {
-
 	let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
 	const freightSumDisplay = document.getElementById('freight-sum');
 	const cartSumDisplay = document.getElementById('cart-sum');
@@ -349,7 +359,8 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 
 	cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
 	freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
-	deliveryTime.textContent = "Beställningen skickas 30 minuter efter orderläggning.";
+	deliveryTime.textContent =
+		'Beställningen skickas 30 minuter efter orderläggning.';
 
 	/*No invoice alternative above 800kr rule*/
 	if (cartSum >= 800) {
@@ -381,17 +392,17 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 	if (cartCount >= 15) {
 		cartSumAndFreightSum = cartSum; //no freight cost added
 		cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
-		freightSumDisplay.textContent = `Fraktfritt.`
+		freightSumDisplay.textContent = `Fraktfritt.`;
 	} else {
 		cartSumAndFreightSum = cartSum + freightSum;
 		freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
 	}
 
 	/*Free order with coupon rule*/
-	if (checkDiscountCode.value === "a_damn_fine-cup_of-coffee") {
+	if (checkDiscountCode.value === 'a_damn_fine-cup_of-coffee') {
 		cartSumAndFreightSum = 0;
 		cartSumDisplay.textContent = `Din beställning är kostnadsfri!`;
-		freightSumDisplay.textContent = `Fraktfritt.`
+		freightSumDisplay.textContent = `Fraktfritt.`;
 	} else {
 		cartSumAndFreightSum = cartSum + freightSum;
 	}
@@ -438,9 +449,13 @@ const generateStarRating = (rating) => {
 
 	return ratingEl;
 };
-const generateDonuts = () => {
+const generateDonuts = (category) => {
 	let donuts = [];
 	for (const donut of donutsArray) {
+		for (const category of donut.categories) {
+			categorySet.add(category);
+		}
+
 		donuts += /*html*/ `
       <article class="donuts__item" data-id=${donut.id}>
         <h2>${donut.name}</h2>
@@ -456,15 +471,18 @@ const generateDonuts = () => {
                 </div>
        
         <div class="donuts__item_quantity">
-          <button class="button button--background" onclick="donutDecreaseCount(${donut.id
-			})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+          <button class="button button--background" onclick="donutDecreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
           <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
           >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-          <button class="button button--background" onclick="donutIncreaseCount(${donut.id
-			})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+          <button class="button button--background" onclick="donutIncreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
         </div>
-        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${donut.id
-			})">Lägg till för <span>${donut.price}</span> kr</button>
+        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+					donut.id
+				})">Lägg till för <span>${donut.price}</span> kr</button>
       </article>
     `;
 	}
@@ -487,15 +505,18 @@ const cityInputField = document.querySelector('[name="city"]');
 const telInputField = document.querySelector('[name="tel"]');
 const emailInputField = document.querySelector('[name="email"]');
 const cardNumberInputField = document.querySelector('[name="card-number"]');
-const cardExpirationInputField = document.querySelector('[name="date"]')
+const cardExpirationInputField = document.querySelector('[name="date"]');
 const cvcInputField = document.querySelector('[name="cvc"]');
-const socialSecurityInputField = document.querySelector('[name="social-security-number"]');
-
+const socialSecurityInputField = document.querySelector(
+	'[name="social-security-number"]'
+);
 
 const cardRadioInput = document.querySelector('#card-radio');
 const invoiceRadioInput = document.querySelector('#invoice-radio');
 
-const paymentOptionRadios = Array.from(document.querySelectorAll('[name="payment-method"]'));
+const paymentOptionRadios = Array.from(
+	document.querySelectorAll('[name="payment-method"]')
+);
 
 const personalDataCheckbox = document.querySelector('[name="personal-data"]');
 
@@ -519,8 +540,8 @@ let formValidation = {
 let cardPaymentValidation = {
 	cardNumber: false,
 	expirationDate: false,
-	cvc: false
-}
+	cvc: false,
+};
 
 nameInputField.addEventListener('keyup', () => {
 	formValidation.name = nameInputField.value.indexOf(' ') > 0;
@@ -528,7 +549,9 @@ nameInputField.addEventListener('keyup', () => {
 });
 
 addressInputField.addEventListener('keyup', () => {
-	formValidation.address = /\d/.test(addressInputField.value) ? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value) : false;
+	formValidation.address = /\d/.test(addressInputField.value)
+		? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value)
+		: false;
 	activateOrderButton();
 });
 
@@ -540,21 +563,19 @@ postCodeInputField.addEventListener('keyup', () => {
 cityInputField.addEventListener('keyup', () => {
 	formValidation.city = cityInputField.value !== '';
 	activateOrderButton;
-})
+});
 
 telInputField.addEventListener('keyup', () => {
 	formValidation.tel = cityInputField.value !== '';
 	activateOrderButton;
-})
+});
 
 emailInputField.addEventListener('keyup', () => {
 	formValidation.email = cityInputField.value !== '';
 	activateOrderButton;
-})
+});
 
-
-
-paymentOptionRadios.map(radio => {
+paymentOptionRadios.map((radio) => {
 	radio.addEventListener('click', () => {
 		activateOrderButton();
 		switch (radio.value) {
@@ -566,36 +587,36 @@ paymentOptionRadios.map(radio => {
 				cvcInputField.setAttribute('required', '');
 				socialSecurityInputField.removeAttribute('required');
 
-				break
+				break;
 
 			case 'invoice':
-				cardForm.style.display = 'none'
-				invoiceForm.style.display = 'flex'
+				cardForm.style.display = 'none';
+				invoiceForm.style.display = 'flex';
 				socialSecurityInputField.setAttribute('required', '');
 				cardNumberInputField.removeAttribute('required');
 				cardExpirationInputField.removeAttribute('required');
 				cvcInputField.removeAttribute('required');
 
-				break
+				break;
 		}
-	})
-})
+	});
+});
 
 cardNumberInputField.addEventListener('keyup', () => {
 	cardPaymentValidation.cardNumber = /\d/.test(cardNumberInputField.value);
 	console.log(/\d/.test(cardNumberInputField.value));
 	activateOrderButton();
-})
+});
 
 cardExpirationInputField.addEventListener('keyup', () => {
 	cardPaymentValidation.expirationDate = cardExpirationInputField.value !== '';
 	activateOrderButton();
-})
+});
 
 cvcInputField.addEventListener('keyup', () => {
 	cardPaymentValidation.cvc = cvcInputField.value !== '';
 	activateOrderButton();
-})
+});
 
 socialSecurityInputField.addEventListener('keyup', () => {
 	formValidation.payment = /\d/.test(socialSecurityInputField.value);
@@ -607,7 +628,7 @@ personalDataCheckbox.addEventListener('click', () => {
 	activateOrderButton();
 })
 
-const validateInput = validatedInputs => {
+const validateInput = (validatedInputs) => {
 	for (const prop in validatedInputs) {
 		if (!validatedInputs[prop]) {
 			return false;
@@ -625,15 +646,14 @@ const validatePaymentInputs = () => {
 			}
 		}
 		formValidation.payment = true;
-	}
-	else if (invoiceRadioInput.checked) {
+	} else if (invoiceRadioInput.checked) {
 		if (socialSecurityInputField.value === '') {
 			formValidation.payment = false;
 			return;
 		}
 		formValidation.payment = true;
 	}
-}
+};
 
 const activateOrderButton = () => {
 	validatePaymentInputs();
@@ -653,11 +673,11 @@ const submitOrder = () => {
 
 document.querySelector('form').addEventListener('reset', function (event) {
 	//A warning text for accessibility
-	if (!confirm('Är du säker att du vill återställa formuläret?')) {
+	if (confirm('Är du säker att du vill återställa formuläret?')) {
 		event.preventDefault();
+		reset();
 	}
 });
-
 
 /*********************************************************
  * Filter/sorting Menu
@@ -688,3 +708,109 @@ filterButton.addEventListener('click', () => {
 
 	if (filterMenuVisible) filterElement.querySelector('select').focus();
 });
+
+const renderFromCategories = () => {
+	let donuts = [];
+	for (const donut of donutsArray) {
+		for (const category of donut.categories) {
+			if (filterSet.find((item) => item === category)) {
+				console.log(item, category, donut);
+				donuts += /*html*/ `
+      <article class="donuts__item" data-id=${donut.id}>
+        <h2>${donut.name}</h2>
+        <div class="donuts__item_image">
+          <img
+            src="${donut.images[1]}"
+            alt="A picture of a donut"
+          />
+        </div>
+                <div class="donuts__item_info">
+                    <p>${donut.price} kr</p>
+                    <p>${generateStarRating(donut.rating)}</p>
+                </div>
+       
+        <div class="donuts__item_quantity">
+          <button class="button button--background" onclick="donutDecreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+          <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
+          >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
+          <button class="button button--background" onclick="donutIncreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+        </div>
+        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+					donut.id
+				})">Lägg till för <span>${donut.price}</span> kr</button>
+      </article>
+    `;
+			}
+		}
+	}
+	donutListEl.innerHTML = donuts;
+};
+
+const addCategorySort = (category) => {
+	console.log(category);
+	filterSet.add(category);
+	renderFromCategories();
+};
+
+const generateFilterButtons = () => {
+	let inputs = '';
+	for (const category of categorySet) {
+		console.log(category, typeof category);
+		inputs += /*html*/ `
+			<li class="checkbox">
+				<label class="checkbox__input"
+					><input 
+					onclick="addCategorySort(${category})" 
+					type="checkbox" name="${category}" />${translatedCategories[category]}
+				</label>
+			</li>
+		`;
+	}
+
+	document.querySelector('.navbar__dropdown_item_categories').innerHTML =
+		inputs;
+};
+
+const categoryButtons = filterElement.querySelectorAll('input');
+
+// Timer
+// 15 min
+const stopTimer = () => {
+	clearInterval(timerInterval);
+	alert('Du var för långsam! Kundvagnen blev nollställd');
+	reset();
+};
+
+const startTimer = (duration, display) => {
+	isTimerStarted = true;
+
+	let timer = duration,
+		minutes,
+		seconds;
+	timerInterval = setInterval(() => {
+		minutes = parseInt(timer / 60, 10);
+		seconds = parseInt(timer % 60, 10);
+
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		seconds = seconds < 10 ? '0' + seconds : seconds;
+
+		// display.textContent = minutes + ':' + seconds;
+
+		if (--timer < 0) {
+			// timer = duration;
+			stopTimer();
+		}
+	}, 1000);
+};
+
+// Reset
+// Resets everything
+const reset = () => {
+	location.reload();
+};
+
+generateFilterButtons();

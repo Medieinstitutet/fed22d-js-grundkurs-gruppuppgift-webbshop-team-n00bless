@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8" />
+		<title>Gottfrids munkar</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Gottfrids Munkar - smaker för alla!" />
 
-<head>
-	<meta charset="utf-8" />
-	<title>Gottfrids munkar</title>
-	<meta name="description" content="" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Gottfrids Munkar - smaker för alla!" />
+		<meta property="og:title" content="Gottfrids Munkar - smaker för alla!" />
+		<meta property="og:type" content="webpage" />
+		<meta property="og:url" content="" />
+		<meta property="og:image" content="" />
 
-	<meta property="og:title" content="Gottfrids Munkar - smaker för alla!" />
-	<meta property="og:type" content="webpage" />
-	<meta property="og:url" content="" />
-	<meta property="og:image" content="" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="apple-touch-icon" href="icon.png" />
+		<!-- Place favicon.ico in the root directory -->
 
-	<link rel="manifest" href="site.webmanifest" />
-	<link rel="apple-touch-icon" href="icon.png" />
-	<!-- Place favicon.ico in the root directory -->
+		<link rel="stylesheet" href="scss/style.css" />
 
-	<link rel="stylesheet" href="scss/style.css" />
+		<meta name="theme-color" content="#fafafa" />
+		<script
+			src="https://kit.fontawesome.com/75888dd569.js"
+			crossorigin="anonymous"
+		></script>
 
-	<meta name="theme-color" content="#fafafa" />
-	<script src="https://kit.fontawesome.com/75888dd569.js" crossorigin="anonymous"></script>
-
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-	<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-		rel="stylesheet" />
-</head>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
 
 	<body>
 		<header class="navbar">
@@ -35,7 +39,9 @@
 				<button class="button" aria-label="Shopping Cart">
 					<span class="fa-layers fa-fw">
 						<i class="icon fa-solid fa-cart-shopping"></i>
-						<span id= "cart-counter" class="icon__counter fa-layers-counter">0</span>
+						<span id="cart-counter" class="icon__counter fa-layers-counter"
+							>0</span
+						>
 					</span>
 				</button>
 			</div>
@@ -59,17 +65,17 @@
 					<ul class="navbar__dropdown_item_categories">
 						<li class="checkbox">
 							<label class="checkbox__input"
-								><input type="checkbox" name="categeory1" />Fyllning
+								><input type="checkbox" name="filled" />Fyllning
 							</label>
 						</li>
 						<li class="checkbox">
 							<label class="checkbox__input"
-								><input type="checkbox" name="categeory2" />glaserade
+								><input type="checkbox" name="glazed" />Glaserade
 							</label>
 						</li>
 						<li class="checkbox">
 							<label class="checkbox__input">
-								<input type="checkbox" name="categeory3" />
+								<input type="checkbox" name="sprinkles" />
 								Strössel
 							</label>
 						</li>
@@ -83,25 +89,25 @@
 						<option class="select__option" value="category2">Kategori 2</option>
 						<option class="select__option" value="category3">Kategori 3</option>
 					</select> -->
-			</div>
-			<div class="navbar__dropdown_item">
-				<p>Välj prisspann</p>
-				<div class="navbar__dropdown_item_filter">
-					<div>
-						<p>Från</p>
-						<input type="number" min="0" max="999" placeholder="0" />
-					</div>
-					<div>
-						<p>Till</p>
-						<input type="number" min="0" max="999" placeholder="100" />
+				</div>
+				<div class="navbar__dropdown_item">
+					<p>Välj prisspann</p>
+					<div class="navbar__dropdown_item_filter">
+						<div>
+							<p>Från</p>
+							<input type="number" min="0" max="999" placeholder="0" />
+						</div>
+						<div>
+							<p>Till</p>
+							<input type="number" min="0" max="999" placeholder="100" />
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</header>
-	<main>
-		<section class="donuts">
-			<!-- <article class="donuts__item">
+		</header>
+		<main>
+			<section class="donuts">
+				<!-- <article class="donuts__item">
 					<h2>Cake Batter Donut</h2>
 					<div>
 						<img
@@ -130,13 +136,10 @@
 					<p id="freight-sum">Frakt: <span>25</span>kr</p>
 					<p id="cart-sum">Totalpris: <span>0</span>kr</p>
 					<p id="delivery-time">
-                        Beställningen skickas 30 minuter efter orderläggning.
-                    </p>
+						Beställningen skickas 30 minuter efter orderläggning.
+					</p>
 					<label for="discount-code">Mata in eventuell rabattkod</label>
-                    <input
-                        type="text"
-                        name="discount-code"
-                    />
+					<input type="text" name="discount-code" />
 				</article>
 				<form action="./order_landing_page.html">
 					<fieldset>
@@ -218,9 +221,8 @@
 			<p>Justin Thyme AB</p>
 		</footer>
 
-	<script src="js/vendor/modernizr-3.11.2.min.js"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/main.js"></script>
-</body>
-
+		<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+		<script src="js/plugins.js"></script>
+		<script src="js/main.js"></script>
+	</body>
 </html>
