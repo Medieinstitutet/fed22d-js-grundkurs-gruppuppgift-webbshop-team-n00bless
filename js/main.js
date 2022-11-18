@@ -492,6 +492,9 @@ const invoiceRadioInput = document.querySelector('#invoice-radio');
 
 const paymentOptionRadios = Array.from(document.querySelectorAll('[name="payment-method"]'));
 
+const personalDataCheckbox = document.querySelector('[name="personal-data"]');
+
+
 const orderButton = document.querySelector('#order-btn');
 
 const cardForm = document.querySelector('#card-payment-form');
@@ -504,7 +507,8 @@ let formValidation = {
 	city: false,
 	tel: false,
 	email: false,
-	payment: false
+	payment: false,
+	personalData: false
 };
 
 let cardPaymentValidation = {
@@ -593,6 +597,10 @@ socialSecurityInputField.addEventListener('keyup', () => {
 	activateOrderButton();
 })
 
+personalDataCheckbox.addEventListener('click', () => {
+	formValidation.personalData = personalDataCheckbox.checked;
+	activateOrderButton();
+})
 
 const validateInput = validatedInputs => {
 	for (const prop in validatedInputs) {
