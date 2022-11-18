@@ -7,6 +7,13 @@ sprinkles
 // Bilder tagna från https://github.com/aaronfrost/DonutsApi/tree/main/static/images
 let isTimerStarted = false;
 let timerInterval = null;
+const categorySet = new Set();
+const filterSet = new Set();
+const translatedCategories = {
+	glazed: 'Glaserad',
+	filled: 'Fylld',
+	sprinkles: 'Strössel',
+};
 
 const donutsArray = [
 	{
@@ -439,9 +446,13 @@ const generateStarRating = (rating) => {
 
 	return ratingEl;
 };
-const generateDonuts = () => {
+const generateDonuts = (category) => {
 	let donuts = [];
 	for (const donut of donutsArray) {
+		for (const category of donut.categories) {
+			categorySet.add(category);
+		}
+
 		donuts += /*html*/ `
       <article class="donuts__item" data-id=${donut.id}>
         <h2>${donut.name}</h2>
@@ -686,6 +697,74 @@ filterButton.addEventListener('click', () => {
 	if (filterMenuVisible) filterElement.querySelector('select').focus();
 });
 
+const renderFromCategories = () => {
+	let donuts = [];
+	for (const donut of donutsArray) {
+		for (const category of donut.categories) {
+			if (filterSet.find((item) => item === category)) {
+				console.log(item, category, donut);
+				donuts += /*html*/ `
+      <article class="donuts__item" data-id=${donut.id}>
+        <h2>${donut.name}</h2>
+        <div class="donuts__item_image">
+          <img
+            src="${donut.images[1]}"
+            alt="A picture of a donut"
+          />
+        </div>
+                <div class="donuts__item_info">
+                    <p>${donut.price} kr</p>
+                    <p>${generateStarRating(donut.rating)}</p>
+                </div>
+       
+        <div class="donuts__item_quantity">
+          <button class="button button--background" onclick="donutDecreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+          <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
+          >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
+          <button class="button button--background" onclick="donutIncreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+        </div>
+        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+					donut.id
+				})">Lägg till för <span>${donut.price}</span> kr</button>
+      </article>
+    `;
+			}
+		}
+	}
+	donutListEl.innerHTML = donuts;
+};
+
+const addCategorySort = (category) => {
+	console.log(category);
+	filterSet.add(category);
+	renderFromCategories();
+};
+
+const generateFilterButtons = () => {
+	let inputs = '';
+	for (const category of categorySet) {
+		console.log(category, typeof category);
+		inputs += /*html*/ `
+			<li class="checkbox">
+				<label class="checkbox__input"
+					><input 
+					onclick="addCategorySort(${category})" 
+					type="checkbox" name="${category}" />${translatedCategories[category]}
+				</label>
+			</li>
+		`;
+	}
+
+	document.querySelector('.navbar__dropdown_item_categories').innerHTML =
+		inputs;
+};
+
+const categoryButtons = filterElement.querySelectorAll('input');
+
 // Timer
 // 15 min
 const stopTimer = () => {
@@ -721,3 +800,5 @@ const startTimer = (duration, display) => {
 const reset = () => {
 	location.reload();
 };
+
+generateFilterButtons();
