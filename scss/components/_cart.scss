@@ -1,5 +1,6 @@
+@use '../base/functions' as fn;
 #cart {
-
+    background-color: fn.getColor(white);
     article {
 
         ul {
