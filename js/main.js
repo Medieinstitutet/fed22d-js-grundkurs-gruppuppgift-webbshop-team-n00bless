@@ -141,8 +141,7 @@ const thisDate = new Date();
 
 const countWeekNumber = () => {
 	startDate = new Date(thisDate.getFullYear(), 0, 1);
-	const days = Math.floor((thisDate - startDate) /
-		(24 * 60 * 60 * 1000));
+	const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
 	const weekNumber = Math.ceil(days / 7);
 	printWeekNumber(days, weekNumber);
 };
@@ -150,7 +149,7 @@ const countWeekNumber = () => {
 const printWeekNumber = (days, weekNumber) => {
 	// console.log(weekNumber);
 	// console.log(days);
-}
+};
 
 countWeekNumber();
 
@@ -165,22 +164,24 @@ const date = thisDate.getDate();
 
 /*Christmas rule*/
 const christmasCheck = () => {
-    if (month === 10 && date == 18) {
-		
-        document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundRepeat = "no-repeat";
-        document.body.style.backgroundAttachment = "fixed";
-		let christmasPrizeColor = document.querySelectorAll('.donuts__item_info p:first-child'), i;
+	if (month === 10 && date == 18) {
+		document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
+		document.body.style.backgroundSize = 'cover';
+		document.body.style.backgroundRepeat = 'no-repeat';
+		document.body.style.backgroundAttachment = 'fixed';
+		let christmasPrizeColor = document.querySelectorAll(
+				'.donuts__item_info p:first-child'
+			),
+			i;
 		for (i = 0; i < christmasPrizeColor.length; ++i) {
-			christmasPrizeColor[i].style.color = "red";
-		}		
-    }
-}
+			christmasPrizeColor[i].style.color = 'red';
+		}
+	}
+};
 
 /*Weekend rule*/
 const weekendPrice = () => {
-    if (day >= 5 && hour >= 15 || day == 6|| day == 1 && hour <= 3) {
+	if ((day >= 5 && hour >= 15) || day == 6 || (day == 1 && hour <= 3)) {
 		for (const obj of donutsArray) {
 			obj.price = Math.round(obj.price * 1.15);
 		}
@@ -256,14 +257,19 @@ const donutAddToCart = (id) => {
 		document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`)
 			.value
 	);
-	let totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0)
+	let totalCartSum = cartItems.reduce(
+		(accumulator, donut) => accumulator + donut.totPrice,
+		0
+	);
 	let donutsCost;
 	for (const donut of donutsArray) {
 		if (donut.id === id) {
 			donutsCost = donut.price * currentCount;
 		}
 	}
-	document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`).value = '0';
+	document.querySelector(
+		`[data-id="${id}"] .donuts__item_quantity input`
+	).value = '0';
 	if (totalCartSum + donutsCost > 2000) {
 		alert('Du kan inte beställa för mer än 2000kr');
 		return;
@@ -318,10 +324,11 @@ const renderCart = () => {
 };
 
 const updateCartQuantity = (id, button) => {
-	const donutInCart = cartItems.find(donut => {
-		return `cart-${donut.id}` === id 
+	const donutInCart = cartItems.find((donut) => {
+		return `cart-${donut.id}` === id;
 	});
-	donutInCart.count = button === 'dec' ? donutInCart.count - 1 : donutInCart.count + 1;
+	donutInCart.count =
+		button === 'dec' ? donutInCart.count - 1 : donutInCart.count + 1;
 	const cartDonutInput = document.querySelector(`input[data-id="${id}"]`);
 	cartDonutInput.value = donutInCart.count;
 	renderCart();
@@ -409,17 +416,19 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 
 	/*Weekend deliver time rule*/
 	if (day === 6 || day === 7) {
-		deliveryTime.textContent = "Beställningen skickas 90 minuter efter orderläggning.";
+		deliveryTime.textContent =
+			'Beställningen skickas 90 minuter efter orderläggning.';
 	}
 
 	/*Night deliver time rule*/
-	if (day !== 6 || day !== 7 && hour >= 0 && hour <= 5) {
-		deliveryTime.textContent = "Beställningen skickas 45 minuter efter orderläggning.";
+	if (day !== 6 || (day !== 7 && hour >= 0 && hour <= 5)) {
+		deliveryTime.textContent =
+			'Beställningen skickas 45 minuter efter orderläggning.';
 	}
 
 	/*friday 11-13 rule*/
 	if (day === 5 && hour >= 11 && hour <= 13) {
-		deliveryTime.textContent = "Leveranstiden är beräknad till 15:00";
+		deliveryTime.textContent = 'Leveranstiden är beräknad till 15:00';
 	}
 
 	/*thuesday even week rule*/
@@ -520,7 +529,6 @@ const paymentOptionRadios = Array.from(
 
 const personalDataCheckbox = document.querySelector('[name="personal-data"]');
 
-
 const orderButton = document.querySelector('#order-btn');
 
 const cardForm = document.querySelector('#card-payment-form');
@@ -534,7 +542,7 @@ let formValidation = {
 	tel: false,
 	email: false,
 	payment: false,
-	personalData: false
+	personalData: false,
 };
 
 let cardPaymentValidation = {
@@ -621,12 +629,12 @@ cvcInputField.addEventListener('keyup', () => {
 socialSecurityInputField.addEventListener('keyup', () => {
 	formValidation.payment = /\d/.test(socialSecurityInputField.value);
 	activateOrderButton();
-})
+});
 
 personalDataCheckbox.addEventListener('click', () => {
 	formValidation.personalData = personalDataCheckbox.checked;
 	activateOrderButton();
-})
+});
 
 const validateInput = (validatedInputs) => {
 	for (const prop in validatedInputs) {
@@ -713,47 +721,55 @@ const renderFromCategories = () => {
 	let donuts = [];
 	for (const donut of donutsArray) {
 		for (const category of donut.categories) {
-			if (filterSet.find((item) => item === category)) {
-				console.log(item, category, donut);
+			if (filterSet.has(category)) {
 				donuts += /*html*/ `
-      <article class="donuts__item" data-id=${donut.id}>
-        <h2>${donut.name}</h2>
-        <div class="donuts__item_image">
-          <img
-            src="${donut.images[1]}"
-            alt="A picture of a donut"
-          />
-        </div>
-                <div class="donuts__item_info">
-                    <p>${donut.price} kr</p>
-                    <p>${generateStarRating(donut.rating)}</p>
-                </div>
-       
-        <div class="donuts__item_quantity">
-          <button class="button button--background" onclick="donutDecreaseCount(${
-						donut.id
-					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
-          <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
-          >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-          <button class="button button--background" onclick="donutIncreaseCount(${
-						donut.id
-					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
-        </div>
-        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
-					donut.id
-				})">Lägg till för <span>${donut.price}</span> kr</button>
-      </article>
-    `;
+					<article class="donuts__item" data-id=${donut.id}>
+						<h2>${donut.name}</h2>
+						<div class="donuts__item_image">
+							<img
+								src="${donut.images[1]}"
+								alt="A picture of a donut"
+							/>
+						</div>
+										<div class="donuts__item_info">
+												<p>${donut.price} kr</p>
+												<p>${generateStarRating(donut.rating)}</p>
+										</div>
+					
+						<div class="donuts__item_quantity">
+							<button class="button button--background" onclick="donutDecreaseCount(${
+								donut.id
+							})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+							<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
+							>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
+							<button class="button button--background" onclick="donutIncreaseCount(${
+								donut.id
+							})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+						</div>
+						<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+							donut.id
+						})">Lägg till för <span>${donut.price}</span> kr</button>
+					</article>
+    		`;
 			}
 		}
 	}
+
 	donutListEl.innerHTML = donuts;
 };
 
 const addCategorySort = (category) => {
-	console.log(category);
-	filterSet.add(category);
-	renderFromCategories();
+	if (filterSet.has(category)) {
+		filterSet.delete(category);
+		if (filterSet.size > 0) {
+			renderFromCategories();
+		} else {
+			generateDonuts();
+		}
+	} else {
+		filterSet.add(category);
+		renderFromCategories();
+	}
 };
 
 const generateFilterButtons = () => {
@@ -764,7 +780,7 @@ const generateFilterButtons = () => {
 			<li class="checkbox">
 				<label class="checkbox__input"
 					><input 
-					onclick="addCategorySort(${category})" 
+					onclick="addCategorySort('${category}')" 
 					type="checkbox" name="${category}" />${translatedCategories[category]}
 				</label>
 			</li>
