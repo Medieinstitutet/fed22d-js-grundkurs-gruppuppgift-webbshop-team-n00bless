@@ -7,140 +7,140 @@ sprinkles
 // Bilder tagna från https://github.com/aaronfrost/DonutsApi/tree/main/static/images
 
 const donutsArray = [
-    {
-        id: 1,
-        name:'Chokladmunk med vaniljfyllning',
-        price: 23,
-        categories: ['glazed', 'filled'],
-        images: [
-            'img/chocolate-iced-custard-filled-banner.jpeg',
-            'img/chocolate-iced-custard-filled.jpeg',
-        ],
-        rating: 5,
-    },
-    {
-        id: 2,
-        name: 'Chokladmunk',
-        price: 18,
-        categories: ['glazed'],
-        images: [
-            'img/chocolate-iced-glazed-banner.jpeg',
-            'img/chocolate-iced-glazed.jpeg',
-        ],
-        rating: 4.5,
-    },
-    {
-        id: 3,
-        name: 'Kanelpudrad munk med äppelfyllning',
-        price: 25,
-        categories: ['filled', 'sprinkles'],
-        images: [
-            'img/cinnamon-apple-filled-banner.jpeg',
-            'img/cinnamon-apple-filled.jpeg',
-        ],
-        rating: 4.5,
-    },
-    {
-        id: 4,
-        name: 'Glaserad kanelmunk',
-        price: 13,
-        categories: ['glazed', 'sprinkles'],
-        images: ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
-        rating: 5,
-    },
-    {
-        id: 5,
-        name: 'Glaserad munk med citronfyllning',
-        price: 23,
-        categories: ['glazed', 'filled'],
-        images: [
-            'img/glazed-lemon-filled-banner.jpeg',
-            'img/glazed-lemon-filled.jpeg',
-        ],
-        rating: 4,
-    },
-    {
-        id: 6,
-        name: 'Munk med chokladfyllning',
-        price: 16,
-        categories: ['filled'],
-        images: [
-            'img/original-filled-chocolate-kreme™-banner.jpeg',
-            'img/original-filled-chocolate-kreme™.jpeg',
-        ],
-        rating: 4,
-    },
-    {
-        id: 7,
-        name: 'Glaserad munk',
-        price: 7,
-        categories: ['glazed'],
-        images: [
-            'img/original-glazed-doughnut-banner.jpeg',
-            'img/original-glazed-doughnut.jpeg',
-        ],
-        rating: 5,
-    },
-    {
-        id: 8,
-        name: 'Pudrad munk med blåbärsfyllning',
-        price: 25,
-        categories: ['sprinkles', 'filled'],
-        images: [
-            'img/powdered-blueberry-filled-banner.jpeg',
-            'img/powdered-blueberry-filled.jpeg',
-        ],
-        rating: 4.5,
-    },
-    {
-        id: 9,
-        name: 'Pudrad munk med jordgubbsfyllning',
-        price: 25,
-        categories: ['sprinkles', 'filled'],
-        images: [
-            'img/powdered-strawberry-filled-banner.jpeg',
-            'img/powdered-strawberry-filled.jpeg',
-        ],
-        rating: 4,
-    },
-    {
-        id: 10,
-        name: 'Jordgubbsmunk',
-        price: 11,
-        categories: ['glazed'],
-        images: ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
-        rating: 5,
-    },
+	{
+		id: 1,
+		name: 'Chokladmunk med vaniljfyllning',
+		price: 23,
+		categories: ['glazed', 'filled'],
+		images: [
+			'img/chocolate-iced-custard-filled-banner.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
+		],
+		rating: 5,
+	},
+	{
+		id: 2,
+		name: 'Chokladmunk',
+		price: 18,
+		categories: ['glazed'],
+		images: [
+			'img/chocolate-iced-glazed-banner.jpeg',
+			'img/chocolate-iced-glazed.jpeg',
+		],
+		rating: 4.5,
+	},
+	{
+		id: 3,
+		name: 'Kanelpudrad munk med äppelfyllning',
+		price: 25,
+		categories: ['filled', 'sprinkles'],
+		images: [
+			'img/cinnamon-apple-filled-banner.jpeg',
+			'img/cinnamon-apple-filled.jpeg',
+		],
+		rating: 4.5,
+	},
+	{
+		id: 4,
+		name: 'Glaserad kanelmunk',
+		price: 13,
+		categories: ['glazed', 'sprinkles'],
+		images: ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
+		rating: 5,
+	},
+	{
+		id: 5,
+		name: 'Glaserad munk med citronfyllning',
+		price: 23,
+		categories: ['glazed', 'filled'],
+		images: [
+			'img/glazed-lemon-filled-banner.jpeg',
+			'img/glazed-lemon-filled.jpeg',
+		],
+		rating: 4,
+	},
+	{
+		id: 6,
+		name: 'Munk med chokladfyllning',
+		price: 16,
+		categories: ['filled'],
+		images: [
+			'img/original-filled-chocolate-kreme™-banner.jpeg',
+			'img/original-filled-chocolate-kreme™.jpeg',
+		],
+		rating: 4,
+	},
+	{
+		id: 7,
+		name: 'Glaserad munk',
+		price: 7,
+		categories: ['glazed'],
+		images: [
+			'img/original-glazed-doughnut-banner.jpeg',
+			'img/original-glazed-doughnut.jpeg',
+		],
+		rating: 5,
+	},
+	{
+		id: 8,
+		name: 'Pudrad munk med blåbärsfyllning',
+		price: 25,
+		categories: ['sprinkles', 'filled'],
+		images: [
+			'img/powdered-blueberry-filled-banner.jpeg',
+			'img/powdered-blueberry-filled.jpeg',
+		],
+		rating: 4.5,
+	},
+	{
+		id: 9,
+		name: 'Pudrad munk med jordgubbsfyllning',
+		price: 25,
+		categories: ['sprinkles', 'filled'],
+		images: [
+			'img/powdered-strawberry-filled-banner.jpeg',
+			'img/powdered-strawberry-filled.jpeg',
+		],
+		rating: 4,
+	},
+	{
+		id: 10,
+		name: 'Jordgubbsmunk',
+		price: 11,
+		categories: ['glazed'],
+		images: ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
+		rating: 5,
+	},
 ];
 
 const donutsArrayLucia = [
-    //placeholder, add 1 to basket free of charge 13/12
-    {
-        id: 11,
-        name: 'Luciamunk',
-        price: 1,
-        categories: ['sprinkles', 'filled'],
-        images: [
-            'img/chocolate-iced-custard-filled-banner.jpeg',
-            'img/chocolate-iced-custard-filled.jpeg',
-        ],
-        rating: 5,
-    },
+	//placeholder, add 1 to basket free of charge 13/12
+	{
+		id: 11,
+		name: 'Luciamunk',
+		price: 1,
+		categories: ['sprinkles', 'filled'],
+		images: [
+			'img/chocolate-iced-custard-filled-banner.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
+		],
+		rating: 5,
+	},
 ];
 
 const thisDate = new Date();
 
 const countWeekNumber = () => {
-    startDate = new Date(thisDate.getFullYear(), 0, 1);
-    const days = Math.floor((thisDate - startDate) /
-        (24 * 60 * 60 * 1000));  
-    const weekNumber = Math.ceil(days / 7);
-    printWeekNumber(days,weekNumber);
+	startDate = new Date(thisDate.getFullYear(), 0, 1);
+	const days = Math.floor((thisDate - startDate) /
+		(24 * 60 * 60 * 1000));
+	const weekNumber = Math.ceil(days / 7);
+	printWeekNumber(days, weekNumber);
 };
 
 const printWeekNumber = (days, weekNumber) => {
-    // console.log(weekNumber);
-    // console.log(days);
+	// console.log(weekNumber);
+	// console.log(days);
 }
 
 countWeekNumber();
@@ -151,26 +151,26 @@ const month = thisDate.getMonth();
 const date = thisDate.getDate();
 
 /*********************************************************
- * Page load rules
- **********************************************************/
+ * Page load rules
+ **********************************************************/
 
 /*Christmas rule*/
 const christmasCheck = () => {
-    if (month === 11 && date == 24) {
-        document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundRepeat = "no-repeat";
-        document.body.style.backgroundAttachment = "fixed";
-    }
+	if (month === 11 && date == 24) {
+		document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
+		document.body.style.backgroundSize = "cover";
+		document.body.style.backgroundRepeat = "no-repeat";
+		document.body.style.backgroundAttachment = "fixed";
+	}
 }
 
 /*Weekend rule*/
 const weekendPrice = () => {
-    if (day >= 5 && day <= 7) {
+	if (day >= 5 && day <= 7) {
 		for (const obj of donutsArray) {
 			obj.price = Math.round(obj.price * 1.15);
-	  }
-    }
+		}
+	}
 }
 weekendPrice();
 
@@ -240,14 +240,14 @@ const donutAddToCart = (id) => {
 		document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`)
 			.value
 	);
-	let totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0) 
+	let totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0)
 	let donutsCost;
 	for (const donut of donutsArray) {
 		if (donut.id === id) {
 			donutsCost = donut.price * currentCount;
 		}
 	}
-	console.log(totalCartSum, donutsCost);
+	document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`).value = '0';
 	if (totalCartSum + donutsCost > 2000) {
 		alert('Du kan inte beställa för mer än 2000kr')
 		return;
@@ -271,7 +271,6 @@ const donutAddToCart = (id) => {
 					count: currentCount,
 					totPrice: currentCount * donut.price,
 				});
-				console.log(cartItems);
 				updateCartDOM();
 				renderCart();
 				return;
@@ -290,9 +289,9 @@ const renderCart = () => {
 			<p>${donut.name}</p>
 		</div>
 		<div className="donuts__item_quantity">			
-			<button class="button button--background" onclick="donutDecreaseCount(${donut.id});updateCartInputValue('input-cart-${donut.id}', ${donut.count})">-</button>
-			<input type="number" value="${donut.count}" data-id="input-cart-${donut.id}"/>
-			<button class="button button--background" onclick="donutIncreaseCount(${donut.id});updateCartInputValue('input-cart-${donut.id}', ${donut.count})">+</button>
+			<button class="button button--background" onclick="updateCartQuantity('cart-${donut.id}', 'dec')">-</button>
+			<input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
+			<button class="button button--background" onclick="updateCartQuantity('cart-${donut.id}', 'inc')">+</button>
 			<p>${donut.totPrice} kr</p>
 		</div>
 		</li>`
@@ -302,10 +301,13 @@ const renderCart = () => {
 	updateCartDOM();
 }
 
-const updateCartInputValue = (id, donutCount) => {
+const updateCartQuantity = (id, button) => {
+	const donutInCart = cartItems.find(donut => {
+		return `cart-${donut.id}` === id 
+	});
+	donutInCart.count = button === 'dec' ? donutInCart.count - 1 : donutInCart.count + 1;
 	const cartDonutInput = document.querySelector(`input[data-id="${id}"]`);
-	console.log(cartDonutInput.value);
-	cartDonutInput.value = donutCount;
+	cartDonutInput.value = donutInCart.count;
 	renderCart();
 }
 
@@ -357,7 +359,7 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 		date: 13,
 	};
 
-	if (month == lucia.month && date == lucia.date && cartItems.length >=1) {
+	if (month == lucia.month && date == lucia.date && cartItems.length >= 1) {
 		cartItems.push(...donutsArrayLucia);
 		donutsArrayLucia.pop();
 	}
@@ -389,20 +391,20 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 		cartSumAndFreightSum = cartSum + freightSum;
 	}
 
-    /*Weekend deliver time rule*/
-    if (day === 6 || day === 7) {
-        deliveryTime.textContent = "Beställningen skickas 90 minuter efter orderläggning.";
-    }
+	/*Weekend deliver time rule*/
+	if (day === 6 || day === 7) {
+		deliveryTime.textContent = "Beställningen skickas 90 minuter efter orderläggning.";
+	}
 
-    /*Night deliver time rule*/
-    if (day !== 6 || day !== 7 && hour >= 0 && hour <= 5) {
-        deliveryTime.textContent = "Beställningen skickas 45 minuter efter orderläggning.";
-    }
-   
-    /*friday 11-13 rule*/
-    if (day === 5 && hour >= 11 && hour <= 13) {
-        deliveryTime.textContent = "Leveranstiden är beräknad till 15:00";
-    }
+	/*Night deliver time rule*/
+	if (day !== 6 || day !== 7 && hour >= 0 && hour <= 5) {
+		deliveryTime.textContent = "Beställningen skickas 45 minuter efter orderläggning.";
+	}
+
+	/*friday 11-13 rule*/
+	if (day === 5 && hour >= 11 && hour <= 13) {
+		deliveryTime.textContent = "Leveranstiden är beräknad till 15:00";
+	}
 
 	/*thuesday even week rule*/
 };
