@@ -141,7 +141,8 @@ const thisDate = new Date();
 
 const countWeekNumber = () => {
 	startDate = new Date(thisDate.getFullYear(), 0, 1);
-	const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
+	const days = Math.floor((thisDate - startDate) /
+		(24 * 60 * 60 * 1000));
 	const weekNumber = Math.ceil(days / 7);
 	printWeekNumber(days, weekNumber);
 };
@@ -149,7 +150,7 @@ const countWeekNumber = () => {
 const printWeekNumber = (days, weekNumber) => {
 	// console.log(weekNumber);
 	// console.log(days);
-};
+}
 
 countWeekNumber();
 
@@ -164,17 +165,22 @@ const date = thisDate.getDate();
 
 /*Christmas rule*/
 const christmasCheck = () => {
-	if (month === 11 && date == 24) {
-		document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
-		document.body.style.backgroundSize = 'cover';
-		document.body.style.backgroundRepeat = 'no-repeat';
-		document.body.style.backgroundAttachment = 'fixed';
-	}
-};
+    if (month === 10 && date == 18) {
+		
+        document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundAttachment = "fixed";
+		let christmasPrizeColor = document.querySelectorAll('.donuts__item_info p:first-child'), i;
+		for (i = 0; i < christmasPrizeColor.length; ++i) {
+			christmasPrizeColor[i].style.color = "red";
+		}		
+    }
+}
 
 /*Weekend rule*/
 const weekendPrice = () => {
-	if (day >= 5 && day <= 7) {
+    if (day >= 5 && hour >= 15 || day == 6|| day == 1 && hour <= 3) {
 		for (const obj of donutsArray) {
 			obj.price = Math.round(obj.price * 1.15);
 		}
@@ -250,17 +256,14 @@ const donutAddToCart = (id) => {
 		document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`)
 			.value
 	);
-	let totalCartSum = cartItems.reduce(
-		(accumulator, donut) => accumulator + donut.totPrice,
-		0
-	);
+	let totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0)
 	let donutsCost;
 	for (const donut of donutsArray) {
 		if (donut.id === id) {
 			donutsCost = donut.price * currentCount;
 		}
 	}
-	console.log(totalCartSum, donutsCost);
+	document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`).value = '0';
 	if (totalCartSum + donutsCost > 2000) {
 		alert('Du kan inte beställa för mer än 2000kr');
 		return;
@@ -284,7 +287,6 @@ const donutAddToCart = (id) => {
 					count: currentCount,
 					totPrice: currentCount * donut.price,
 				});
-				console.log(cartItems);
 				updateCartDOM();
 				renderCart();
 				return;
@@ -303,9 +305,9 @@ const renderCart = () => {
 			<p>${donut.name}</p>
 		</div>
 		<div className="donuts__item_quantity">			
-			<button class="button button--background" onclick="donutDecreaseCount(${donut.id});updateCartInputValue('input-cart-${donut.id}', ${donut.count})">-</button>
-			<input type="number" value="${donut.count}" data-id="input-cart-${donut.id}"/>
-			<button class="button button--background" onclick="donutIncreaseCount(${donut.id});updateCartInputValue('input-cart-${donut.id}', ${donut.count})">+</button>
+			<button class="button button--background" onclick="updateCartQuantity('cart-${donut.id}', 'dec')">-</button>
+			<input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
+			<button class="button button--background" onclick="updateCartQuantity('cart-${donut.id}', 'inc')">+</button>
 			<p>${donut.totPrice} kr</p>
 		</div>
 		</li>`;
@@ -315,10 +317,13 @@ const renderCart = () => {
 	updateCartDOM();
 };
 
-const updateCartInputValue = (id, donutCount) => {
+const updateCartQuantity = (id, button) => {
+	const donutInCart = cartItems.find(donut => {
+		return `cart-${donut.id}` === id 
+	});
+	donutInCart.count = button === 'dec' ? donutInCart.count - 1 : donutInCart.count + 1;
 	const cartDonutInput = document.querySelector(`input[data-id="${id}"]`);
-	console.log(cartDonutInput.value);
-	cartDonutInput.value = donutCount;
+	cartDonutInput.value = donutInCart.count;
 	renderCart();
 };
 
@@ -404,19 +409,17 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 
 	/*Weekend deliver time rule*/
 	if (day === 6 || day === 7) {
-		deliveryTime.textContent =
-			'Beställningen skickas 90 minuter efter orderläggning.';
+		deliveryTime.textContent = "Beställningen skickas 90 minuter efter orderläggning.";
 	}
 
 	/*Night deliver time rule*/
-	if (day !== 6 || (day !== 7 && hour >= 0 && hour <= 5)) {
-		deliveryTime.textContent =
-			'Beställningen skickas 45 minuter efter orderläggning.';
+	if (day !== 6 || day !== 7 && hour >= 0 && hour <= 5) {
+		deliveryTime.textContent = "Beställningen skickas 45 minuter efter orderläggning.";
 	}
 
 	/*friday 11-13 rule*/
 	if (day === 5 && hour >= 11 && hour <= 13) {
-		deliveryTime.textContent = 'Leveranstiden är beräknad till 15:00';
+		deliveryTime.textContent = "Leveranstiden är beräknad till 15:00";
 	}
 
 	/*thuesday even week rule*/
@@ -515,6 +518,9 @@ const paymentOptionRadios = Array.from(
 	document.querySelectorAll('[name="payment-method"]')
 );
 
+const personalDataCheckbox = document.querySelector('[name="personal-data"]');
+
+
 const orderButton = document.querySelector('#order-btn');
 
 const cardForm = document.querySelector('#card-payment-form');
@@ -528,6 +534,7 @@ let formValidation = {
 	tel: false,
 	email: false,
 	payment: false,
+	personalData: false
 };
 
 let cardPaymentValidation = {
@@ -614,7 +621,12 @@ cvcInputField.addEventListener('keyup', () => {
 socialSecurityInputField.addEventListener('keyup', () => {
 	formValidation.payment = /\d/.test(socialSecurityInputField.value);
 	activateOrderButton();
-});
+})
+
+personalDataCheckbox.addEventListener('click', () => {
+	formValidation.personalData = personalDataCheckbox.checked;
+	activateOrderButton();
+})
 
 const validateInput = (validatedInputs) => {
 	for (const prop in validatedInputs) {
