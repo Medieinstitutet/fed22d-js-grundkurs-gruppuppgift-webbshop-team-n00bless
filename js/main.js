@@ -5,143 +5,144 @@ sprinkles
 */
 
 // Bilder tagna från https://github.com/aaronfrost/DonutsApi/tree/main/static/images
+let isTimerStarted = false;
+let timerInterval = null;
 
 const donutsArray = [
-    {
-        id: 1,
-        name:'Chokladmunk med vaniljfyllning',
-        price: 23,
-        categories: ['glazed', 'filled'],
-        images: [
-            'img/chocolate-iced-custard-filled-banner.jpeg',
-            'img/chocolate-iced-custard-filled.jpeg',
-        ],
-        rating: 5,
-    },
-    {
-        id: 2,
-        name: 'Chokladmunk',
-        price: 18,
-        categories: ['glazed'],
-        images: [
-            'img/chocolate-iced-glazed-banner.jpeg',
-            'img/chocolate-iced-glazed.jpeg',
-        ],
-        rating: 4.5,
-    },
-    {
-        id: 3,
-        name: 'Kanelpudrad munk med äppelfyllning',
-        price: 25,
-        categories: ['filled', 'sprinkles'],
-        images: [
-            'img/cinnamon-apple-filled-banner.jpeg',
-            'img/cinnamon-apple-filled.jpeg',
-        ],
-        rating: 4.5,
-    },
-    {
-        id: 4,
-        name: 'Glaserad kanelmunk',
-        price: 13,
-        categories: ['glazed', 'sprinkles'],
-        images: ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
-        rating: 5,
-    },
-    {
-        id: 5,
-        name: 'Glaserad munk med citronfyllning',
-        price: 23,
-        categories: ['glazed', 'filled'],
-        images: [
-            'img/glazed-lemon-filled-banner.jpeg',
-            'img/glazed-lemon-filled.jpeg',
-        ],
-        rating: 4,
-    },
-    {
-        id: 6,
-        name: 'Munk med chokladfyllning',
-        price: 16,
-        categories: ['filled'],
-        images: [
-            'img/original-filled-chocolate-kreme™-banner.jpeg',
-            'img/original-filled-chocolate-kreme™.jpeg',
-        ],
-        rating: 4,
-    },
-    {
-        id: 7,
-        name: 'Glaserad munk',
-        price: 7,
-        categories: ['glazed'],
-        images: [
-            'img/original-glazed-doughnut-banner.jpeg',
-            'img/original-glazed-doughnut.jpeg',
-        ],
-        rating: 5,
-    },
-    {
-        id: 8,
-        name: 'Pudrad munk med blåbärsfyllning',
-        price: 25,
-        categories: ['sprinkles', 'filled'],
-        images: [
-            'img/powdered-blueberry-filled-banner.jpeg',
-            'img/powdered-blueberry-filled.jpeg',
-        ],
-        rating: 4.5,
-    },
-    {
-        id: 9,
-        name: 'Pudrad munk med jordgubbsfyllning',
-        price: 25,
-        categories: ['sprinkles', 'filled'],
-        images: [
-            'img/powdered-strawberry-filled-banner.jpeg',
-            'img/powdered-strawberry-filled.jpeg',
-        ],
-        rating: 4,
-    },
-    {
-        id: 10,
-        name: 'Jordgubbsmunk',
-        price: 11,
-        categories: ['glazed'],
-        images: ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
-        rating: 5,
-    },
+	{
+		id: 1,
+		name: 'Chokladmunk med vaniljfyllning',
+		price: 23,
+		categories: ['glazed', 'filled'],
+		images: [
+			'img/chocolate-iced-custard-filled-banner.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
+		],
+		rating: 5,
+	},
+	{
+		id: 2,
+		name: 'Chokladmunk',
+		price: 18,
+		categories: ['glazed'],
+		images: [
+			'img/chocolate-iced-glazed-banner.jpeg',
+			'img/chocolate-iced-glazed.jpeg',
+		],
+		rating: 4.5,
+	},
+	{
+		id: 3,
+		name: 'Kanelpudrad munk med äppelfyllning',
+		price: 25,
+		categories: ['filled', 'sprinkles'],
+		images: [
+			'img/cinnamon-apple-filled-banner.jpeg',
+			'img/cinnamon-apple-filled.jpeg',
+		],
+		rating: 4.5,
+	},
+	{
+		id: 4,
+		name: 'Glaserad kanelmunk',
+		price: 13,
+		categories: ['glazed', 'sprinkles'],
+		images: ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
+		rating: 5,
+	},
+	{
+		id: 5,
+		name: 'Glaserad munk med citronfyllning',
+		price: 23,
+		categories: ['glazed', 'filled'],
+		images: [
+			'img/glazed-lemon-filled-banner.jpeg',
+			'img/glazed-lemon-filled.jpeg',
+		],
+		rating: 4,
+	},
+	{
+		id: 6,
+		name: 'Munk med chokladfyllning',
+		price: 16,
+		categories: ['filled'],
+		images: [
+			'img/original-filled-chocolate-kreme™-banner.jpeg',
+			'img/original-filled-chocolate-kreme™.jpeg',
+		],
+		rating: 4,
+	},
+	{
+		id: 7,
+		name: 'Glaserad munk',
+		price: 7,
+		categories: ['glazed'],
+		images: [
+			'img/original-glazed-doughnut-banner.jpeg',
+			'img/original-glazed-doughnut.jpeg',
+		],
+		rating: 5,
+	},
+	{
+		id: 8,
+		name: 'Pudrad munk med blåbärsfyllning',
+		price: 25,
+		categories: ['sprinkles', 'filled'],
+		images: [
+			'img/powdered-blueberry-filled-banner.jpeg',
+			'img/powdered-blueberry-filled.jpeg',
+		],
+		rating: 4.5,
+	},
+	{
+		id: 9,
+		name: 'Pudrad munk med jordgubbsfyllning',
+		price: 25,
+		categories: ['sprinkles', 'filled'],
+		images: [
+			'img/powdered-strawberry-filled-banner.jpeg',
+			'img/powdered-strawberry-filled.jpeg',
+		],
+		rating: 4,
+	},
+	{
+		id: 10,
+		name: 'Jordgubbsmunk',
+		price: 11,
+		categories: ['glazed'],
+		images: ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
+		rating: 5,
+	},
 ];
 
 const donutsArrayLucia = [
-    //placeholder, add 1 to basket free of charge 13/12
-    {
-        id: 11,
-        name: 'Luciamunk',
-        price: 1,
-        categories: ['sprinkles', 'filled'],
-        images: [
-            'img/chocolate-iced-custard-filled-banner.jpeg',
-            'img/chocolate-iced-custard-filled.jpeg',
-        ],
-        rating: 5,
-    },
+	//placeholder, add 1 to basket free of charge 13/12
+	{
+		id: 11,
+		name: 'Luciamunk',
+		price: 1,
+		categories: ['sprinkles', 'filled'],
+		images: [
+			'img/chocolate-iced-custard-filled-banner.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
+		],
+		rating: 5,
+	},
 ];
 
 const thisDate = new Date();
 
 const countWeekNumber = () => {
-    startDate = new Date(thisDate.getFullYear(), 0, 1);
-    const days = Math.floor((thisDate - startDate) /
-        (24 * 60 * 60 * 1000));  
-    const weekNumber = Math.ceil(days / 7);
-    printWeekNumber(days,weekNumber);
+	startDate = new Date(thisDate.getFullYear(), 0, 1);
+	const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
+	const weekNumber = Math.ceil(days / 7);
+	printWeekNumber(days, weekNumber);
 };
 
 const printWeekNumber = (days, weekNumber) => {
-    // console.log(weekNumber);
-    // console.log(days);
-}
+	// console.log(weekNumber);
+	// console.log(days);
+};
 
 countWeekNumber();
 
@@ -151,27 +152,27 @@ const month = thisDate.getMonth();
 const date = thisDate.getDate();
 
 /*********************************************************
- * Page load rules
- **********************************************************/
+ * Page load rules
+ **********************************************************/
 
 /*Christmas rule*/
 const christmasCheck = () => {
-    if (month === 11 && date == 24) {
-        document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundRepeat = "no-repeat";
-        document.body.style.backgroundAttachment = "fixed";
-    }
-}
+	if (month === 11 && date == 24) {
+		document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
+		document.body.style.backgroundSize = 'cover';
+		document.body.style.backgroundRepeat = 'no-repeat';
+		document.body.style.backgroundAttachment = 'fixed';
+	}
+};
 
 /*Weekend rule*/
 const weekendPrice = () => {
-    if (day >= 5 && day <= 7) {
+	if (day >= 5 && day <= 7) {
 		for (const obj of donutsArray) {
 			obj.price = Math.round(obj.price * 1.15);
-	  }
-    }
-}
+		}
+	}
+};
 weekendPrice();
 
 /*********************************************************
@@ -236,11 +237,16 @@ const donutDecreaseCount = (id) => {
 };
 
 const donutAddToCart = (id) => {
+	if (!isTimerStarted) startTimer(60 * 15);
+
 	const currentCount = Number(
 		document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`)
 			.value
 	);
-	let totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0) 
+	let totalCartSum = cartItems.reduce(
+		(accumulator, donut) => accumulator + donut.totPrice,
+		0
+	);
 	let donutsCost;
 	for (const donut of donutsArray) {
 		if (donut.id === id) {
@@ -249,7 +255,7 @@ const donutAddToCart = (id) => {
 	}
 	console.log(totalCartSum, donutsCost);
 	if (totalCartSum + donutsCost > 2000) {
-		alert('Du kan inte beställa för mer än 2000kr')
+		alert('Du kan inte beställa för mer än 2000kr');
 		return;
 	}
 	// if (currentCount > 0 && cartItems.length > 0) {
@@ -295,19 +301,19 @@ const renderCart = () => {
 			<button class="button button--background" onclick="donutIncreaseCount(${donut.id});updateCartInputValue('input-cart-${donut.id}', ${donut.count})">+</button>
 			<p>${donut.totPrice} kr</p>
 		</div>
-		</li>`
-		cartItemsToRender = cartItemsToRender + donutElement
+		</li>`;
+		cartItemsToRender = cartItemsToRender + donutElement;
 	}
 	document.querySelector('#cart article ul').innerHTML = cartItemsToRender;
 	updateCartDOM();
-}
+};
 
 const updateCartInputValue = (id, donutCount) => {
 	const cartDonutInput = document.querySelector(`input[data-id="${id}"]`);
 	console.log(cartDonutInput.value);
 	cartDonutInput.value = donutCount;
 	renderCart();
-}
+};
 
 const updateCartDOM = () => {
 	/*To get total price of cart*/
@@ -331,7 +337,6 @@ const updateCartDOM = () => {
  **********************************************************/
 
 const checkForSpecialRules = (cartSum, cartCount) => {
-
 	let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
 	const freightSumDisplay = document.getElementById('freight-sum');
 	const cartSumDisplay = document.getElementById('cart-sum');
@@ -342,7 +347,8 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 
 	cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
 	freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
-	deliveryTime.textContent = "Beställningen skickas 30 minuter efter orderläggning.";
+	deliveryTime.textContent =
+		'Beställningen skickas 30 minuter efter orderläggning.';
 
 	/*No invoice alternative above 800kr rule*/
 	if (cartSum >= 800) {
@@ -357,7 +363,7 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 		date: 13,
 	};
 
-	if (month == lucia.month && date == lucia.date && cartItems.length >=1) {
+	if (month == lucia.month && date == lucia.date && cartItems.length >= 1) {
 		cartItems.push(...donutsArrayLucia);
 		donutsArrayLucia.pop();
 	}
@@ -374,35 +380,37 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 	if (cartCount >= 15) {
 		cartSumAndFreightSum = cartSum; //no freight cost added
 		cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
-		freightSumDisplay.textContent = `Fraktfritt.`
+		freightSumDisplay.textContent = `Fraktfritt.`;
 	} else {
 		cartSumAndFreightSum = cartSum + freightSum;
 		freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
 	}
 
 	/*Free order with coupon rule*/
-	if (checkDiscountCode.value === "a_damn_fine-cup_of-coffee") {
+	if (checkDiscountCode.value === 'a_damn_fine-cup_of-coffee') {
 		cartSumAndFreightSum = 0;
 		cartSumDisplay.textContent = `Din beställning är kostnadsfri!`;
-		freightSumDisplay.textContent = `Fraktfritt.`
+		freightSumDisplay.textContent = `Fraktfritt.`;
 	} else {
 		cartSumAndFreightSum = cartSum + freightSum;
 	}
 
-    /*Weekend deliver time rule*/
-    if (day === 6 || day === 7) {
-        deliveryTime.textContent = "Beställningen skickas 90 minuter efter orderläggning.";
-    }
+	/*Weekend deliver time rule*/
+	if (day === 6 || day === 7) {
+		deliveryTime.textContent =
+			'Beställningen skickas 90 minuter efter orderläggning.';
+	}
 
-    /*Night deliver time rule*/
-    if (day !== 6 || day !== 7 && hour >= 0 && hour <= 5) {
-        deliveryTime.textContent = "Beställningen skickas 45 minuter efter orderläggning.";
-    }
-   
-    /*friday 11-13 rule*/
-    if (day === 5 && hour >= 11 && hour <= 13) {
-        deliveryTime.textContent = "Leveranstiden är beräknad till 15:00";
-    }
+	/*Night deliver time rule*/
+	if (day !== 6 || (day !== 7 && hour >= 0 && hour <= 5)) {
+		deliveryTime.textContent =
+			'Beställningen skickas 45 minuter efter orderläggning.';
+	}
+
+	/*friday 11-13 rule*/
+	if (day === 5 && hour >= 11 && hour <= 13) {
+		deliveryTime.textContent = 'Leveranstiden är beräknad till 15:00';
+	}
 
 	/*thuesday even week rule*/
 };
@@ -449,15 +457,18 @@ const generateDonuts = () => {
                 </div>
        
         <div class="donuts__item_quantity">
-          <button class="button button--background" onclick="donutDecreaseCount(${donut.id
-			})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+          <button class="button button--background" onclick="donutDecreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
           <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
           >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-          <button class="button button--background" onclick="donutIncreaseCount(${donut.id
-			})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+          <button class="button button--background" onclick="donutIncreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
         </div>
-        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${donut.id
-			})">Lägg till för <span>${donut.price}</span> kr</button>
+        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+					donut.id
+				})">Lägg till för <span>${donut.price}</span> kr</button>
       </article>
     `;
 	}
@@ -480,15 +491,18 @@ const cityInputField = document.querySelector('[name="city"]');
 const telInputField = document.querySelector('[name="tel"]');
 const emailInputField = document.querySelector('[name="email"]');
 const cardNumberInputField = document.querySelector('[name="card-number"]');
-const cardExpirationInputField = document.querySelector('[name="date"]')
+const cardExpirationInputField = document.querySelector('[name="date"]');
 const cvcInputField = document.querySelector('[name="cvc"]');
-const socialSecurityInputField = document.querySelector('[name="social-security-number"]');
-
+const socialSecurityInputField = document.querySelector(
+	'[name="social-security-number"]'
+);
 
 const cardRadioInput = document.querySelector('#card-radio');
 const invoiceRadioInput = document.querySelector('#invoice-radio');
 
-const paymentOptionRadios = Array.from(document.querySelectorAll('[name="payment-method"]'));
+const paymentOptionRadios = Array.from(
+	document.querySelectorAll('[name="payment-method"]')
+);
 
 const orderButton = document.querySelector('#order-btn');
 
@@ -502,14 +516,14 @@ let formValidation = {
 	city: false,
 	tel: false,
 	email: false,
-	payment: false
+	payment: false,
 };
 
 let cardPaymentValidation = {
 	cardNumber: false,
 	expirationDate: false,
-	cvc: false
-}
+	cvc: false,
+};
 
 nameInputField.addEventListener('keyup', () => {
 	formValidation.name = nameInputField.value.indexOf(' ') > 0;
@@ -517,7 +531,9 @@ nameInputField.addEventListener('keyup', () => {
 });
 
 addressInputField.addEventListener('keyup', () => {
-	formValidation.address = /\d/.test(addressInputField.value) ? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value) : false;
+	formValidation.address = /\d/.test(addressInputField.value)
+		? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value)
+		: false;
 	activateOrderButton();
 });
 
@@ -529,21 +545,19 @@ postCodeInputField.addEventListener('keyup', () => {
 cityInputField.addEventListener('keyup', () => {
 	formValidation.city = cityInputField.value !== '';
 	activateOrderButton;
-})
+});
 
 telInputField.addEventListener('keyup', () => {
 	formValidation.tel = cityInputField.value !== '';
 	activateOrderButton;
-})
+});
 
 emailInputField.addEventListener('keyup', () => {
 	formValidation.email = cityInputField.value !== '';
 	activateOrderButton;
-})
+});
 
-
-
-paymentOptionRadios.map(radio => {
+paymentOptionRadios.map((radio) => {
 	radio.addEventListener('click', () => {
 		activateOrderButton();
 		switch (radio.value) {
@@ -555,44 +569,43 @@ paymentOptionRadios.map(radio => {
 				cvcInputField.setAttribute('required', '');
 				socialSecurityInputField.removeAttribute('required');
 
-				break
+				break;
 
 			case 'invoice':
-				cardForm.style.display = 'none'
-				invoiceForm.style.display = 'flex'
+				cardForm.style.display = 'none';
+				invoiceForm.style.display = 'flex';
 				socialSecurityInputField.setAttribute('required', '');
 				cardNumberInputField.removeAttribute('required');
 				cardExpirationInputField.removeAttribute('required');
 				cvcInputField.removeAttribute('required');
 
-				break
+				break;
 		}
-	})
-})
+	});
+});
 
 cardNumberInputField.addEventListener('keyup', () => {
 	cardPaymentValidation.cardNumber = /\d/.test(cardNumberInputField.value);
 	console.log(/\d/.test(cardNumberInputField.value));
 	activateOrderButton();
-})
+});
 
 cardExpirationInputField.addEventListener('keyup', () => {
 	cardPaymentValidation.expirationDate = cardExpirationInputField.value !== '';
 	activateOrderButton();
-})
+});
 
 cvcInputField.addEventListener('keyup', () => {
 	cardPaymentValidation.cvc = cvcInputField.value !== '';
 	activateOrderButton();
-})
+});
 
 socialSecurityInputField.addEventListener('keyup', () => {
 	formValidation.payment = /\d/.test(socialSecurityInputField.value);
 	activateOrderButton();
-})
+});
 
-
-const validateInput = validatedInputs => {
+const validateInput = (validatedInputs) => {
 	for (const prop in validatedInputs) {
 		if (!validatedInputs[prop]) {
 			return false;
@@ -610,15 +623,14 @@ const validatePaymentInputs = () => {
 			}
 		}
 		formValidation.payment = true;
-	}
-	else if (invoiceRadioInput.checked) {
+	} else if (invoiceRadioInput.checked) {
 		if (socialSecurityInputField.value === '') {
 			formValidation.payment = false;
 			return;
 		}
 		formValidation.payment = true;
 	}
-}
+};
 
 const activateOrderButton = () => {
 	validatePaymentInputs();
@@ -642,7 +654,6 @@ document.querySelector('form').addEventListener('reset', function (event) {
 		event.preventDefault();
 	}
 });
-
 
 /*********************************************************
  * Filter/sorting Menu
@@ -673,3 +684,38 @@ filterButton.addEventListener('click', () => {
 
 	if (filterMenuVisible) filterElement.querySelector('select').focus();
 });
+
+// Timer
+// 15 min
+const stopTimer = () => {
+	clearInterval(timerInterval);
+	console.log('Times up!');
+};
+
+const startTimer = (duration, display) => {
+	isTimerStarted = true;
+
+	let timer = duration,
+		minutes,
+		seconds;
+	timerInterval = setInterval(() => {
+		minutes = parseInt(timer / 60, 10);
+		seconds = parseInt(timer % 60, 10);
+
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		seconds = seconds < 10 ? '0' + seconds : seconds;
+
+		// display.textContent = minutes + ':' + seconds;
+
+		if (--timer < 0) {
+			// timer = duration;
+			stopTimer();
+		}
+	}, 1000);
+};
+
+// Reset
+// Resets everything
+// const reset = () => {
+
+// }
