@@ -650,8 +650,9 @@ const submitOrder = () => {
 
 document.querySelector('form').addEventListener('reset', function (event) {
 	//A warning text for accessibility
-	if (!confirm('Är du säker att du vill återställa formuläret?')) {
+	if (confirm('Är du säker att du vill återställa formuläret?')) {
 		event.preventDefault();
+		reset();
 	}
 });
 
@@ -689,7 +690,8 @@ filterButton.addEventListener('click', () => {
 // 15 min
 const stopTimer = () => {
 	clearInterval(timerInterval);
-	console.log('Times up!');
+	alert('Du var för långsam! Kundvagnen blev nollställd');
+	reset();
 };
 
 const startTimer = (duration, display) => {
@@ -716,6 +718,6 @@ const startTimer = (duration, display) => {
 
 // Reset
 // Resets everything
-// const reset = () => {
-
-// }
+const reset = () => {
+	location.reload();
+};
