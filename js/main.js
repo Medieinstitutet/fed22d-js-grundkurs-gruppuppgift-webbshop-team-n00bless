@@ -139,20 +139,6 @@ const donutsArrayLucia = [
 
 const thisDate = new Date();
 
-const countWeekNumber = () => {
-	startDate = new Date(thisDate.getFullYear(), 0, 1);
-	const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
-	const weekNumber = Math.ceil(days / 7);
-	printWeekNumber(days, weekNumber);
-};
-
-const printWeekNumber = (days, weekNumber) => {
-	// console.log(weekNumber);
-	// console.log(days);
-};
-
-countWeekNumber();
-
 const day = thisDate.getDay();
 const hour = thisDate.getHours();
 const month = thisDate.getMonth();
@@ -164,7 +150,7 @@ const date = thisDate.getDate();
 
 /*Christmas rule*/
 const christmasCheck = () => {
-	if (month === 10 && date == 18) {
+	if (month === 11 && date == 24) {
 		document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
 		document.body.style.backgroundSize = 'cover';
 		document.body.style.backgroundRepeat = 'no-repeat';
@@ -432,6 +418,17 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 	}
 
 	/*thuesday even week rule*/
+	const countWeekNumber = () => {
+		startDate = new Date(thisDate.getFullYear(), 0, 1);
+		const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
+		const weekNumber = Math.ceil(days / 7);
+
+		if(weekNumber % 2 == 0 && day == 5 && cartSumAndFreightSum >= 25){
+			cartSumAndFreightSum = cartSumAndFreightSum - 25;
+			cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${cartSumAndFreightSum} kr.`;
+		}
+	};
+	countWeekNumber();
 };
 
 /*********************************************************
