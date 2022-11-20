@@ -79,7 +79,8 @@ header {
 			&_filter {
 				display: flex;
 				align-items: center;
-				
+				justify-content: space-evenly;
+				flex-wrap: wrap;
 				background-color: fn.getColor(orange);
 				color: #fff;
 				border: unset;

@@ -790,6 +790,160 @@ const generateFilterButtons = () => {
 
 const categoryButtons = filterElement.querySelectorAll('input');
 
+const toogleIconPrice = document.querySelector("#price-sort");
+const toogleIconRating = document.querySelector("#rating-sort");
+const toogleIconName = document.querySelector("#name-sort");
+
+let toogleIconPriceDir = document.querySelector("#price-sort i");
+let toogleIconRatingDir = document.querySelector("#rating-sort i");
+let toogleIconNameDir = document.querySelector("#name-sort i");
+
+toogleIconPrice.addEventListener("click", initSortPriceDown);
+toogleIconRating.addEventListener("click", initSortRatingDown);
+toogleIconName.addEventListener("click", initSortNameDown);
+/*Name*/
+const sortNameDown = ( a, b ) => {
+    toogleIconName.removeEventListener("click", initSortNameDown);
+    toogleIconName.addEventListener("click", initSortNameUp);
+    if ( a.name < b.name ){
+
+      return -1;
+    }
+    if ( a.name > b.name ){
+
+      return 1;
+    }
+  }
+
+function initSortNameDown() {
+    donutsArray.sort(sortNameDown);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+    toogleIconName.style.color = "red"; //placeholder
+    toogleIconNameDir.classList.toggle("fa-arrow-down-wide-short");
+    console.log(toogleIconNameDir.classList.contains('fa-arrow-down-wide-short'));
+}
+ 
+const sortNameUp = ( a, b ) => {
+    toogleIconName.removeEventListener("click", initSortNameUp);
+    toogleIconName.addEventListener("click", initSortNameDown);
+    if ( a.name < b.name ){
+
+      return 1;
+    }
+    if ( a.name > b.name ){
+
+      return -1;
+    }
+}
+
+function initSortNameUp() {
+    donutsArray.sort(sortNameUp);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+     toogleIconName.style.color = "green"; //placeholder
+}
+/*Rating*/
+const sortRatingDown = ( a, b ) => {
+    toogleIconRating.removeEventListener("click", initSortRatingDown);
+    toogleIconRating.addEventListener("click", initSortRatingUp);
+    if ( a.rating < b.rating ){
+
+      return -1;
+    }
+    if ( a.rating > b.rating ){
+
+      return 1;
+    }
+}
+
+function initSortRatingDown() {
+    donutsArray.sort(sortRatingDown);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+    toogleIconRating.style.color = "red"; //placeholder
+
+}
+ 
+const sortRatingUp = ( a, b ) => {
+    toogleIconRating.removeEventListener("click", initSortRatingUp);
+    toogleIconRating.addEventListener("click", initSortRatingDown);
+    if ( a.rating < b.rating ){
+
+      return 1;
+    }
+    if ( a.rating > b.rating ){
+
+      return -1;
+    }
+}
+
+function initSortRatingUp() {
+    donutsArray.sort(sortRatingUp);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+     toogleIconRating.style.color = "green"; //placeholder
+}
+/*Price*/
+const sortPriceDown = ( a, b ) => {
+    toogleIconPrice.removeEventListener("click", initSortPriceDown);
+    toogleIconPrice.addEventListener("click", initSortPriceUp);
+    if ( a.price < b.price ){
+
+      return -1;
+    }
+    if ( a.price > b.price ){
+
+      return 1;
+    }
+}
+
+function initSortPriceDown() {
+    donutsArray.sort(sortPriceDown);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+    toogleIconPrice.style.color = "red"; //placeholder
+
+}
+ 
+const sortPriceUp = ( a, b ) => {
+    toogleIconPrice.removeEventListener("click", initSortPriceUp);
+    toogleIconPrice.addEventListener("click", initSortPriceDown);
+    if ( a.price < b.price ){
+
+      return 1;
+    }
+    if ( a.price > b.price ){
+
+      return -1;
+    }
+}
+
+function initSortPriceUp() {
+    donutsArray.sort(sortPriceUp);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+     toogleIconPrice.style.color = "green"; //placeholder
+}
+
 // Timer
 // 15 min
 const stopTimer = () => {
