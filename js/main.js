@@ -429,6 +429,14 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 		}
 	};
 	countWeekNumber();
+
+	 /*More than 10 of same donut rule*/
+    for (var i = 0; i < cartItems.length; i++) {
+        let sameDonutCount = cartItems[i].count;
+        if(sameDonutCount >=10){
+            return cartItems[i].totPrice = Math.round(cartItems[i].totPrice * 0.9);
+        }
+    }
 };
 
 /*********************************************************
