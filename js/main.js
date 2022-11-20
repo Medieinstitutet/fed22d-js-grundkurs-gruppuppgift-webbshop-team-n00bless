@@ -122,6 +122,8 @@ const donutsArray = [
 	},
 ];
 
+let filteredDonutsArray = donutsArray;
+
 const donutsArrayLucia = [
 	//placeholder, add 1 to basket free of charge 13/12
 	{
@@ -423,20 +425,19 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 		const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
 		const weekNumber = Math.ceil(days / 7);
 
-		if(weekNumber % 2 == 0 && day == 5 && cartSumAndFreightSum >= 25){
+		if (weekNumber % 2 == 0 && day == 5 && cartSumAndFreightSum >= 25) {
 			cartSumAndFreightSum = cartSumAndFreightSum - 25;
 			cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${cartSumAndFreightSum} kr.`;
 		}
 	};
-	countWeekNumber();
+	countWeekNumber(); /*More than 10 of same donut rule*/
 
-	 /*More than 10 of same donut rule*/
-    for (var i = 0; i < cartItems.length; i++) {
-        let sameDonutCount = cartItems[i].count;
-        if(sameDonutCount >=10){
-            return cartItems[i].totPrice = Math.round(cartItems[i].totPrice * 0.9);
-        }
-    }
+	for (var i = 0; i < cartItems.length; i++) {
+		let sameDonutCount = cartItems[i].count;
+		if (sameDonutCount >= 10) {
+			return (cartItems[i].totPrice = Math.round(cartItems[i].totPrice * 0.9));
+		}
+	}
 };
 
 /*********************************************************
@@ -463,7 +464,7 @@ const generateStarRating = (rating) => {
 
 	return ratingEl;
 };
-const generateDonuts = (category) => {
+const generateDonuts = () => {
 	let donuts = [];
 	for (const donut of donutsArray) {
 		for (const category of donut.categories) {
@@ -698,6 +699,8 @@ document.querySelector('form').addEventListener('reset', function (event) {
 
 const filterButton = document.querySelector('.navbar__menu > button');
 const filterElement = document.querySelector('#filterMenu');
+const searchInput = document.querySelector('[name="searchQuery"]');
+const searchButton = document.querySelector('#searchButton');
 let filterMenuVisible = false;
 
 filterButton.addEventListener('click', () => {
@@ -722,58 +725,136 @@ filterButton.addEventListener('click', () => {
 	if (filterMenuVisible) filterElement.querySelector('select').focus();
 });
 
-const renderFromCategories = () => {
+searchButton.addEventListener('click', () => {
+	searchQuery(searchInput.value);
+});
+
+// Listen for ENTER click
+document.addEventListener('keydown', (e) => {
+	if (e.key === 'Enter' && document.activeElement === searchInput) {
+		searchQuery(searchInput.value);
+	}
+});
+
+const searchQuery = (query) => {
+	if (query && query != '') {
+		const filteredArray = donutsArray.filter((item) =>
+			item.name.toLowerCase().includes(query.toLowerCase())
+		);
+
+		console.log(filteredArray);
+	}
+};
+
+const renderFromFilter = () => {
 	let donuts = [];
-	for (const donut of donutsArray) {
-		for (const category of donut.categories) {
-			if (filterSet.has(category)) {
-				donuts += /*html*/ `
-					<article class="donuts__item" data-id=${donut.id}>
-						<h2>${donut.name}</h2>
-						<div class="donuts__item_image">
-							<img
-								src="${donut.images[1]}"
-								alt="A picture of a donut"
-							/>
-						</div>
-										<div class="donuts__item_info">
-												<p>${donut.price} kr</p>
-												<p>${generateStarRating(donut.rating)}</p>
-										</div>
-					
-						<div class="donuts__item_quantity">
-							<button class="button button--background" onclick="donutDecreaseCount(${
-								donut.id
-							})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
-							<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
-							>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-							<button class="button button--background" onclick="donutIncreaseCount(${
-								donut.id
-							})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
-						</div>
-						<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
-							donut.id
-						})">Lägg till för <span>${donut.price}</span> kr</button>
-					</article>
-    		`;
-			}
-		}
+	for (const donut of filteredDonutsArray) {
+		donuts += /*html*/ `
+			<article class="donuts__item" data-id=${donut.id}>
+				<h2>${donut.name}</h2>
+				<div class="donuts__item_image">
+					<img
+						src="${donut.images[1]}"
+						alt="A picture of a donut"
+					/>
+				</div>
+								<div class="donuts__item_info">
+										<p>${donut.price} kr</p>
+										<p>${generateStarRating(donut.rating)}</p>
+								</div>
+			
+				<div class="donuts__item_quantity">
+					<button class="button button--background" onclick="donutDecreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+					<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
+					>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
+					<button class="button button--background" onclick="donutIncreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+				</div>
+				<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+					donut.id
+				})">Lägg till för <span>${donut.price}</span> kr</button>
+			</article>
+		`;
 	}
 
 	donutListEl.innerHTML = donuts;
 };
+// const renderFromCategories = () => {
+// 	let donuts = [];
+// 	for (const donut of donutsArray) {
+// 		for (const category of donut.categories) {
+// 			if (filterSet.has(category)) {
+// 				donuts += /*html*/ `
+// 					<article class="donuts__item" data-id=${donut.id}>
+// 						<h2>${donut.name}</h2>
+// 						<div class="donuts__item_image">
+// 							<img
+// 								src="${donut.images[1]}"
+// 								alt="A picture of a donut"
+// 							/>
+// 						</div>
+// 										<div class="donuts__item_info">
+// 												<p>${donut.price} kr</p>
+// 												<p>${generateStarRating(donut.rating)}</p>
+// 										</div>
+
+// 						<div class="donuts__item_quantity">
+// 							<button class="button button--background" onclick="donutDecreaseCount(${
+// 								donut.id
+// 							})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+// 							<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
+// 							>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
+// 							<button class="button button--background" onclick="donutIncreaseCount(${
+// 								donut.id
+// 							})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+// 						</div>
+// 						<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+// 							donut.id
+// 						})">Lägg till för <span>${donut.price}</span> kr</button>
+// 					</article>
+//     		`;
+// 			}
+// 		}
+// 	}
+
+// 	donutListEl.innerHTML = donuts;
+// };
 
 const addCategorySort = (category) => {
 	if (filterSet.has(category)) {
 		filterSet.delete(category);
 		if (filterSet.size > 0) {
-			renderFromCategories();
+			// filteredDonutsArray =
+
+			filteredDonutsArray = [];
+			for (const donut of donutsArray) {
+				for (const category of donut.categories) {
+					if (filterSet.has(category)) {
+						filteredDonutsArray.push(donut);
+					}
+				}
+			}
+
+			renderFromFilter();
 		} else {
 			generateDonuts();
 		}
 	} else {
 		filterSet.add(category);
-		renderFromCategories();
+
+		filteredDonutsArray = [];
+		for (const donut of donutsArray) {
+			for (const category of donut.categories) {
+				if (filterSet.has(category)) {
+					filteredDonutsArray.push(donut);
+				}
+			}
+		}
+
+		renderFromFilter();
 	}
 };
 
@@ -798,158 +879,141 @@ const generateFilterButtons = () => {
 
 const categoryButtons = filterElement.querySelectorAll('input');
 
-const toogleIconPrice = document.querySelector("#price-sort");
-const toogleIconRating = document.querySelector("#rating-sort");
-const toogleIconName = document.querySelector("#name-sort");
+const toogleIconPrice = document.querySelector('#price-sort');
+const toogleIconRating = document.querySelector('#rating-sort');
+const toogleIconName = document.querySelector('#name-sort');
 
-let toogleIconPriceDir = document.querySelector("#price-sort i");
-let toogleIconRatingDir = document.querySelector("#rating-sort i");
-let toogleIconNameDir = document.querySelector("#name-sort i");
+let toogleIconPriceDir = document.querySelector('#price-sort i');
+let toogleIconRatingDir = document.querySelector('#rating-sort i');
+let toogleIconNameDir = document.querySelector('#name-sort i');
 
-toogleIconPrice.addEventListener("click", initSortPriceDown);
-toogleIconRating.addEventListener("click", initSortRatingDown);
-toogleIconName.addEventListener("click", initSortNameDown);
+toogleIconPrice.addEventListener('click', initSortPriceDown);
+toogleIconRating.addEventListener('click', initSortRatingDown);
+toogleIconName.addEventListener('click', initSortNameDown);
 /*Name*/
-const sortNameDown = ( a, b ) => {
-    toogleIconName.removeEventListener("click", initSortNameDown);
-    toogleIconName.addEventListener("click", initSortNameUp);
-    if ( a.name < b.name ){
+const sortNameDown = (a, b) => {
+	toogleIconName.removeEventListener('click', initSortNameDown);
+	toogleIconName.addEventListener('click', initSortNameUp);
+	if (a.name < b.name) {
+		return -1;
+	}
+	if (a.name > b.name) {
+		return 1;
+	}
+};
 
-      return -1;
-    }
-    if ( a.name > b.name ){
-
-      return 1;
-    }
-  }
-
-function initSortNameDown() {
-    donutsArray.sort(sortNameDown);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-    toogleIconName.style.color = "red"; //placeholder
-    toogleIconNameDir.classList.toggle("fa-arrow-down-wide-short");
-    console.log(toogleIconNameDir.classList.contains('fa-arrow-down-wide-short'));
+function initSortNameDown() {
+	filteredDonutsArray.sort(sortNameDown);
+	if (filterSet.size > 0) {
+		renderFromFilter();
+	} else {
+		generateDonuts();
+	}
+	toogleIconName.style.color = 'red'; //placeholder
+	toogleIconNameDir.classList.toggle('fa-arrow-down-wide-short');
+	console.log(toogleIconNameDir.classList.contains('fa-arrow-down-wide-short'));
 }
- 
-const sortNameUp = ( a, b ) => {
-    toogleIconName.removeEventListener("click", initSortNameUp);
-    toogleIconName.addEventListener("click", initSortNameDown);
-    if ( a.name < b.name ){
+const sortNameUp = (a, b) => {
+	toogleIconName.removeEventListener('click', initSortNameUp);
+	toogleIconName.addEventListener('click', initSortNameDown);
+	if (a.name < b.name) {
+		return 1;
+	}
+	if (a.name > b.name) {
+		return -1;
+	}
+};
 
-      return 1;
-    }
-    if ( a.name > b.name ){
-
-      return -1;
-    }
-}
-
-function initSortNameUp() {
-    donutsArray.sort(sortNameUp);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-     toogleIconName.style.color = "green"; //placeholder
+function initSortNameUp() {
+	filteredDonutsArray.sort(sortNameUp);
+	if (filterSet.size > 0) {
+		renderFromFilter();
+	} else {
+		generateDonuts();
+	}
+	toogleIconName.style.color = 'green'; //placeholder
 }
 /*Rating*/
-const sortRatingDown = ( a, b ) => {
-    toogleIconRating.removeEventListener("click", initSortRatingDown);
-    toogleIconRating.addEventListener("click", initSortRatingUp);
-    if ( a.rating < b.rating ){
+const sortRatingDown = (a, b) => {
+	toogleIconRating.removeEventListener('click', initSortRatingDown);
+	toogleIconRating.addEventListener('click', initSortRatingUp);
+	if (a.rating < b.rating) {
+		return -1;
+	}
+	if (a.rating > b.rating) {
+		return 1;
+	}
+};
 
-      return -1;
-    }
-    if ( a.rating > b.rating ){
-
-      return 1;
-    }
+function initSortRatingDown() {
+	filteredDonutsArray.sort(sortRatingDown);
+	if (filterSet.size > 0) {
+		renderFromFilter();
+	} else {
+		generateDonuts();
+	}
+	toogleIconRating.style.color = 'red'; //placeholder
 }
+const sortRatingUp = (a, b) => {
+	toogleIconRating.removeEventListener('click', initSortRatingUp);
+	toogleIconRating.addEventListener('click', initSortRatingDown);
+	if (a.rating < b.rating) {
+		return 1;
+	}
+	if (a.rating > b.rating) {
+		return -1;
+	}
+};
 
-function initSortRatingDown() {
-    donutsArray.sort(sortRatingDown);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-    toogleIconRating.style.color = "red"; //placeholder
-
-}
- 
-const sortRatingUp = ( a, b ) => {
-    toogleIconRating.removeEventListener("click", initSortRatingUp);
-    toogleIconRating.addEventListener("click", initSortRatingDown);
-    if ( a.rating < b.rating ){
-
-      return 1;
-    }
-    if ( a.rating > b.rating ){
-
-      return -1;
-    }
-}
-
-function initSortRatingUp() {
-    donutsArray.sort(sortRatingUp);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-     toogleIconRating.style.color = "green"; //placeholder
+function initSortRatingUp() {
+	filteredDonutsArray.sort(sortRatingUp);
+	if (filterSet.size > 0) {
+		renderFromFilter();
+	} else {
+		generateDonuts();
+	}
+	toogleIconRating.style.color = 'green'; //placeholder
 }
 /*Price*/
-const sortPriceDown = ( a, b ) => {
-    toogleIconPrice.removeEventListener("click", initSortPriceDown);
-    toogleIconPrice.addEventListener("click", initSortPriceUp);
-    if ( a.price < b.price ){
+const sortPriceDown = (a, b) => {
+	toogleIconPrice.removeEventListener('click', initSortPriceDown);
+	toogleIconPrice.addEventListener('click', initSortPriceUp);
+	if (a.price < b.price) {
+		return -1;
+	}
+	if (a.price > b.price) {
+		return 1;
+	}
+};
 
-      return -1;
-    }
-    if ( a.price > b.price ){
-
-      return 1;
-    }
+function initSortPriceDown() {
+	filteredDonutsArray.sort(sortPriceDown);
+	if (filterSet.size > 0) {
+		renderFromFilter();
+	} else {
+		generateDonuts();
+	}
+	toogleIconPrice.style.color = 'red'; //placeholder
 }
+const sortPriceUp = (a, b) => {
+	toogleIconPrice.removeEventListener('click', initSortPriceUp);
+	toogleIconPrice.addEventListener('click', initSortPriceDown);
+	if (a.price < b.price) {
+		return 1;
+	}
+	if (a.price > b.price) {
+		return -1;
+	}
+};
 
-function initSortPriceDown() {
-    donutsArray.sort(sortPriceDown);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-    toogleIconPrice.style.color = "red"; //placeholder
-
-}
- 
-const sortPriceUp = ( a, b ) => {
-    toogleIconPrice.removeEventListener("click", initSortPriceUp);
-    toogleIconPrice.addEventListener("click", initSortPriceDown);
-    if ( a.price < b.price ){
-
-      return 1;
-    }
-    if ( a.price > b.price ){
-
-      return -1;
-    }
-}
-
-function initSortPriceUp() {
-    donutsArray.sort(sortPriceUp);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-     toogleIconPrice.style.color = "green"; //placeholder
+function initSortPriceUp() {
+	filteredDonutsArray.sort(sortPriceUp);
+	if (filterSet.size > 0) {
+		renderFromFilter();
+	} else {
+		generateDonuts();
+	}
+	toogleIconPrice.style.color = 'green'; //placeholder
 }
 
 // Timer
