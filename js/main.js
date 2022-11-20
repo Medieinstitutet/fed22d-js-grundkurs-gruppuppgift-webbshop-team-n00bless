@@ -879,141 +879,166 @@ const generateFilterButtons = () => {
 
 const categoryButtons = filterElement.querySelectorAll('input');
 
-const toogleIconPrice = document.querySelector('#price-sort');
-const toogleIconRating = document.querySelector('#rating-sort');
-const toogleIconName = document.querySelector('#name-sort');
+const toogleIconPrice = document.querySelector("#price-sort");
+const toogleIconRating = document.querySelector("#rating-sort");
+const toogleIconName = document.querySelector("#name-sort");
 
-let toogleIconPriceDir = document.querySelector('#price-sort i');
-let toogleIconRatingDir = document.querySelector('#rating-sort i');
-let toogleIconNameDir = document.querySelector('#name-sort i');
+toogleIconPrice.style.transform= "scale(-1, 1)";
+toogleIconRating.style.transform= "scale(-1, 1)";
+toogleIconName.style.transform= "scale(-1, 1)";
 
-toogleIconPrice.addEventListener('click', initSortPriceDown);
-toogleIconRating.addEventListener('click', initSortRatingDown);
-toogleIconName.addEventListener('click', initSortNameDown);
+toogleIconPrice.addEventListener("click", initSortPriceDown);
+toogleIconRating.addEventListener("click", initSortRatingDown);
+toogleIconName.addEventListener("click", initSortNameDown);
+
 /*Name*/
-const sortNameDown = (a, b) => {
-	toogleIconName.removeEventListener('click', initSortNameDown);
-	toogleIconName.addEventListener('click', initSortNameUp);
-	if (a.name < b.name) {
-		return -1;
-	}
-	if (a.name > b.name) {
-		return 1;
-	}
-};
+const sortNameDown = ( a, b ) => {
+    toogleIconName.removeEventListener("click", initSortNameDown);
+    toogleIconName.addEventListener("click", initSortNameUp);
+    if ( a.name < b.name ){
 
-function initSortNameDown() {
-	filteredDonutsArray.sort(sortNameDown);
-	if (filterSet.size > 0) {
-		renderFromFilter();
-	} else {
-		generateDonuts();
-	}
-	toogleIconName.style.color = 'red'; //placeholder
-	toogleIconNameDir.classList.toggle('fa-arrow-down-wide-short');
-	console.log(toogleIconNameDir.classList.contains('fa-arrow-down-wide-short'));
+      return -1;
+    }
+    if ( a.name > b.name ){
+
+      return 1;
+    }
+  }
+
+function initSortNameDown() {
+    donutsArray.sort(sortNameDown);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+    toogleIconName.style.transition= "0.6s ease";
+    toogleIconName.style.transform = "rotate(-0.5turn)";
 }
-const sortNameUp = (a, b) => {
-	toogleIconName.removeEventListener('click', initSortNameUp);
-	toogleIconName.addEventListener('click', initSortNameDown);
-	if (a.name < b.name) {
-		return 1;
-	}
-	if (a.name > b.name) {
-		return -1;
-	}
-};
+ 
+const sortNameUp = ( a, b ) => {
+    toogleIconName.removeEventListener("click", initSortNameUp);
+    toogleIconName.addEventListener("click", initSortNameDown);
+    if ( a.name < b.name ){
 
-function initSortNameUp() {
-	filteredDonutsArray.sort(sortNameUp);
-	if (filterSet.size > 0) {
-		renderFromFilter();
-	} else {
-		generateDonuts();
-	}
-	toogleIconName.style.color = 'green'; //placeholder
+      return 1;
+    }
+    if ( a.name > b.name ){
+
+      return -1;
+    }
+}
+
+function initSortNameUp() {
+    donutsArray.sort(sortNameUp);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+     toogleIconName.style.transition= "0.6s ease";
+     toogleIconName.style.transform= "scale(-1, 1)";
+     toogleIconName.style.transform = "rotate(deg0)";
 }
 /*Rating*/
-const sortRatingDown = (a, b) => {
-	toogleIconRating.removeEventListener('click', initSortRatingDown);
-	toogleIconRating.addEventListener('click', initSortRatingUp);
-	if (a.rating < b.rating) {
-		return -1;
-	}
-	if (a.rating > b.rating) {
-		return 1;
-	}
-};
+const sortRatingDown = ( a, b ) => {
+    toogleIconRating.removeEventListener("click", initSortRatingDown);
+    toogleIconRating.addEventListener("click", initSortRatingUp);
+    if ( a.rating < b.rating ){
 
-function initSortRatingDown() {
-	filteredDonutsArray.sort(sortRatingDown);
-	if (filterSet.size > 0) {
-		renderFromFilter();
-	} else {
-		generateDonuts();
-	}
-	toogleIconRating.style.color = 'red'; //placeholder
+      return -1;
+    }
+    if ( a.rating > b.rating ){
+
+      return 1;
+    }
 }
-const sortRatingUp = (a, b) => {
-	toogleIconRating.removeEventListener('click', initSortRatingUp);
-	toogleIconRating.addEventListener('click', initSortRatingDown);
-	if (a.rating < b.rating) {
-		return 1;
-	}
-	if (a.rating > b.rating) {
-		return -1;
-	}
-};
 
-function initSortRatingUp() {
-	filteredDonutsArray.sort(sortRatingUp);
-	if (filterSet.size > 0) {
-		renderFromFilter();
-	} else {
-		generateDonuts();
-	}
-	toogleIconRating.style.color = 'green'; //placeholder
+function initSortRatingDown() {
+    donutsArray.sort(sortRatingDown);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+    toogleIconRating.style.transition= "0.6s ease";
+    toogleIconRating.style.transform = "rotate(-0.5turn)";
+
+}
+ 
+const sortRatingUp = ( a, b ) => {
+    toogleIconRating.removeEventListener("click", initSortRatingUp);
+    toogleIconRating.addEventListener("click", initSortRatingDown);
+    if ( a.rating < b.rating ){
+
+      return 1;
+    }
+    if ( a.rating > b.rating ){
+
+      return -1;
+    }
+}
+
+function initSortRatingUp() {
+    donutsArray.sort(sortRatingUp);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+    toogleIconRating.style.transition= "0.6s ease";
+    toogleIconRating.style.transform= "scale(-1, 1)";
+    toogleIconRating.style.transform = "rotate(deg0)";
 }
 /*Price*/
-const sortPriceDown = (a, b) => {
-	toogleIconPrice.removeEventListener('click', initSortPriceDown);
-	toogleIconPrice.addEventListener('click', initSortPriceUp);
-	if (a.price < b.price) {
-		return -1;
-	}
-	if (a.price > b.price) {
-		return 1;
-	}
-};
+const sortPriceDown = ( a, b ) => {
+    toogleIconPrice.removeEventListener("click", initSortPriceDown);
+    toogleIconPrice.addEventListener("click", initSortPriceUp);
+    if ( a.price < b.price ){
 
-function initSortPriceDown() {
-	filteredDonutsArray.sort(sortPriceDown);
-	if (filterSet.size > 0) {
-		renderFromFilter();
-	} else {
-		generateDonuts();
-	}
-	toogleIconPrice.style.color = 'red'; //placeholder
+      return -1;
+    }
+    if ( a.price > b.price ){
+
+      return 1;
+    }
 }
-const sortPriceUp = (a, b) => {
-	toogleIconPrice.removeEventListener('click', initSortPriceUp);
-	toogleIconPrice.addEventListener('click', initSortPriceDown);
-	if (a.price < b.price) {
-		return 1;
-	}
-	if (a.price > b.price) {
-		return -1;
-	}
-};
 
-function initSortPriceUp() {
-	filteredDonutsArray.sort(sortPriceUp);
-	if (filterSet.size > 0) {
-		renderFromFilter();
-	} else {
-		generateDonuts();
-	}
-	toogleIconPrice.style.color = 'green'; //placeholder
+function initSortPriceDown() {
+    donutsArray.sort(sortPriceDown);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+    toogleIconPrice.style.transition= "0.6s ease";
+    toogleIconPrice.style.transform = "rotate(-0.5turn)";
+
+}
+ 
+const sortPriceUp = ( a, b ) => {
+    toogleIconPrice.removeEventListener("click", initSortPriceUp);
+    toogleIconPrice.addEventListener("click", initSortPriceDown);
+    if ( a.price < b.price ){
+
+      return 1;
+    }
+    if ( a.price > b.price ){
+
+      return -1;
+    }
+}
+
+function initSortPriceUp() {
+    donutsArray.sort(sortPriceUp);
+    if (filterSet.size > 0) {
+        renderFromCategories();
+    } else {
+        generateDonuts();
+    }
+    toogleIconPrice.style.transition= "0.6s ease";
+    toogleIconPrice.style.transform= "scale(-1, 1)";
+    toogleIconPrice.style.transform = "rotate(deg0)";
 }
 
 // Timer
