@@ -1,13 +1,14 @@
 # HTML
 
-+ [ ] Filter-ikon som dropdown-meny
-
 
 # JS
-+ [ ] Välja prisintervall
-+ [ ] Plus- och minusknapparna ska fungera
-+ [ ] Bilder behöver laddas hem
-+ [ ] Alla munkar ska skapas och läggas i en array
++ [ ] Prisintervallsfunktionen behöver fungera
++ [ ] Ta bort grejer från varukorgen
++ [ ] Slideshow
++ [ ] Kolla igenom 10%-regeln
++ [ ] Visuell förändring vid ändring av totalpriset
++ [ ] Summan och totala antalet munkar i varukorgen samt vid ikonen längst upp till höger ska bara uppdateras vid tryck på "Lägg till"
+
 
 # Styling
 + [ ] Baslayouten ska göras

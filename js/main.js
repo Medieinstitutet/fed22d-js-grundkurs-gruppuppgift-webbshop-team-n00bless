@@ -158,8 +158,8 @@ const christmasCheck = () => {
 		document.body.style.backgroundRepeat = 'no-repeat';
 		document.body.style.backgroundAttachment = 'fixed';
 		let christmasPrizeColor = document.querySelectorAll(
-				'.donuts__item_info p:first-child'
-			),
+			'.donuts__item_info p:first-child'
+		),
 			i;
 		for (i = 0; i < christmasPrizeColor.length; ++i) {
 			christmasPrizeColor[i].style.color = 'red';
@@ -293,18 +293,18 @@ const renderCart = () => {
 	let cartItemsToRender = '';
 	for (const donut of cartItems) {
 		let donutElement = /*html*/ `
-		<li data-id="cart-${donut.id}">
-		<div className="name">
-			<img src=${donut.images[1]} width="30" height="30"/>
-			<p>${donut.name}</p>
-		</div>
-		<div className="donuts__item_quantity">			
-			<button class="button button--background" onclick="updateCartQuantity('cart-${donut.id}', 'dec')">-</button>
-			<input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
-			<button class="button button--background" onclick="updateCartQuantity('cart-${donut.id}', 'inc')">+</button>
-			<p>${donut.totPrice} kr</p>
-		</div>
-		</li>`;
+			<li data-id="cart-${donut.id}">
+			<div className="name">
+				<img src=${donut.images[1]} width="30" height="30"/>
+				<p>${donut.name}</p>
+			</div>
+			<div className="donuts__item_quantity">			
+				<button class="button button--background" onclick="updateCartQuantity('cart-${donut.id}', 'dec')">-</button>
+				<input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
+				<button class="button button--background" onclick="updateCartQuantity('cart-${donut.id}', 'inc')">+</button>
+				<p>${donut.totPrice} kr</p>
+			</div>
+			</li>`;
 		cartItemsToRender = cartItemsToRender + donutElement;
 	}
 	document.querySelector('#cart article ul').innerHTML = cartItemsToRender;
@@ -486,18 +486,15 @@ const generateDonuts = () => {
                 </div>
        
         <div class="donuts__item_quantity">
-          <button class="button button--background" onclick="donutDecreaseCount(${
-						donut.id
-					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+          <button class="button button--background" onclick="donutDecreaseCount(${donut.id
+			})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
           <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
           >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-          <button class="button button--background" onclick="donutIncreaseCount(${
-						donut.id
-					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+          <button class="button button--background" onclick="donutIncreaseCount(${donut.id
+			})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
         </div>
-        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
-					donut.id
-				})">Lägg till för <span>${donut.price}</span> kr</button>
+        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${donut.id
+			})">Lägg till för <span>${donut.price}</span> kr</button>
       </article>
     `;
 	}
@@ -764,18 +761,15 @@ const renderFromFilter = () => {
 								</div>
 			
 				<div class="donuts__item_quantity">
-					<button class="button button--background" onclick="donutDecreaseCount(${
-						donut.id
-					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+					<button class="button button--background" onclick="donutDecreaseCount(${donut.id
+			})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
 					<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
 					>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-					<button class="button button--background" onclick="donutIncreaseCount(${
-						donut.id
-					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+					<button class="button button--background" onclick="donutIncreaseCount(${donut.id
+			})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
 				</div>
-				<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
-					donut.id
-				})">Lägg till för <span>${donut.price}</span> kr</button>
+				<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${donut.id
+			})">Lägg till för <span>${donut.price}</span> kr</button>
 			</article>
 		`;
 	}
@@ -802,18 +796,15 @@ const renderFromCategories = () => {
 										</div>
 
 						<div class="donuts__item_quantity">
-							<button class="button button--background" onclick="donutDecreaseCount(${
-								donut.id
-							})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+							<button class="button button--background" onclick="donutDecreaseCount(${donut.id
+					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
 							<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
 							>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-							<button class="button button--background" onclick="donutIncreaseCount(${
-								donut.id
-							})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+							<button class="button button--background" onclick="donutIncreaseCount(${donut.id
+					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
 						</div>
-						<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
-							donut.id
-						})">Lägg till för <span>${donut.price}</span> kr</button>
+						<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${donut.id
+					})">Lägg till för <span>${donut.price}</span> kr</button>
 					</article>
     		`;
 			}
