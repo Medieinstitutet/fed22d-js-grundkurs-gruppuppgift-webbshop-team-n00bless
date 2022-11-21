@@ -721,8 +721,6 @@ filterButton.addEventListener('click', () => {
 			filterElement.style.display = 'none';
 		}, 200);
 	}
-
-	if (filterMenuVisible) filterElement.querySelector('select').focus();
 });
 
 searchButton.addEventListener('click', () => {
