@@ -742,7 +742,9 @@ const searchQuery = (query) => {
 			item.name.toLowerCase().includes(query.toLowerCase())
 		);
 
-		console.log(filteredArray);
+		filteredDonutsArray = filteredArray;
+
+		renderFromFilter();
 	}
 };
 
@@ -782,46 +784,46 @@ const renderFromFilter = () => {
 
 	donutListEl.innerHTML = donuts;
 };
-// const renderFromCategories = () => {
-// 	let donuts = [];
-// 	for (const donut of donutsArray) {
-// 		for (const category of donut.categories) {
-// 			if (filterSet.has(category)) {
-// 				donuts += /*html*/ `
-// 					<article class="donuts__item" data-id=${donut.id}>
-// 						<h2>${donut.name}</h2>
-// 						<div class="donuts__item_image">
-// 							<img
-// 								src="${donut.images[1]}"
-// 								alt="A picture of a donut"
-// 							/>
-// 						</div>
-// 										<div class="donuts__item_info">
-// 												<p>${donut.price} kr</p>
-// 												<p>${generateStarRating(donut.rating)}</p>
-// 										</div>
+const renderFromCategories = () => {
+	let donuts = [];
+	for (const donut of donutsArray) {
+		for (const category of donut.categories) {
+			if (filterSet.has(category)) {
+				donuts += /*html*/ `
+					<article class="donuts__item" data-id=${donut.id}>
+						<h2>${donut.name}</h2>
+						<div class="donuts__item_image">
+							<img
+								src="${donut.images[1]}"
+								alt="A picture of a donut"
+							/>
+						</div>
+										<div class="donuts__item_info">
+												<p>${donut.price} kr</p>
+												<p>${generateStarRating(donut.rating)}</p>
+										</div>
 
-// 						<div class="donuts__item_quantity">
-// 							<button class="button button--background" onclick="donutDecreaseCount(${
-// 								donut.id
-// 							})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
-// 							<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
-// 							>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-// 							<button class="button button--background" onclick="donutIncreaseCount(${
-// 								donut.id
-// 							})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
-// 						</div>
-// 						<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
-// 							donut.id
-// 						})">Lägg till för <span>${donut.price}</span> kr</button>
-// 					</article>
-//     		`;
-// 			}
-// 		}
-// 	}
+						<div class="donuts__item_quantity">
+							<button class="button button--background" onclick="donutDecreaseCount(${
+								donut.id
+							})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+							<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
+							>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
+							<button class="button button--background" onclick="donutIncreaseCount(${
+								donut.id
+							})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+						</div>
+						<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+							donut.id
+						})">Lägg till för <span>${donut.price}</span> kr</button>
+					</article>
+    		`;
+			}
+		}
+	}
 
-// 	donutListEl.innerHTML = donuts;
-// };
+	donutListEl.innerHTML = donuts;
+};
 
 const addCategorySort = (category) => {
 	if (filterSet.has(category)) {
@@ -832,7 +834,12 @@ const addCategorySort = (category) => {
 			filteredDonutsArray = [];
 			for (const donut of donutsArray) {
 				for (const category of donut.categories) {
-					if (filterSet.has(category)) {
+					if (
+						filterSet.has(category) &&
+						!filteredDonutsArray.find(
+							(filteredDonut) => filteredDonut.id === donut.id
+						)
+					) {
 						filteredDonutsArray.push(donut);
 					}
 				}
@@ -848,7 +855,12 @@ const addCategorySort = (category) => {
 		filteredDonutsArray = [];
 		for (const donut of donutsArray) {
 			for (const category of donut.categories) {
-				if (filterSet.has(category)) {
+				if (
+					filterSet.has(category) &&
+					!filteredDonutsArray.find(
+						(filteredDonut) => filteredDonut.id === donut.id
+					)
+				) {
 					filteredDonutsArray.push(donut);
 				}
 			}
@@ -879,166 +891,149 @@ const generateFilterButtons = () => {
 
 const categoryButtons = filterElement.querySelectorAll('input');
 
-const toogleIconPrice = document.querySelector("#price-sort");
-const toogleIconRating = document.querySelector("#rating-sort");
-const toogleIconName = document.querySelector("#name-sort");
+const toogleIconPrice = document.querySelector('#price-sort');
+const toogleIconRating = document.querySelector('#rating-sort');
+const toogleIconName = document.querySelector('#name-sort');
 
-toogleIconPrice.style.transform= "scale(-1, 1)";
-toogleIconRating.style.transform= "scale(-1, 1)";
-toogleIconName.style.transform= "scale(-1, 1)";
+toogleIconPrice.style.transform = 'scale(-1, 1)';
+toogleIconRating.style.transform = 'scale(-1, 1)';
+toogleIconName.style.transform = 'scale(-1, 1)';
 
-toogleIconPrice.addEventListener("click", initSortPriceDown);
-toogleIconRating.addEventListener("click", initSortRatingDown);
-toogleIconName.addEventListener("click", initSortNameDown);
+toogleIconPrice.addEventListener('click', initSortPriceDown);
+toogleIconRating.addEventListener('click', initSortRatingDown);
+toogleIconName.addEventListener('click', initSortNameDown);
 
 /*Name*/
-const sortNameDown = ( a, b ) => {
-    toogleIconName.removeEventListener("click", initSortNameDown);
-    toogleIconName.addEventListener("click", initSortNameUp);
-    if ( a.name < b.name ){
+const sortNameDown = (a, b) => {
+	toogleIconName.removeEventListener('click', initSortNameDown);
+	toogleIconName.addEventListener('click', initSortNameUp);
+	if (a.name < b.name) {
+		return -1;
+	}
+	if (a.name > b.name) {
+		return 1;
+	}
+};
 
-      return -1;
-    }
-    if ( a.name > b.name ){
-
-      return 1;
-    }
-  }
-
-function initSortNameDown() {
-    donutsArray.sort(sortNameDown);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-    toogleIconName.style.transition= "0.6s ease";
-    toogleIconName.style.transform = "rotate(-0.5turn)";
+function initSortNameDown() {
+	donutsArray.sort(sortNameDown);
+	if (filterSet.size > 0) {
+		renderFromCategories();
+	} else {
+		generateDonuts();
+	}
+	toogleIconName.style.transition = '0.6s ease';
+	toogleIconName.style.transform = 'rotate(-0.5turn)';
 }
- 
-const sortNameUp = ( a, b ) => {
-    toogleIconName.removeEventListener("click", initSortNameUp);
-    toogleIconName.addEventListener("click", initSortNameDown);
-    if ( a.name < b.name ){
+const sortNameUp = (a, b) => {
+	toogleIconName.removeEventListener('click', initSortNameUp);
+	toogleIconName.addEventListener('click', initSortNameDown);
+	if (a.name < b.name) {
+		return 1;
+	}
+	if (a.name > b.name) {
+		return -1;
+	}
+};
 
-      return 1;
-    }
-    if ( a.name > b.name ){
-
-      return -1;
-    }
-}
-
-function initSortNameUp() {
-    donutsArray.sort(sortNameUp);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-     toogleIconName.style.transition= "0.6s ease";
-     toogleIconName.style.transform= "scale(-1, 1)";
-     toogleIconName.style.transform = "rotate(deg0)";
+function initSortNameUp() {
+	donutsArray.sort(sortNameUp);
+	if (filterSet.size > 0) {
+		renderFromCategories();
+	} else {
+		generateDonuts();
+	}
+	toogleIconName.style.transition = '0.6s ease';
+	toogleIconName.style.transform = 'scale(-1, 1)';
+	toogleIconName.style.transform = 'rotate(deg0)';
 }
 /*Rating*/
-const sortRatingDown = ( a, b ) => {
-    toogleIconRating.removeEventListener("click", initSortRatingDown);
-    toogleIconRating.addEventListener("click", initSortRatingUp);
-    if ( a.rating < b.rating ){
+const sortRatingDown = (a, b) => {
+	toogleIconRating.removeEventListener('click', initSortRatingDown);
+	toogleIconRating.addEventListener('click', initSortRatingUp);
+	if (a.rating < b.rating) {
+		return -1;
+	}
+	if (a.rating > b.rating) {
+		return 1;
+	}
+};
 
-      return -1;
-    }
-    if ( a.rating > b.rating ){
-
-      return 1;
-    }
+function initSortRatingDown() {
+	donutsArray.sort(sortRatingDown);
+	if (filterSet.size > 0) {
+		renderFromCategories();
+	} else {
+		generateDonuts();
+	}
+	toogleIconRating.style.transition = '0.6s ease';
+	toogleIconRating.style.transform = 'rotate(-0.5turn)';
 }
+const sortRatingUp = (a, b) => {
+	toogleIconRating.removeEventListener('click', initSortRatingUp);
+	toogleIconRating.addEventListener('click', initSortRatingDown);
+	if (a.rating < b.rating) {
+		return 1;
+	}
+	if (a.rating > b.rating) {
+		return -1;
+	}
+};
 
-function initSortRatingDown() {
-    donutsArray.sort(sortRatingDown);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-    toogleIconRating.style.transition= "0.6s ease";
-    toogleIconRating.style.transform = "rotate(-0.5turn)";
-
-}
- 
-const sortRatingUp = ( a, b ) => {
-    toogleIconRating.removeEventListener("click", initSortRatingUp);
-    toogleIconRating.addEventListener("click", initSortRatingDown);
-    if ( a.rating < b.rating ){
-
-      return 1;
-    }
-    if ( a.rating > b.rating ){
-
-      return -1;
-    }
-}
-
-function initSortRatingUp() {
-    donutsArray.sort(sortRatingUp);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-    toogleIconRating.style.transition= "0.6s ease";
-    toogleIconRating.style.transform= "scale(-1, 1)";
-    toogleIconRating.style.transform = "rotate(deg0)";
+function initSortRatingUp() {
+	donutsArray.sort(sortRatingUp);
+	if (filterSet.size > 0) {
+		renderFromCategories();
+	} else {
+		generateDonuts();
+	}
+	toogleIconRating.style.transition = '0.6s ease';
+	toogleIconRating.style.transform = 'scale(-1, 1)';
+	toogleIconRating.style.transform = 'rotate(deg0)';
 }
 /*Price*/
-const sortPriceDown = ( a, b ) => {
-    toogleIconPrice.removeEventListener("click", initSortPriceDown);
-    toogleIconPrice.addEventListener("click", initSortPriceUp);
-    if ( a.price < b.price ){
+const sortPriceDown = (a, b) => {
+	toogleIconPrice.removeEventListener('click', initSortPriceDown);
+	toogleIconPrice.addEventListener('click', initSortPriceUp);
+	if (a.price < b.price) {
+		return -1;
+	}
+	if (a.price > b.price) {
+		return 1;
+	}
+};
 
-      return -1;
-    }
-    if ( a.price > b.price ){
-
-      return 1;
-    }
+function initSortPriceDown() {
+	donutsArray.sort(sortPriceDown);
+	if (filterSet.size > 0) {
+		renderFromCategories();
+	} else {
+		generateDonuts();
+	}
+	toogleIconPrice.style.transition = '0.6s ease';
+	toogleIconPrice.style.transform = 'rotate(-0.5turn)';
 }
+const sortPriceUp = (a, b) => {
+	toogleIconPrice.removeEventListener('click', initSortPriceUp);
+	toogleIconPrice.addEventListener('click', initSortPriceDown);
+	if (a.price < b.price) {
+		return 1;
+	}
+	if (a.price > b.price) {
+		return -1;
+	}
+};
 
-function initSortPriceDown() {
-    donutsArray.sort(sortPriceDown);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-    toogleIconPrice.style.transition= "0.6s ease";
-    toogleIconPrice.style.transform = "rotate(-0.5turn)";
-
-}
- 
-const sortPriceUp = ( a, b ) => {
-    toogleIconPrice.removeEventListener("click", initSortPriceUp);
-    toogleIconPrice.addEventListener("click", initSortPriceDown);
-    if ( a.price < b.price ){
-
-      return 1;
-    }
-    if ( a.price > b.price ){
-
-      return -1;
-    }
-}
-
-function initSortPriceUp() {
-    donutsArray.sort(sortPriceUp);
-    if (filterSet.size > 0) {
-        renderFromCategories();
-    } else {
-        generateDonuts();
-    }
-    toogleIconPrice.style.transition= "0.6s ease";
-    toogleIconPrice.style.transform= "scale(-1, 1)";
-    toogleIconPrice.style.transform = "rotate(deg0)";
+function initSortPriceUp() {
+	donutsArray.sort(sortPriceUp);
+	if (filterSet.size > 0) {
+		renderFromCategories();
+	} else {
+		generateDonuts();
+	}
+	toogleIconPrice.style.transition = '0.6s ease';
+	toogleIconPrice.style.transform = 'scale(-1, 1)';
+	toogleIconPrice.style.transform = 'rotate(deg0)';
 }
 
 // Timer
