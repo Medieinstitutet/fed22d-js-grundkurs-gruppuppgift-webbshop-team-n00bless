@@ -1,12 +1,25 @@
+@use '../base/functions' as fn;
 .donuts {
+	display: flex;
+	align-items: center;
+	justify-content:space-around;
+	flex-direction: row;
+	flex-wrap: wrap;
+
 	&__item {
 		display: flex;
+		flex-basis: 33%;
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
+		color: fn.getColor(pink);
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 		// height: 80vh;
 		// padding: 2rem;
-
+		.donuts__item_info p {
+			color: fn.getColor(orange);
+			font-weight: bolder;
+		}
 		h2 {
 			margin-bottom: 0;
 		}
@@ -24,6 +37,8 @@
 		&_addcart {
 			margin-top: 1rem;
 			padding: 1rem 2rem;
+			cursor: pointer;
 		}
 	}
 }
+

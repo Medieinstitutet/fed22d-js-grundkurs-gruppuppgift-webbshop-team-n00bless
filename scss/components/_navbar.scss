@@ -18,19 +18,44 @@
 	}
 }
 
+header {
+	background-color: fn.getColor(white);
+
+}
+
 .navbar {
 	&__heading {
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		min-height: 200px;
+		
+		h1 {
+			color: fn.getColor(pink);
+			font-size: clamp(2rem, 2.5vw, 4rem);
+			position: relative;
+			margin: auto;
+			transform: rotate(6deg);
 
-		// h1 {
-		// 	color: fn.getColor(pink);
+			span {
+				color: fn.getColor(orange);
+				margin-left: 230px;
+			}
+		}
 
-		// 	span {
-		// 		color: fn.getColor(orange);
-		// 	}
-		// }
+		#cart-icon {
+			position: fixed;
+			top: 1rem;
+			right: 2.5rem;
+			cursor: pointer;
+		}
+
+		img {
+			position: absolute;
+			margin-left: auto;
+			margin-right: auto;
+			left: 0;
+			right: 0;
+			text-align: center;
+		}
 	}
 
 	&__menu {
@@ -42,8 +67,8 @@
 		border-radius: 1rem;
 		padding: 0.25rem 1rem;
 
-		&_input {
-		}
+		// &_input {
+		// }
 	}
 
 	&__dropdown {
@@ -65,7 +90,8 @@
 			&_filter {
 				display: flex;
 				align-items: center;
-				justify-content: space-between;
+				justify-content: space-evenly;
+				flex-wrap: wrap;
 				background-color: fn.getColor(orange);
 				color: #fff;
 				border: unset;
@@ -75,11 +101,16 @@
 				div {
 					display: flex;
 					align-items: center;
+					padding: 0 2rem;
 
 					p {
 						margin: 0;
 					}
 
+					.fa-arrow-up-wide-short {
+						cursor: pointer;
+					}
+					
 					input {
 						margin: 0 0.5rem;
 						border: 1px solid fn.getColor(grey, '200');
