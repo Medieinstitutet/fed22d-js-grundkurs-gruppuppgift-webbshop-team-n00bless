@@ -26,6 +26,7 @@ const donutsArray = [
 			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 5,
+		discount: false,
 	},
 	{
 		id: 2,
@@ -37,6 +38,7 @@ const donutsArray = [
 			'img/chocolate-iced-glazed.jpeg',
 		],
 		rating: 4.5,
+		discount: false,
 	},
 	{
 		id: 3,
@@ -48,6 +50,7 @@ const donutsArray = [
 			'img/cinnamon-apple-filled.jpeg',
 		],
 		rating: 4.5,
+		discount: false,
 	},
 	{
 		id: 4,
@@ -56,6 +59,7 @@ const donutsArray = [
 		categories: ['glazed', 'sprinkles'],
 		images: ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
 		rating: 5,
+		discount: false,
 	},
 	{
 		id: 5,
@@ -67,6 +71,7 @@ const donutsArray = [
 			'img/glazed-lemon-filled.jpeg',
 		],
 		rating: 4,
+		discount: false,
 	},
 	{
 		id: 6,
@@ -78,6 +83,7 @@ const donutsArray = [
 			'img/original-filled-chocolate-kreme™.jpeg',
 		],
 		rating: 4,
+		discount: false,
 	},
 	{
 		id: 7,
@@ -89,6 +95,7 @@ const donutsArray = [
 			'img/original-glazed-doughnut.jpeg',
 		],
 		rating: 5,
+		discount: false,
 	},
 	{
 		id: 8,
@@ -100,6 +107,7 @@ const donutsArray = [
 			'img/powdered-blueberry-filled.jpeg',
 		],
 		rating: 4.5,
+		discount: false,
 	},
 	{
 		id: 9,
@@ -111,6 +119,7 @@ const donutsArray = [
 			'img/powdered-strawberry-filled.jpeg',
 		],
 		rating: 4,
+		discount: false,
 	},
 	{
 		id: 10,
@@ -119,6 +128,7 @@ const donutsArray = [
 		categories: ['glazed'],
 		images: ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
 		rating: 5,
+		discount: false,
 	},
 ];
 
@@ -343,101 +353,113 @@ const updateCartDOM = () => {
  * Special Rules
  **********************************************************/
 
-const checkForSpecialRules = (cartSum, cartCount) => {
-	let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
-	const freightSumDisplay = document.getElementById('freight-sum');
-	const cartSumDisplay = document.getElementById('cart-sum');
-	const deliveryTime = document.getElementById('delivery-time');
-	const checkDiscountCode = document.querySelector('[name="discount-code"]');
-	checkDiscountCode.addEventListener('keyup', updateCartDOM);
-	let cartSumAndFreightSum = cartSum + freightSum;
+ const checkForSpecialRules = (cartSum, cartCount) => {
+    let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
+    const freightSumDisplay = document.getElementById('freight-sum');
+    const cartSumDisplay = document.getElementById('cart-sum');
+    const deliveryTime = document.getElementById('delivery-time');
+    const checkDiscountCode = document.querySelector('[name="discount-code"]');
+    checkDiscountCode.addEventListener('keyup', updateCartDOM);
+    let cartSumAndFreightSum = cartSum + freightSum;
 
-	cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
-	freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
-	deliveryTime.textContent =
-		'Beställningen skickas 30 minuter efter orderläggning.';
+    const FreightSumInSEK = new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK' }).format(freightSum);
+    // const cartSumInSEK = new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK' }).format(cartSum); <-- never displayed
+    const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK' }).format(cartSumAndFreightSum);
 
-	/*No invoice alternative above 800kr rule*/
-	if (cartSum >= 800) {
-		document.getElementById('invoice-radio').disabled = true;
-	} else {
-		document.getElementById('invoice-radio').disabled = false;
-	}
 
-	/*Lucia donut rule*/
-	const lucia = {
-		month: 11, //month/date index start at 0, so 11 = 12.
-		date: 13,
-	};
+    cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+    freightSumDisplay.textContent = `Frakt: ${FreightSumInSEK}.`;
+    deliveryTime.textContent =
+        'Beställningen skickas 30 minuter efter orderläggning.';
 
-	if (month == lucia.month && date == lucia.date && cartItems.length >= 1) {
-		cartItems.push(...donutsArrayLucia);
-		donutsArrayLucia.pop();
-	}
+    /*No invoice alternative above 800kr rule*/
+    if (cartSum >= 800) {
+        document.getElementById('invoice-radio').disabled = true;
+    } else {
+        document.getElementById('invoice-radio').disabled = false;
+    }
 
-	/*Monday before 10:00 rule*/
-	if (day === 1 && hour <= 10) {
-		cartSumAndFreightSum = Math.round(cartSumAndFreightSum * 0.9); //10 % discount
-		cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${cartSumAndFreightSum} kr.`;
-	} else {
-		cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
-	}
+    /*Lucia donut rule*/
+    const lucia = {
+        month: 11, //month/date index start at 0, so 11 = 12.
+        date: 13,
+    };
 
-	/*More than 15 donuts in total rule*/
-	if (cartCount >= 15) {
-		cartSumAndFreightSum = cartSum; //no freight cost added
-		cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSum} kr.`;
-		freightSumDisplay.textContent = `Fraktfritt.`;
-	} else {
-		cartSumAndFreightSum = cartSum + freightSum;
-		freightSumDisplay.textContent = `Frakt: ${freightSum} kr.`;
-	}
+    if (month == lucia.month && date == lucia.date && cartItems.length >= 1) {
+        cartItems.push(...donutsArrayLucia);
+        donutsArrayLucia.pop();
+    }
 
-	/*Free order with coupon rule*/
-	if (checkDiscountCode.value === 'a_damn_fine-cup_of-coffee') {
-		cartSumAndFreightSum = 0;
-		cartSumDisplay.textContent = `Din beställning är kostnadsfri!`;
-		freightSumDisplay.textContent = `Fraktfritt.`;
-	} else {
-		cartSumAndFreightSum = cartSum + freightSum;
-	}
+    /*Monday before 10:00 rule*/
+    if (day === 1 && hour <= 10) {
+        cartSumAndFreightSum = Math.round(cartSumAndFreightSumInSEK * 0.9); //10 % discount
+        cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${cartSumAndFreightSumInSEK}.`;
+    } else {
+        cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+    }
 
-	/*Weekend deliver time rule*/
-	if (day === 6 || day === 0) {
-		deliveryTime.textContent =
-			'Beställningen skickas 90 minuter efter orderläggning.';
-	}
+    /*More than 15 donuts in total rule*/
+    if (cartCount >= 15) {
+        cartSumAndFreightSum = cartSum; //no freight cost added
+        cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+        freightSumDisplay.textContent = `Fraktfritt.`;
+    } else {
+        cartSumAndFreightSum = cartSum + freightSum;
+        freightSumDisplay.textContent = `Frakt: ${FreightSumInSEK}.`;
+    }
 
-	/*Night deliver time rule*/
-	if (day !== 6 || (day !== 0 && hour >= 0 && hour <= 5)) {
-		deliveryTime.textContent =
-			'Beställningen skickas 45 minuter efter orderläggning.';
-	}
+    /*Free order with coupon rule*/
+    if (checkDiscountCode.value === 'a_damn_fine-cup_of-coffee') {
+        cartSumAndFreightSum = 0;
+        cartSumDisplay.textContent = `Din beställning är kostnadsfri!`;
+        freightSumDisplay.textContent = `Fraktfritt.`;
+    } else {
+        cartSumAndFreightSum = cartSum + freightSum;
+    }
 
-	/*friday 11-13 rule*/
-	if (day === 5 && hour >= 11 && hour <= 13) {
-		deliveryTime.textContent = 'Leveranstiden är beräknad till 15:00';
-	}
+    /*Weekend deliver time rule*/
+    if (day === 6 || day === 0) {
+        deliveryTime.textContent =
+            'Beställningen skickas 90 minuter efter orderläggning.';
+    }
 
-	/*thuesday even week rule*/
-	const countWeekNumber = () => {
-		startDate = new Date(thisDate.getFullYear(), 0, 1);
-		const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
-		const weekNumber = Math.ceil(days / 7);
+    /*Night deliver time rule*/
+    if (day !== 6 || (day !== 0 && hour >= 0 && hour <= 5)) {
+        deliveryTime.textContent =
+            'Beställningen skickas 45 minuter efter orderläggning.';
+    }
 
-		if (weekNumber % 2 == 0 && day == 5 && cartSumAndFreightSum >= 25) {
-			cartSumAndFreightSum = cartSumAndFreightSum - 25;
-			cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${cartSumAndFreightSum} kr.`;
-		}
-	};
-	countWeekNumber(); /*More than 10 of same donut rule*/
+    /*friday 11-13 rule*/
+    if (day === 5 && hour >= 11 && hour <= 13) {
+        deliveryTime.textContent = 'Leveranstiden är beräknad till 15:00';
+    }
 
-	for (var i = 0; i < cartItems.length; i++) {
-		let sameDonutCount = cartItems[i].count;
-		if (sameDonutCount >= 10) {
-			return (cartItems[i].totPrice = Math.round(cartItems[i].totPrice * 0.9));
-		}
-	}
+    /*thuesday even week rule*/
+    const countWeekNumber = () => {
+        startDate = new Date(thisDate.getFullYear(), 0, 1);
+        const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
+        const weekNumber = Math.ceil(days / 7);
+
+        if (weekNumber % 2 == 0 && day == 5 && cartSumAndFreightSum >= 25) {
+            cartSumAndFreightSum = cartSumAndFreightSum - 25;
+            cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${cartSumAndFreightSumInSEK}.`;
+        }
+    };
+
+	countWeekNumber(); 
+	
+	/*More than 10 of same donut rule*/
+	const checkSameDonut = () => {
+        for (let donuts of cartItems){
+
+            if(donuts.count  >= 10 && donuts.discount == false) {
+                donuts.totPrice = Math.round(donuts.totPrice * 0.9);
+                donuts.discount = true;
+            }
+       
+        }
+    }
+	checkSameDonut();
 };
 
 /*********************************************************
