@@ -30,14 +30,17 @@ header {
 		
 		h1 {
 			color: fn.getColor(pink);
-			font-size: clamp(2rem, 2.5vw, 4rem);
+			font-size: clamp(2rem, 3.5vw, 5rem);
 			position: relative;
-			margin: auto;
-			transform: rotate(6deg);
+			margin-bottom: 3rem;
+			// transform: rotate(-2deg);
 
 			span {
 				color: fn.getColor(orange);
-				margin-left: 230px;
+				position: absolute;
+				top: clamp(20px, 3.5vw, 60px);
+				left: 1rem;
+
 			}
 		}
 
@@ -67,6 +70,9 @@ header {
 		border-radius: 1rem;
 		padding: 0.25rem 1rem;
 
+		.button {
+			cursor: pointer;
+		}
 		// &_input {
 		// }
 	}
@@ -122,9 +128,10 @@ header {
 			}
 
 			&_categories {
-				display: grid;
-				grid-template-columns: repeat(2, 1fr);
-				gap: 0.25rem;
+				display: flex;
+				// margin: 0;
+				// grid-template-columns: repeat(3, 1fr);
+				gap: 2.25rem;
 			}
 		}
 	}

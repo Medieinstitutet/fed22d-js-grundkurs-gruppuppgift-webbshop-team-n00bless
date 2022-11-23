@@ -6,6 +6,10 @@ html {
 
 body {
 	padding: 0 1rem;
+	background-image: url("/img/mainbg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
 }
 
 input {
@@ -17,6 +21,10 @@ input {
 	&:focus-visible {
 		outline: none;
 	}
+}
+
+input[type="number"] {
+	width: 50px;
 }
 
 ul {
