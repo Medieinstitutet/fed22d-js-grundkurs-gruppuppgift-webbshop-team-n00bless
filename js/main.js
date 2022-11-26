@@ -777,7 +777,8 @@ document.querySelector('form').addEventListener('reset', function (event) {
  * Filter/sorting Menu
  **********************************************************/
 
-const filterButton = document.querySelector('.navbar__menu > button');
+const filterButton = document.querySelector('#filterMenuButton');
+const resetButton = document.querySelector('#filterMenuResetButton');
 const filterElement = document.querySelector('#filterMenu');
 const searchInput = document.querySelector('[name="searchQuery"]');
 const searchButton = document.querySelector('#searchButton');
@@ -801,6 +802,11 @@ filterButton.addEventListener('click', () => {
 			filterElement.style.display = 'none';
 		}, 200);
 	}
+});
+
+resetButton.addEventListener('click', () => {
+	filteredDonutsArray = [...donutsArray];
+	generateDonuts();
 });
 
 searchButton.addEventListener('click', () => {
