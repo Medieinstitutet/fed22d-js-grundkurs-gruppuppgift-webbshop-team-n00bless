@@ -21,6 +21,7 @@ module.exports = {
     'no-undef': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
     'no-restricted-syntax': ['error', 'LabeledStatement', 'WithStatement'],
     'no-tabs': ['error', { allowIndentationTabs: true }],
+    'linebreak-style': 0, //for windows
     'comma-dangle': 0,
     'no-use-before-define': [
       'error',

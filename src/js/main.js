@@ -1,4 +1,5 @@
 import donutsArray from './store/donuts';
+import generateSlideshow from './store/slideshow';
 
 /* Kategorier:
 filling
@@ -239,7 +240,7 @@ const renderCart = () => {
     const donutElement = /* html */ `
 			<li data-id="cart-${donut.id}">
 				<div className="name">
-					<img src=${donut.images[1]} width="30" height="30"/>
+					<img src=${donut.images[0]} width="30" height="30"/>
 					<p>${donut.name}</p>
 				</div>
 				<div className="donuts__item_quantity">
@@ -286,9 +287,9 @@ const checkForSpecialRules = (cartSum, cartCount) => {
     style: 'currency',
     currency: 'SEK',
   }).format(freightSum);
-  /* const cartSumInSEK = new Intl.NumberFormat('sv-SE', {
-		style: 'currency', currency: 'SEK'
-	}).format(cartSum); <-- never displayed */
+    /* const cartSumInSEK = new Intl.NumberFormat('sv-SE', {
+          style: 'currency', currency: 'SEK'
+      }).format(cartSum); <-- never displayed */
   const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
     style: 'currency',
     currency: 'SEK',
@@ -449,6 +450,7 @@ const generateDonuts = () => {
   }
 
   generateButtonListeners();
+  generateSlideshow();
 };
 
 const generateCategories = () => {
@@ -458,46 +460,6 @@ const generateCategories = () => {
     }
   }
 };
-
-/**
- * Slideshow section
- *
- */
-/* Come back to make it work on not just "donutsArray" */
-function prevImage(e) {
-  const index = e.currentTarget.id.replace('prev-', '');
-  const imgContainer = document.querySelector(`#img-${index}`);
-  const currentSrc = imgContainer.getAttribute('src');
-
-  if (currentSrc === donutsArray[index].images[0]) {
-    imgContainer.setAttribute('src', donutsArray[index].images[1]);
-  } else {
-    imgContainer.setAttribute('src', donutsArray[index].images[0]);
-  }
-}
-
-function nextImage(e) {
-  const index = e.currentTarget.id.replace('next-', '');
-  const imgContainer = document.querySelector(`#img-${index}`);
-  const currentSrc = imgContainer.getAttribute('src');
-
-  if (currentSrc === donutsArray[index].images[0]) {
-    imgContainer.setAttribute('src', donutsArray[index].images[1]);
-  } else {
-    imgContainer.setAttribute('src', donutsArray[index].images[0]);
-  }
-}
-
-const prevBtns = document.querySelectorAll('button.prev');
-const nextBtns = document.querySelectorAll('button.next');
-
-prevBtns.forEach((btn) => {
-  btn.addEventListener('click', prevImage);
-});
-
-nextBtns.forEach((btn) => {
-  btn.addEventListener('click', nextImage);
-});
 
 /** *******************************************************
  * Input field validation
