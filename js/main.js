@@ -59,7 +59,7 @@ const donutsArray = [
 		categories: ['glazed', 'sprinkles'],
 		images: [
 			'img/glazed-cinnamon.jpeg',
-			'img/chocolate-iced-custard-filled.jpeg', 
+			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 5,
 		discount: false,
@@ -71,7 +71,7 @@ const donutsArray = [
 		categories: ['glazed', 'filled'],
 		images: [
 			'img/glazed-lemon-filled.jpeg',
-			'img/chocolate-iced-custard-filled.jpeg',	
+			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 4,
 		discount: false,
@@ -138,7 +138,7 @@ const donutsArray = [
 	},
 ];
 
-let filteredDonutsArray = donutsArray;
+let filteredDonutsArray = [...donutsArray];
 
 const donutsArrayLucia = [
 	//placeholder, add 1 to basket free of charge 13/12
@@ -174,8 +174,8 @@ const christmasCheck = () => {
 		document.body.style.backgroundRepeat = 'no-repeat';
 		document.body.style.backgroundAttachment = 'fixed';
 		let christmasPrizeColor = document.querySelectorAll(
-			'.donuts__item_info p:first-child'
-		),
+				'.donuts__item_info p:first-child'
+			),
 			i;
 		for (i = 0; i < christmasPrizeColor.length; ++i) {
 			christmasPrizeColor[i].style.color = 'red';
@@ -359,114 +359,117 @@ const updateCartDOM = () => {
  * Special Rules
  **********************************************************/
 
- const checkForSpecialRules = (cartSum, cartCount) => {
-    let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
-    const freightSumDisplay = document.getElementById('freight-sum');
-    const cartSumDisplay = document.getElementById('cart-sum');
-    const deliveryTime = document.getElementById('delivery-time');
-    const checkDiscountCode = document.querySelector('[name="discount-code"]');
-    checkDiscountCode.addEventListener('keyup', updateCartDOM);
-    let cartSumAndFreightSum = cartSum + freightSum;
+const checkForSpecialRules = (cartSum, cartCount) => {
+	let freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
+	const freightSumDisplay = document.getElementById('freight-sum');
+	const cartSumDisplay = document.getElementById('cart-sum');
+	const deliveryTime = document.getElementById('delivery-time');
+	const checkDiscountCode = document.querySelector('[name="discount-code"]');
+	checkDiscountCode.addEventListener('keyup', updateCartDOM);
+	let cartSumAndFreightSum = cartSum + freightSum;
 
-    const FreightSumInSEK = new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK' }).format(freightSum);
-    // const cartSumInSEK = new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK' }).format(cartSum); <-- never displayed
-    const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK' }).format(cartSumAndFreightSum);
+	const FreightSumInSEK = new Intl.NumberFormat('sv-SE', {
+		style: 'currency',
+		currency: 'SEK',
+	}).format(freightSum);
+	// const cartSumInSEK = new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK' }).format(cartSum); <-- never displayed
+	const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
+		style: 'currency',
+		currency: 'SEK',
+	}).format(cartSumAndFreightSum);
 
+	cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+	freightSumDisplay.textContent = `Frakt: ${FreightSumInSEK}.`;
+	deliveryTime.textContent =
+		'Beställningen skickas 30 minuter efter orderläggning.';
 
-    cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
-    freightSumDisplay.textContent = `Frakt: ${FreightSumInSEK}.`;
-    deliveryTime.textContent =
-        'Beställningen skickas 30 minuter efter orderläggning.';
+	/*No invoice alternative above 800kr rule*/
+	if (cartSum >= 800) {
+		document.getElementById('invoice-radio').disabled = true;
+	} else {
+		document.getElementById('invoice-radio').disabled = false;
+	}
 
-    /*No invoice alternative above 800kr rule*/
-    if (cartSum >= 800) {
-        document.getElementById('invoice-radio').disabled = true;
-    } else {
-        document.getElementById('invoice-radio').disabled = false;
-    }
+	/*Lucia donut rule*/
+	const lucia = {
+		month: 11, //month/date index start at 0, so 11 = 12.
+		date: 13,
+	};
 
-    /*Lucia donut rule*/
-    const lucia = {
-        month: 11, //month/date index start at 0, so 11 = 12.
-        date: 13,
-    };
+	if (month == lucia.month && date == lucia.date && cartItems.length >= 1) {
+		cartItems.push(...donutsArrayLucia);
+		donutsArrayLucia.pop();
+	}
 
-    if (month == lucia.month && date == lucia.date && cartItems.length >= 1) {
-        cartItems.push(...donutsArrayLucia);
-        donutsArrayLucia.pop();
-    }
+	/*Monday before 10:00 rule*/
+	if (day === 1 && hour <= 10) {
+		cartSumAndFreightSum = Math.round(cartSumAndFreightSumInSEK * 0.9); //10 % discount
+		cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${cartSumAndFreightSumInSEK}.`;
+	} else {
+		cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+	}
 
-    /*Monday before 10:00 rule*/
-    if (day === 1 && hour <= 10) {
-        cartSumAndFreightSum = Math.round(cartSumAndFreightSumInSEK * 0.9); //10 % discount
-        cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${cartSumAndFreightSumInSEK}.`;
-    } else {
-        cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
-    }
+	/*More than 15 donuts in total rule*/
+	if (cartCount >= 15) {
+		cartSumAndFreightSum = cartSum; //no freight cost added
+		cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+		freightSumDisplay.textContent = `Fraktfritt.`;
+	} else {
+		cartSumAndFreightSum = cartSum + freightSum;
+		freightSumDisplay.textContent = `Frakt: ${FreightSumInSEK}.`;
+	}
 
-    /*More than 15 donuts in total rule*/
-    if (cartCount >= 15) {
-        cartSumAndFreightSum = cartSum; //no freight cost added
-        cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
-        freightSumDisplay.textContent = `Fraktfritt.`;
-    } else {
-        cartSumAndFreightSum = cartSum + freightSum;
-        freightSumDisplay.textContent = `Frakt: ${FreightSumInSEK}.`;
-    }
+	/*Free order with coupon rule*/
+	if (checkDiscountCode.value === 'a_damn_fine-cup_of-coffee') {
+		cartSumAndFreightSum = 0;
+		cartSumDisplay.textContent = `Din beställning är kostnadsfri!`;
+		freightSumDisplay.textContent = `Fraktfritt.`;
+	} else {
+		cartSumAndFreightSum = cartSum + freightSum;
+	}
 
-    /*Free order with coupon rule*/
-    if (checkDiscountCode.value === 'a_damn_fine-cup_of-coffee') {
-        cartSumAndFreightSum = 0;
-        cartSumDisplay.textContent = `Din beställning är kostnadsfri!`;
-        freightSumDisplay.textContent = `Fraktfritt.`;
-    } else {
-        cartSumAndFreightSum = cartSum + freightSum;
-    }
+	/*Weekend deliver time rule*/
+	if (day === 6 || day === 0) {
+		deliveryTime.textContent =
+			'Beställningen skickas 90 minuter efter orderläggning.';
+	}
 
-    /*Weekend deliver time rule*/
-    if (day === 6 || day === 0) {
-        deliveryTime.textContent =
-            'Beställningen skickas 90 minuter efter orderläggning.';
-    }
+	/*Night deliver time rule*/
+	if (day !== 6 || (day !== 0 && hour >= 0 && hour <= 5)) {
+		deliveryTime.textContent =
+			'Beställningen skickas 45 minuter efter orderläggning.';
+	}
 
-    /*Night deliver time rule*/
-    if (day !== 6 || (day !== 0 && hour >= 0 && hour <= 5)) {
-        deliveryTime.textContent =
-            'Beställningen skickas 45 minuter efter orderläggning.';
-    }
+	/*friday 11-13 rule*/
+	if (day === 5 && hour >= 11 && hour <= 13) {
+		deliveryTime.textContent = 'Leveranstiden är beräknad till 15:00';
+	}
 
-    /*friday 11-13 rule*/
-    if (day === 5 && hour >= 11 && hour <= 13) {
-        deliveryTime.textContent = 'Leveranstiden är beräknad till 15:00';
-    }
+	/*thuesday even week rule*/
+	const countWeekNumber = () => {
+		startDate = new Date(thisDate.getFullYear(), 0, 1);
+		const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
+		const weekNumber = Math.ceil(days / 7);
 
-    /*thuesday even week rule*/
-    const countWeekNumber = () => {
-        startDate = new Date(thisDate.getFullYear(), 0, 1);
-        const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
-        const weekNumber = Math.ceil(days / 7);
+		if (weekNumber % 2 == 0 && day == 5 && cartSumAndFreightSum >= 25) {
+			cartSumAndFreightSum = cartSumAndFreightSum - 25;
+			cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${cartSumAndFreightSumInSEK}.`;
+		}
+	};
 
-        if (weekNumber % 2 == 0 && day == 5 && cartSumAndFreightSum >= 25) {
-            cartSumAndFreightSum = cartSumAndFreightSum - 25;
-            cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${cartSumAndFreightSumInSEK}.`;
-        }
-    };
+	countWeekNumber();
 
-	countWeekNumber(); 
-	
 	/*More than 10 of same donut rule*/
-	const checkSameDonut = () => {
-        for (let donuts of cartItems){
-
-            if(donuts.count  >= 10 && donuts.discount == false) {
-                donuts.totPrice = Math.round(donuts.totPrice * 0.9);
-                donuts.discount = true;
-            } else if (donuts.count  < 10 && donuts.discount == true){
-				donuts.discount = false;
+	const checkSameDonut = () => {
+		for (let donuts of cartItems) {
+			if (donuts.count >= 10 && donuts.discount == false) {
+				donuts.totPrice = Math.round(donuts.totPrice * 0.9);
+				donuts.discount = true;
+			} else if (donuts.count < 10 && donuts.discount == true) {
+				donuts.discount = false;
 			}
-       
-        }
-    }
+		}
+	};
 	checkSameDonut();
 };
 
@@ -495,18 +498,17 @@ const generateStarRating = (rating) => {
 	return ratingEl;
 };
 const generateDonuts = () => {
-	let donuts = [];
-	for (const donut of donutsArray) {
-		for (const category of donut.categories) {
-			categorySet.add(category);
-		}
+	donutListEl.innerHTML = '';
 
-		donuts += /*html*/ `
+	for (const donut of filteredDonutsArray) {
+		donutListEl.innerHTML += /*html*/ `
       <article class="donuts__item" data-id=${donut.id}>
         <h2>${donut.name}</h2>
 		<div class="donuts__item_image">
 			<button id ="prev-${donut.id}" class="prev">&#10094;</button>
-			<img id = "img-${donut.id}" src="${donut.images[0]}" alt="A picture of a donut"/>
+			<img id = "img-${donut.id}" src="${
+			donut.images[0]
+		}" alt="A picture of a donut"/>
 		 	<button id ="next-${donut.id}" class="next">&#10095;</button>
    		</div>
 
@@ -516,28 +518,39 @@ const generateDonuts = () => {
 		</div>
        
         <div class="donuts__item_quantity">
-          <button class="button button--background" onclick="donutDecreaseCount(${donut.id
-			})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
+          <button class="button button--background" onclick="donutDecreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
           <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
           >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-          <button class="button button--background" onclick="donutIncreaseCount(${donut.id
-			})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
+          <button class="button button--background" onclick="donutIncreaseCount(${
+						donut.id
+					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
         </div>
-        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${donut.id
-			})">Lägg till för <span>${donut.price}</span> kr</button>
+        <button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${
+					donut.id
+				})">Lägg till för <span>${donut.price}</span> kr</button>
       </article>
     `;
 	}
-	donutListEl.innerHTML = donuts;
+};
+
+const generateCategories = () => {
+	for (const donut of donutsArray) {
+		for (const category of donut.categories) {
+			categorySet.add(category);
+		}
+	}
 };
 
 generateDonuts();
-christmasCheck(); 
+generateCategories();
+christmasCheck();
 
 /**
-* Slideshow section
-* 
-*/
+ * Slideshow section
+ *
+ */
 /* Come back to make it work on not just "donutsArray" */
 function prevImage(e) {
 	const index = e.currentTarget.id.replace('prev-', '');
@@ -809,120 +822,32 @@ const searchQuery = (query) => {
 
 		filteredDonutsArray = filteredArray;
 
-		renderFromFilter();
+		generateDonuts();
 	}
-};
-
-const renderFromFilter = () => {
-	let donuts = [];
-	for (const donut of filteredDonutsArray) {
-		donuts += /*html*/ `
-			<article class="donuts__item" data-id=${donut.id}>
-				<h2>${donut.name}</h2>
-				<div class="donuts__item_image">
-					<button id ="prev-filter${donut.id}" class="prev">&#10094;</button>
-					<img id = "img-filter${donut.id}" src="${donut.images[0]}" alt="A picture of a donut"/>
-					<button id ="next-filter${donut.id}" class="next">&#10095;</button>
-   				</div>
-				<div class="donuts__item_info">
-					<p>${donut.price} kr</p>
-					<p>${generateStarRating(donut.rating)}</p>
-				</div>
-				<div class="donuts__item_quantity">
-					<button class="button button--background" onclick="donutDecreaseCount(${donut.id
-			})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
-					<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
-					>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-					<button class="button button--background" onclick="donutIncreaseCount(${donut.id
-			})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
-				</div>
-				<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${donut.id
-			})">Lägg till för <span>${donut.price}</span> kr</button>
-			</article>
-		`;
-	}
-
-	donutListEl.innerHTML = donuts;
-};
-const renderFromCategories = () => {
-	let donuts = [];
-	for (const donut of donutsArray) {
-		for (const category of donut.categories) {
-			if (filterSet.has(category)) {
-				donuts += /*html*/ `
-					<article class="donuts__item" data-id=${donut.id}>
-						<h2>${donut.name}</h2>
-						<div class="donuts__item_image">
-							<button id ="prev-${donut.id}" class="prev">&#10094;</button>
-							<img id = "img-${donut.id}" src="${donut.images[0]}" alt="A picture of a donut"/>
-		 					<button id ="next-${donut.id}" class="next">&#10095;</button>
-   						</div>
-						<div class="donuts__item_info">
-								<p>${donut.price} kr</p>
-								<p>${generateStarRating(donut.rating)}</p>
-						</div>
-						<div class="donuts__item_quantity">
-							<button class="button button--background" onclick="donutDecreaseCount(${donut.id
-					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
-							<input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
-							>= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
-							<button class="button button--background" onclick="donutIncreaseCount(${donut.id
-					})"><i class="fa-solid fa-plus" title="Increase count"></i></button>
-						</div>
-						<button class="donuts__item_addcart button button--background" onclick="donutAddToCart(${donut.id
-					})">Lägg till för <span>${donut.price}</span> kr</button>
-					</article>
-    		`;
-			}
-		}
-	}
-
-	donutListEl.innerHTML = donuts;
 };
 
 const addCategorySort = (category) => {
 	if (filterSet.has(category)) {
 		filterSet.delete(category);
-		if (filterSet.size > 0) {
-			// filteredDonutsArray =
-
-			filteredDonutsArray = [];
-			for (const donut of donutsArray) {
-				for (const category of donut.categories) {
-					if (
-						filterSet.has(category) &&
-						!filteredDonutsArray.find(
-							(filteredDonut) => filteredDonut.id === donut.id
-						)
-					) {
-						filteredDonutsArray.push(donut);
-					}
-				}
-			}
-
-			renderFromFilter();
-		} else {
-			generateDonuts();
-		}
 	} else {
 		filterSet.add(category);
+	}
 
-		filteredDonutsArray = [];
-		for (const donut of donutsArray) {
-			for (const category of donut.categories) {
-				if (
-					filterSet.has(category) &&
-					!filteredDonutsArray.find(
-						(filteredDonut) => filteredDonut.id === donut.id
-					)
-				) {
-					filteredDonutsArray.push(donut);
-				}
+	filteredDonutsArray = [];
+	for (const donut of donutsArray) {
+		for (const category of donut.categories) {
+			if (
+				filterSet.has(category) &&
+				!filteredDonutsArray.find(
+					(filteredDonut) => filteredDonut.id === donut.id
+				)
+			) {
+				filteredDonutsArray.push(donut);
 			}
 		}
-
-		renderFromFilter();
 	}
+
+	generateDonuts();
 };
 
 const generateFilterButtons = () => {
@@ -971,12 +896,9 @@ const sortNameDown = (a, b) => {
 };
 
 function initSortNameDown() {
-	donutsArray.sort(sortNameDown);
-	if (filterSet.size > 0) {
-		renderFromCategories();
-	} else {
-		generateDonuts();
-	}
+	filteredDonutsArray.sort(sortNameDown);
+	generateDonuts();
+
 	toogleIconName.style.transition = '0.6s ease';
 	toogleIconName.style.transform = 'rotate(-0.5turn)';
 }
@@ -992,12 +914,9 @@ const sortNameUp = (a, b) => {
 };
 
 function initSortNameUp() {
-	donutsArray.sort(sortNameUp);
-	if (filterSet.size > 0) {
-		renderFromCategories();
-	} else {
-		generateDonuts();
-	}
+	filteredDonutsArray.sort(sortNameUp);
+	generateDonuts();
+
 	toogleIconName.style.transition = '0.6s ease';
 	toogleIconName.style.transform = 'scale(-1, 1)';
 	toogleIconName.style.transform = 'rotate(deg0)';
@@ -1015,12 +934,9 @@ const sortRatingDown = (a, b) => {
 };
 
 function initSortRatingDown() {
-	donutsArray.sort(sortRatingDown);
-	if (filterSet.size > 0) {
-		renderFromCategories();
-	} else {
-		generateDonuts();
-	}
+	filteredDonutsArray.sort(sortRatingDown);
+	generateDonuts();
+
 	toogleIconRating.style.transition = '0.6s ease';
 	toogleIconRating.style.transform = 'rotate(-0.5turn)';
 }
@@ -1036,12 +952,9 @@ const sortRatingUp = (a, b) => {
 };
 
 function initSortRatingUp() {
-	donutsArray.sort(sortRatingUp);
-	if (filterSet.size > 0) {
-		renderFromCategories();
-	} else {
-		generateDonuts();
-	}
+	filteredDonutsArray.sort(sortRatingUp);
+	generateDonuts();
+
 	toogleIconRating.style.transition = '0.6s ease';
 	toogleIconRating.style.transform = 'scale(-1, 1)';
 	toogleIconRating.style.transform = 'rotate(deg0)';
@@ -1059,12 +972,9 @@ const sortPriceDown = (a, b) => {
 };
 
 function initSortPriceDown() {
-	donutsArray.sort(sortPriceDown);
-	if (filterSet.size > 0) {
-		renderFromCategories();
-	} else {
-		generateDonuts();
-	}
+	filteredDonutsArray.sort(sortPriceDown);
+	generateDonuts();
+
 	toogleIconPrice.style.transition = '0.6s ease';
 	toogleIconPrice.style.transform = 'rotate(-0.5turn)';
 }
@@ -1080,12 +990,9 @@ const sortPriceUp = (a, b) => {
 };
 
 function initSortPriceUp() {
-	donutsArray.sort(sortPriceUp);
-	if (filterSet.size > 0) {
-		renderFromCategories();
-	} else {
-		generateDonuts();
-	}
+	filteredDonutsArray.sort(sortPriceUp);
+	generateDonuts();
+
 	toogleIconPrice.style.transition = '0.6s ease';
 	toogleIconPrice.style.transform = 'scale(-1, 1)';
 	toogleIconPrice.style.transform = 'rotate(deg0)';
