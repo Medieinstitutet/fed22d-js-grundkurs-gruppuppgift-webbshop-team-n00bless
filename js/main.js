@@ -543,10 +543,6 @@ const generateCategories = () => {
 	}
 };
 
-generateDonuts();
-generateCategories();
-christmasCheck();
-
 /**
  * Slideshow section
  *
@@ -1040,4 +1036,7 @@ const reset = () => {
 	location.reload();
 };
 
+generateDonuts();
+generateCategories();
+christmasCheck();
 generateFilterButtons();
