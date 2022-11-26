@@ -64,8 +64,8 @@ weekendPrice();
 /** *******************************************************
  * Adding to Cart
  ********************************************************* */
-let cartItems = [];
-let cartTotalSum = 0;
+const cartItems = [];
+const cartTotalSum = 0;
 const donutListEl = document.querySelector('.donuts');
 
 let donutListElQuantityButtons = donutListEl.querySelectorAll('.donuts__item_quantity > button');
