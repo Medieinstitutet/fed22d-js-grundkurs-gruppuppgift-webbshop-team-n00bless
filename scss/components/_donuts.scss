@@ -28,6 +28,7 @@
 
 		&_info {
 			display: flex;
+			z-index: 1;
 		}
 
 		&_quantity {
@@ -37,8 +38,13 @@
 		}
 
 		&_image {
-			z-index: -1;
-			filter: drop-shadow(9px 100px 8px rgba(39, 39, 39, 0.5));
+			img {
+				z-index: -1;
+				filter: drop-shadow(9px 100px 8px rgba(39, 39, 39, 0.5));
+			}
+			button {
+				cursor: pointer;
+			}
 		}
 
 		&_addcart {
