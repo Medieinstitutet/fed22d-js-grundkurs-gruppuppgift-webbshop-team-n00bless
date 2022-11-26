@@ -1,3 +1,5 @@
+import donutsArray from './store/donuts';
+
 /* Kategorier:
 filling
 glazed
@@ -9,104 +11,6 @@ let isTimerStarted = false;
 let timerInterval = null;
 const categorySet = new Set();
 const filterSet = new Set();
-const translatedCategories = {
-  glazed: 'Glaserad',
-  filled: 'Fylld',
-  sprinkles: 'Strössel',
-};
-
-const donutsArray = [
-  {
-    id: 1,
-    name: 'Chokladmunk med vaniljfyllning',
-    price: 23,
-    categories: ['glazed', 'filled'],
-    images: ['img/chocolate-iced-custard-filled.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 5,
-    discount: false,
-  },
-  {
-    id: 2,
-    name: 'Chokladmunk',
-    price: 18,
-    categories: ['glazed'],
-    images: ['img/chocolate-iced-glazed.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 4.5,
-    discount: false,
-  },
-  {
-    id: 3,
-    name: 'Kanelpudrad munk med äppelfyllning',
-    price: 25,
-    categories: ['filled', 'sprinkles'],
-    images: ['img/cinnamon-apple-filled.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 4.5,
-    discount: false,
-  },
-  {
-    id: 4,
-    name: 'Glaserad kanelmunk',
-    price: 13,
-    categories: ['glazed', 'sprinkles'],
-    images: ['img/glazed-cinnamon.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 5,
-    discount: false,
-  },
-  {
-    id: 5,
-    name: 'Glaserad munk med citronfyllning',
-    price: 23,
-    categories: ['glazed', 'filled'],
-    images: ['img/glazed-lemon-filled.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 4,
-    discount: false,
-  },
-  {
-    id: 6,
-    name: 'Munk med chokladfyllning',
-    price: 16,
-    categories: ['filled'],
-    images: ['img/original-filled-chocolate-kreme™.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 4,
-    discount: false,
-  },
-  {
-    id: 7,
-    name: 'Glaserad munk',
-    price: 7,
-    categories: ['glazed'],
-    images: ['img/original-glazed-doughnut.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 5,
-    discount: false,
-  },
-  {
-    id: 8,
-    name: 'Pudrad munk med blåbärsfyllning',
-    price: 25,
-    categories: ['sprinkles', 'filled'],
-    images: ['img/powdered-blueberry-filled.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 4.5,
-    discount: false,
-  },
-  {
-    id: 9,
-    name: 'Pudrad munk med jordgubbsfyllning',
-    price: 25,
-    categories: ['sprinkles', 'filled'],
-    images: ['img/powdered-strawberry-filled.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 4,
-    discount: false,
-  },
-  {
-    id: 10,
-    name: 'Jordgubbsmunk',
-    price: 11,
-    categories: ['glazed'],
-    images: ['img/strawberry-iced.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
-    rating: 5,
-    discount: false,
-  },
-];
 
 let filteredDonutsArray = [...donutsArray];
 
@@ -160,17 +64,34 @@ weekendPrice();
 /** *******************************************************
  * Adding to Cart
  ********************************************************* */
-const cartItems = [];
+let cartItems = [];
+let cartTotalSum = 0;
 const donutListEl = document.querySelector('.donuts');
 
-const fetchDonut = (id) => {
-  for (const donut of donutsArray) {
-    if (donut.id === id) {
-      return donut;
+let donutListElQuantityButtons = donutListEl.querySelectorAll('.donuts__item_quantity > button');
+let donutListElAddToCartButtons = donutListEl.querySelectorAll('.donuts__item_addcart');
+
+const generateButtonListeners = () => {
+  donutListElQuantityButtons = donutListEl.querySelectorAll('.donuts__item_quantity > button');
+  donutListElAddToCartButtons = donutListEl.querySelectorAll('.donuts__item_addcart');
+
+  for (const button of donutListElQuantityButtons) {
+    if (button.getAttribute('data-type') === 'decrease') {
+      button.addEventListener('click', () => {
+        donutDecreaseCount(button.getAttribute('data-id'));
+      });
+    } else if (button.getAttribute('data-type') === 'increase') {
+      button.addEventListener('click', () => {
+        donutIncreaseCount(button.getAttribute('data-id'));
+      });
     }
   }
 
-  return false;
+  for (const button of donutListElAddToCartButtons) {
+    button.addEventListener('click', () => {
+      donutAddToCart(button.getAttribute('data-id'));
+    });
+  }
 };
 
 const updateCartDOM = () => {
@@ -189,18 +110,23 @@ const updateCartDOM = () => {
 const donutIncreaseCount = (id) => {
   const donutEl = document.querySelector(`[data-id="${id}"]`);
   const currentCountEl = donutEl.querySelector('.donuts__item_quantity input');
-  // const currentCount = Number(currentCountEl.value) + 1;
-  if (currentCountEl.value >= 99) {
-    currentCountEl.value = currentCountEl.value.slice(0, 2); // remove 3rd digit
-  } else {
-    currentCountEl.value += 1;
-    const donutObj = fetchDonut(id);
-    const currentPriceText = donutEl.querySelector('.donuts__item_addcart span');
-    currentPriceText.innerText = donutObj.price * currentCountEl.value;
+  let currentCount = Number(currentCountEl.value) + 1;
+  const intId = Number(id);
+  const donutObject = donutsArray.find((item) => item.id === intId);
+
+  if (currentCount > 99) {
+    currentCount = 99;
   }
+
+  currentCountEl.value = currentCount;
+  donutEl.querySelector('.donuts__item_addcart span').innerText = donutObject.price * currentCount;
+
+  const price = donutObject.price * currentCount >= 0 ? donutObject.price * currentCount : donutObject.price;
+  donutEl.querySelector('.donuts__item_addcart span').innerText = price;
+
   for (const donut of cartItems) {
-    if (donut.id === id) {
-      donut.count += 1;
+    if (donut.id === id && donut.count > 0) {
+      donut.count -= 1;
       donut.totPrice = donut.count * donut.price;
       console.log(cartItems);
       renderCart();
@@ -211,14 +137,17 @@ const donutIncreaseCount = (id) => {
 const donutDecreaseCount = (id) => {
   const donutEl = document.querySelector(`[data-id="${id}"]`);
   const currentCountEl = donutEl.querySelector('.donuts__item_quantity input');
-  // const currentCount = Number(currentCountEl.value) - 1;
+  const currentCount = Number(currentCountEl.value) - 1;
+  const intId = Number(id);
+  const donutObject = donutsArray.find((item) => item.id === intId);
 
-  if (currentCountEl.value !== 0) {
-    currentCountEl.value -= 1;
-    const donutObj = fetchDonut(id);
-    const currentPriceText = donutEl.querySelector('.donuts__item_addcart span');
-    currentPriceText.innerText = donutObj.price * currentCountEl.value;
+  if (currentCountEl.value > 0) {
+    currentCountEl.value = currentCount;
+    donutEl.querySelector('.donuts__item_addcart span').innerText = donutObject.price * currentCount;
   }
+
+  const price = donutObject.price * currentCount >= 0 ? donutObject.price * currentCount : donutObject.price;
+  donutEl.querySelector('.donuts__item_addcart span').innerText = price;
 
   for (const donut of cartItems) {
     if (donut.id === id && donut.count > 0) {
@@ -231,53 +160,82 @@ const donutDecreaseCount = (id) => {
 };
 
 const donutAddToCart = (id) => {
-  if (!isTimerStarted) {
-    startTimer(60 * 15);
-  }
-
+  const intId = Number(id);
   const currentCount = Number(document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`).value);
-  const totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0);
-  let donutsCost;
-  for (const donut of donutsArray) {
-    if (donut.id === id) {
-      donutsCost = donut.price * currentCount;
-    }
-  }
-  document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`).value = '0';
-  if (totalCartSum + donutsCost > 2000) {
-    alert('Du kan inte beställa för mer än 2000kr');
-    return;
-  }
-  // if (currentCount > 0 && cartItems.length > 0) {
+
   if (currentCount > 0) {
-    for (const item of cartItems) {
-      if (item.id === id) {
-        item.count += currentCount;
-        item.totPrice += currentCount * item.price;
-        updateCartDOM();
-        renderCart();
-        return;
-      }
+    const donutObject = donutsArray.find((item) => item.id === intId);
+    const donutsCost = donutObject.price * currentCount;
+
+    // if (!isTimerStarted) {
+    //   startTimer(60 * 15);
+    // }
+
+    // const totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0);
+    // console.log(totalCartSum);
+    // let donutsCost;
+    // for (const donut of donutsArray) {
+    //   if (donut.id === id) {
+    //     donutsCost = donut.price * currentCount;
+    //   }
+    // }
+    document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`).value = '0';
+
+    if (cartTotalSum + donutsCost > 2000) {
+      alert('Du kan inte beställa för mer än 2000kr');
+      return;
     }
 
-    for (const donut of donutsArray) {
-      if (donut.id === id) {
-        cartItems.push({
-          ...donut,
-          count: currentCount,
-          totPrice: currentCount * donut.price,
-        });
-        updateCartDOM();
-        renderCart();
-        return;
+    const existsInCart = cartItems.find((item) => item.id === intId);
+
+    if (existsInCart) {
+      for (const item of cartItems) {
+        item.count += currentCount;
+        item.totPrice += donutsCost;
       }
+    } else {
+      cartItems.push({
+        ...donutObject,
+        count: currentCount,
+        totPrice: donutsCost,
+      });
     }
+
+    updateCartDOM();
+    renderCart();
+
+    // if (currentCount > 0 && cartItems.length > 0) {
+    // if (currentCount > 0) {
+    //   for (const item of cartItems) {
+    //     if (item.id === id) {
+    //       item.count += currentCount;
+    //       item.totPrice += currentCount * item.price;
+    //       updateCartDOM();
+    //       renderCart();
+    //       return;
+    //     }
+    //   }
+
+    //   for (const donut of donutsArray) {
+    //     if (donut.id === id) {
+    //       cartItems.push({
+    //         ...donut,
+    //         count: currentCount,
+    //         totPrice: currentCount * donut.price,
+    //       });
+    //       updateCartDOM();
+    //       renderCart();
+    //       return;
+    //     }
+    //   }
+    // }
   }
 };
 
 const renderCart = () => {
   let cartItemsToRender = '';
   for (const donut of cartItems) {
+    console.log(donut);
     const donutElement = /* html */ `
 			<li data-id="cart-${donut.id}">
 				<div className="name">
@@ -286,13 +244,13 @@ const renderCart = () => {
 				</div>
 				<div className="donuts__item_quantity">
 					<button 
-						class="button button--background" 
-						onclick="updateCartQuantity('cart-${donut.id}', 'dec')"
+						class="button button--background"
+						onClick="updateCartQuantity('cart-${donut.id}', 'dec')"
 					>-</button>
 					<input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
 					<button 
 						class="button button--background" 
-						onclick="updateCartQuantity('cart-${donut.id}', 'inc')"
+						onClick="updateCartQuantity('cart-${donut.id}', 'inc')"
 					>+</button>
 					<p>${donut.totPrice} kr</p>
 				</div>
@@ -471,22 +429,26 @@ const generateDonuts = () => {
         <div class="donuts__item_quantity">
           <button 
 						class="button button--background" 
-						onclick="donutDecreaseCount(${donut.id})"
+						data-id=${donut.id}
+						data-type='decrease'
 					><i class="fa-solid fa-minus" title="Decrease count"></i></button>
           <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
           >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
           <button 
 						class="button button--background" 
-						onclick="donutIncreaseCount(${donut.id})"
+						data-id=${donut.id}
+						data-type='increase'
 					><i class="fa-solid fa-plus" title="Increase count"></i></button>
         </div>
         <button 
 					class="donuts__item_addcart button button--background" 
-					onclick="donutAddToCart(${donut.id})"
+					data-id=${donut.id}
 				>Lägg till för <span>${donut.price}</span> kr</button>
       </article>
     `;
   }
+
+  generateButtonListeners();
 };
 
 const generateCategories = () => {
@@ -779,6 +741,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// eslint-disable-next-line no-unused-vars
 const addCategorySort = (category) => {
   if (filterSet.has(category)) {
     filterSet.delete(category);
@@ -798,23 +761,10 @@ const addCategorySort = (category) => {
   generateDonuts();
 };
 
-const generateFilterButtons = () => {
-  let inputs = '';
-  for (const category of categorySet) {
-    console.log(category, typeof category);
-    inputs += /* html */ `
-			<li class="checkbox">
-				<label class="checkbox__input"
-					><input 
-					onclick="addCategorySort('${category}')" 
-					type="checkbox" name="${category}" />${translatedCategories[category]}
-				</label>
-			</li>
-		`;
-  }
-
-  document.querySelector('.navbar__dropdown_item_categories').innerHTML = inputs;
-};
+const inputButtons = document.querySelectorAll('.navbar__dropdown_item_categories input');
+for (const input of inputButtons) {
+  input.addEventListener('click', (e) => addCategorySort(e.target.name));
+}
 
 const toogleIconPrice = document.querySelector('#price-sort');
 const toogleIconRating = document.querySelector('#rating-sort');
@@ -976,4 +926,3 @@ const startTimer = (duration) => {
 generateDonuts();
 generateCategories();
 christmasCheck();
-generateFilterButtons();

@@ -1,108 +1,85 @@
 <!DOCTYPE html>
 <html class="no-js" lang="sv">
-	<head>
-		<meta charset="utf-8" />
-		<title>Gottfrids munkar</title>
-		<meta name="description" content="" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Gottfrids Munkar - smaker för alla!" />
+  <head>
+    <meta charset="utf-8" />
+    <title>Gottfrids munkar</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Gottfrids Munkar - smaker för alla!" />
 
-		<meta property="og:title" content="Gottfrids Munkar - smaker för alla!" />
-		<meta property="og:type" content="webpage" />
-		<meta property="og:url" content="" />
-		<meta property="og:image" content="" />
+    <meta property="og:title" content="Gottfrids Munkar - smaker för alla!" />
+    <meta property="og:type" content="webpage" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
 
-		<link rel="manifest" href="site.webmanifest" />
-		<link rel="apple-touch-icon" href="icon.png" />
-		<!-- Place favicon.ico in the root directory -->
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-		<link rel="stylesheet" href="scss/style.css" />
+    <link rel="stylesheet" href="scss/style.css" />
 
-		<meta name="theme-color" content="#fafafa" />
-		<script
-			src="https://kit.fontawesome.com/75888dd569.js"
-			crossorigin="anonymous"
-		></script>
+    <meta name="theme-color" content="#fafafa" />
+    <script src="https://kit.fontawesome.com/75888dd569.js" crossorigin="anonymous"></script>
 
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-			rel="stylesheet"
-		/>
-	</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-	<body>
-		<header class="navbar">
-			<div class="navbar__heading">
-				<img
-					src="./img/gotfrid.png"
-					width="200"
-					height="200"
-					alt="A picture of Gotfrid the owner of the donut shop"
-				/>
-				<h1>Gottfrids <span>Munkar</span></h1>
-				<button
-					id="cart-icon"
-					class="button"
-					aria-label="Shopping Cart"
-					onclick="location.href='#freight-sum'"
-				>
-					<!--link is for development only-->
-					<span class="fa-layers fa-fw">
-						<i class="icon fa-solid fa-cart-shopping"></i>
-						<span id="cart-counter" class="icon__counter fa-layers-counter"
-							>0</span
-						>
-					</span>
-				</button>
-			</div>
-			<div class="navbar__menu">
-				<div class="navbar__menu_input">
-					<i id="searchButton" class="fa-solid fa-magnifying-glass"></i>
-					<input type="text" name="searchQuery" placeholder="Search..." />
-				</div>
-				<div>
-					<button
-						aria-label="Reset filter"
-						class="button"
-						id="filterMenuResetButton"
-					>
-						<i class="icon fa-solid fa-rotate-left"></i>
-					</button>
-					<button
-						id="filterMenuButton"
-						aria-label="Filter"
-						class="button"
-						aria-expanded="false"
-						aria-controls="filterMenu"
-					>
-						<i class="icon fa-solid fa-sliders"></i>
-					</button>
-				</div>
-			</div>
-			<div class="navbar__dropdown" style="display: none" id="filterMenu">
-				<div class="navbar__dropdown_item">
-					<p>Välj kategorier</p>
-					<ul class="navbar__dropdown_item_categories">
-						<li class="checkbox">
-							<label class="checkbox__input"
-								><input type="checkbox" name="filled" />Fyllning
-							</label>
-						</li>
-						<li class="checkbox">
-							<label class="checkbox__input"
-								><input type="checkbox" name="glazed" />Glaserade
-							</label>
-						</li>
-						<li class="checkbox">
-							<label class="checkbox__input">
-								<input type="checkbox" name="sprinkles" />
-								Strössel
-							</label>
-						</li>
-					</ul>
-					<!-- <label for="category">Välj kategorier</label>
+  <body>
+    <header class="navbar">
+      <div class="navbar__heading">
+        <img src="./img/gotfrid.png" width="200" height="200" alt="A picture of Gotfrid the owner of the donut shop" />
+        <h1>Gottfrids <span>Munkar</span></h1>
+        <button id="cart-icon" class="button" aria-label="Shopping Cart" onclick="location.href='#freight-sum'">
+          <!--link is for development only-->
+          <span class="fa-layers fa-fw">
+            <i class="icon fa-solid fa-cart-shopping"></i>
+            <span id="cart-counter" class="icon__counter fa-layers-counter">0</span>
+          </span>
+        </button>
+      </div>
+      <div class="navbar__menu">
+        <div class="navbar__menu_input">
+          <i id="searchButton" class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" name="searchQuery" placeholder="Search..." />
+        </div>
+        <div>
+          <button aria-label="Reset filter" class="button" id="filterMenuResetButton">
+            <i class="icon fa-solid fa-rotate-left"></i>
+          </button>
+          <button
+            id="filterMenuButton"
+            aria-label="Filter"
+            class="button"
+            aria-expanded="false"
+            aria-controls="filterMenu"
+          >
+            <i class="icon fa-solid fa-sliders"></i>
+          </button>
+        </div>
+      </div>
+      <div class="navbar__dropdown" style="display: none" id="filterMenu">
+        <div class="navbar__dropdown_item">
+          <p>Välj kategorier</p>
+          <ul class="navbar__dropdown_item_categories">
+            <li class="checkbox">
+              <label class="checkbox__input"><input type="checkbox" name="filled" />Fyllning </label>
+            </li>
+            <li class="checkbox">
+              <label class="checkbox__input"><input type="checkbox" name="glazed" />Glaserade </label>
+            </li>
+            <li class="checkbox">
+              <label class="checkbox__input">
+                <input type="checkbox" name="sprinkles" />
+                Strössel
+              </label>
+            </li>
+          </ul>
+          <!-- <label for="category">Välj kategorier</label>
 					<select class="select" name="category">
 						<option class="select__option" value="category0">
 							Alla munkar
@@ -111,40 +88,40 @@
 						<option class="select__option" value="category2">Kategori 2</option>
 						<option class="select__option" value="category3">Kategori 3</option>
 					</select> -->
-				</div>
-				<div class="navbar__dropdown_item">
-					<p>Välj prisspann</p>
-					<div class="navbar__dropdown_item_filter">
-						<div>
-							<p>Från</p>
-							<input type="number" min="0" max="999" placeholder="0" />
-						</div>
-						<div>
-							<p>Till</p>
-							<input type="number" min="0" max="999" placeholder="100" />
-						</div>
-						<div>
-							<!--sorting placeholder-->
-							<p>Pris</p>
-							<div id="price-sort">
-								<i class="fa-solid fa-arrow-up-wide-short"></i>
-							</div>
-							<p>Rating</p>
-							<div id="rating-sort">
-								<i class="fa-solid fa-arrow-up-wide-short"></i>
-							</div>
-							<p>Namn</p>
-							<div id="name-sort">
-								<i class="fa-solid fa-arrow-up-wide-short"></i>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</header>
-		<main>
-			<section class="donuts">
-				<!-- <article class="donuts__item">
+        </div>
+        <div class="navbar__dropdown_item">
+          <p>Välj prisspann</p>
+          <div class="navbar__dropdown_item_filter">
+            <div>
+              <p>Från</p>
+              <input type="number" min="0" max="999" placeholder="0" />
+            </div>
+            <div>
+              <p>Till</p>
+              <input type="number" min="0" max="999" placeholder="100" />
+            </div>
+            <div>
+              <!--sorting placeholder-->
+              <p>Pris</p>
+              <div id="price-sort">
+                <i class="fa-solid fa-arrow-up-wide-short"></i>
+              </div>
+              <p>Rating</p>
+              <div id="rating-sort">
+                <i class="fa-solid fa-arrow-up-wide-short"></i>
+              </div>
+              <p>Namn</p>
+              <div id="name-sort">
+                <i class="fa-solid fa-arrow-up-wide-short"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="donuts">
+        <!-- <article class="donuts__item">
 					<h2>Cake Batter Donut</h2>
 					<div>
 						<img
@@ -162,102 +139,80 @@
 					<div class="rating">
 					</div>
 				</article> -->
-			</section>
-			<section id="cart">
-				<h2>Beställningssektion</h2>
-				<article>
-					<h2>Varukorg</h2>
-					<ul></ul>
-					<p id="freight-sum">Frakt: <span>25</span>kr</p>
-					<p id="cart-sum">Totalpris: <span>0</span>kr</p>
-					<p id="delivery-time">
-						Beställningen skickas 30 minuter efter orderläggning.
-					</p>
-					<label for="discount-code">Mata in eventuell rabattkod</label>
-					<input type="text" name="discount-code" />
-				</article>
-				<form action="./order_landing_page.html">
-					<fieldset>
-						<legend>Kontaktuppgifter</legend>
-						<label for="name">För- och efternamn</label>
-						<input
-							type="text"
-							name="name"
-							pattern="[A-Za-zÅåÄäÖö\s]+"
-							title="Endast små och stora bokstäver"
-							required
-						/>
-						<label for="address">Adress</label>
-						<input type="text" name="address" required />
-						<label for="post-code">Postkod</label>
-						<input
-							type="text"
-							name="post-code"
-							pattern="[0-9]{5}"
-							title="5 siffror utan mellanslag"
-							required
-						/>
-						<label for="city">Stad</label>
-						<input type="text" name="city" required />
-						<label for="tel">Telefonnummer</label>
-						<input type="tel" name="tel" required />
-						<label for="email">Mailadress</label>
-						<input type="email" name="email" required />
-					</fieldset>
-					<fieldset class="payment-method">
-						<legend>Betalningssätt</legend>
-						<label>
-							Kort
-							<input
-								type="radio"
-								name="payment-method"
-								id="card-radio"
-								value="card"
-							/>
-						</label>
-						<label>
-							Faktura
-							<input
-								type="radio"
-								name="payment-method"
-								id="invoice-radio"
-								value="invoice"
-							/>
-						</label>
-					</fieldset>
-					<fieldset id="card-payment-form" class="payment-form">
-						<legend>Kort</legend>
-						<label for="card-number">Kortnummer</label>
-						<input type="text" inputmode="numeric" name="card-number" />
-						<label for="date">Utgångsdatum</label>
-						<input type="text" name="date" />
-						<label for="cvc">CVC</label>
-						<input type="text" name="cvc" />
-					</fieldset>
-					<fieldset id="invoice-payment-form" class="payment-form">
-						<legend>Faktura</legend>
-						<label for="social-security-number">Personnummer</label>
-						<input
-							type="text"
-							inputmode="numeric"
-							name="social-security-number"
-						/>
-					</fieldset>
-					<label for="personal-data">Personuppgifter</label>
-					<input type="checkbox" name="personal-data" required />
-					<label for="newsletter">Prenumerera på nyhetsbrev?</label>
-					<input type="checkbox" name="newsletter" />
-					<button type="submit" disabled id="order-btn">Beställ</button>
-					<button type="reset">Rensa</button>
-				</form>
-			</section>
-		</main>
-		<footer>
-			<p>Justin Thyme AB</p>
-		</footer>
+      </section>
+      <section id="cart">
+        <h2>Beställningssektion</h2>
+        <article>
+          <h2>Varukorg</h2>
+          <ul></ul>
+          <p id="freight-sum">Frakt: <span>25</span>kr</p>
+          <p id="cart-sum">Totalpris: <span>0</span>kr</p>
+          <p id="delivery-time">Beställningen skickas 30 minuter efter orderläggning.</p>
+          <label for="discount-code">Mata in eventuell rabattkod</label>
+          <input type="text" name="discount-code" />
+        </article>
+        <form action="./order_landing_page.html">
+          <fieldset>
+            <legend>Kontaktuppgifter</legend>
+            <label for="name">För- och efternamn</label>
+            <input
+              type="text"
+              name="name"
+              pattern="[A-Za-zÅåÄäÖö\s]+"
+              title="Endast små och stora bokstäver"
+              required
+            />
+            <label for="address">Adress</label>
+            <input type="text" name="address" required />
+            <label for="post-code">Postkod</label>
+            <input type="text" name="post-code" pattern="[0-9]{5}" title="5 siffror utan mellanslag" required />
+            <label for="city">Stad</label>
+            <input type="text" name="city" required />
+            <label for="tel">Telefonnummer</label>
+            <input type="tel" name="tel" required />
+            <label for="email">Mailadress</label>
+            <input type="email" name="email" required />
+          </fieldset>
+          <fieldset class="payment-method">
+            <legend>Betalningssätt</legend>
+            <label>
+              Kort
+              <input type="radio" name="payment-method" id="card-radio" value="card" />
+            </label>
+            <label>
+              Faktura
+              <input type="radio" name="payment-method" id="invoice-radio" value="invoice" />
+            </label>
+          </fieldset>
+          <fieldset id="card-payment-form" class="payment-form">
+            <legend>Kort</legend>
+            <label for="card-number">Kortnummer</label>
+            <input type="text" inputmode="numeric" name="card-number" />
+            <label for="date">Utgångsdatum</label>
+            <input type="text" name="date" />
+            <label for="cvc">CVC</label>
+            <input type="text" name="cvc" />
+          </fieldset>
+          <fieldset id="invoice-payment-form" class="payment-form">
+            <legend>Faktura</legend>
+            <label for="social-security-number">Personnummer</label>
+            <input type="text" inputmode="numeric" name="social-security-number" />
+          </fieldset>
+          <label for="personal-data">Personuppgifter</label>
+          <input type="checkbox" name="personal-data" required />
+          <label for="newsletter">Prenumerera på nyhetsbrev?</label>
+          <input type="checkbox" name="newsletter" />
+          <button type="submit" disabled id="order-btn">Beställ</button>
+          <button type="reset">Rensa</button>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <p>Justin Thyme AB</p>
+    </footer>
 
-		<script src="js/vendor/modernizr-3.11.2.min.js"></script>
-		<script src="js/plugins.js"></script>
-		<script src="js/main.js"></script>
-	</body>
+    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>
