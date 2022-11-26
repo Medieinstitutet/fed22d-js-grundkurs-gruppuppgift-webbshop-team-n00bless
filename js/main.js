@@ -22,7 +22,7 @@ const donutsArray = [
 		price: 23,
 		categories: ['glazed', 'filled'],
 		images: [
-			'img/chocolate-iced-custard-filled-banner.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
 			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 5,
@@ -34,8 +34,8 @@ const donutsArray = [
 		price: 18,
 		categories: ['glazed'],
 		images: [
-			'img/chocolate-iced-glazed-banner.jpeg',
 			'img/chocolate-iced-glazed.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 4.5,
 		discount: false,
@@ -46,8 +46,8 @@ const donutsArray = [
 		price: 25,
 		categories: ['filled', 'sprinkles'],
 		images: [
-			'img/cinnamon-apple-filled-banner.jpeg',
 			'img/cinnamon-apple-filled.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 4.5,
 		discount: false,
@@ -57,7 +57,10 @@ const donutsArray = [
 		name: 'Glaserad kanelmunk',
 		price: 13,
 		categories: ['glazed', 'sprinkles'],
-		images: ['img/glazed-cinnamon-banner.jpeg', 'img/glazed-cinnamon.jpeg'],
+		images: [
+			'img/glazed-cinnamon.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg', 
+		],
 		rating: 5,
 		discount: false,
 	},
@@ -67,8 +70,8 @@ const donutsArray = [
 		price: 23,
 		categories: ['glazed', 'filled'],
 		images: [
-			'img/glazed-lemon-filled-banner.jpeg',
 			'img/glazed-lemon-filled.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',	
 		],
 		rating: 4,
 		discount: false,
@@ -79,8 +82,8 @@ const donutsArray = [
 		price: 16,
 		categories: ['filled'],
 		images: [
-			'img/original-filled-chocolate-kreme™-banner.jpeg',
 			'img/original-filled-chocolate-kreme™.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 4,
 		discount: false,
@@ -91,8 +94,8 @@ const donutsArray = [
 		price: 7,
 		categories: ['glazed'],
 		images: [
-			'img/original-glazed-doughnut-banner.jpeg',
 			'img/original-glazed-doughnut.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 5,
 		discount: false,
@@ -103,8 +106,8 @@ const donutsArray = [
 		price: 25,
 		categories: ['sprinkles', 'filled'],
 		images: [
-			'img/powdered-blueberry-filled-banner.jpeg',
 			'img/powdered-blueberry-filled.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 4.5,
 		discount: false,
@@ -115,8 +118,8 @@ const donutsArray = [
 		price: 25,
 		categories: ['sprinkles', 'filled'],
 		images: [
-			'img/powdered-strawberry-filled-banner.jpeg',
 			'img/powdered-strawberry-filled.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 4,
 		discount: false,
@@ -126,7 +129,10 @@ const donutsArray = [
 		name: 'Jordgubbsmunk',
 		price: 11,
 		categories: ['glazed'],
-		images: ['img/strawberry-iced-banner.jpeg', 'img/strawberry-iced.jpeg'],
+		images: [
+			'img/strawberry-iced.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
+		],
 		rating: 5,
 		discount: false,
 	},
@@ -142,7 +148,7 @@ const donutsArrayLucia = [
 		price: 1,
 		categories: ['sprinkles', 'filled'],
 		images: [
-			'img/chocolate-iced-custard-filled-banner.jpeg',
+			'img/chocolate-iced-custard-filled.jpeg',
 			'img/chocolate-iced-custard-filled.jpeg',
 		],
 		rating: 5,
@@ -455,7 +461,9 @@ const updateCartDOM = () => {
             if(donuts.count  >= 10 && donuts.discount == false) {
                 donuts.totPrice = Math.round(donuts.totPrice * 0.9);
                 donuts.discount = true;
-            }
+            } else if (donuts.count  < 10 && donuts.discount == true){
+				donuts.discount = false;
+			}
        
         }
     }
@@ -496,16 +504,16 @@ const generateDonuts = () => {
 		donuts += /*html*/ `
       <article class="donuts__item" data-id=${donut.id}>
         <h2>${donut.name}</h2>
-        <div class="donuts__item_image">
-          <img
-            src="${donut.images[1]}"
-            alt="A picture of a donut"
-          />
-        </div>
-                <div class="donuts__item_info">
-                    <p>${donut.price} kr</p>
-                    <p>${generateStarRating(donut.rating)}</p>
-                </div>
+		<div class="donuts__item_image">
+			<button id ="prev-${donut.id}" class="prev">&#10094;</button>
+			<img id = "img-${donut.id}" src="${donut.images[0]}" alt="A picture of a donut"/>
+		 	<button id ="next-${donut.id}" class="next">&#10095;</button>
+   		</div>
+
+		<div class="donuts__item_info">
+			<p>${donut.price} kr</p>
+			<p>${generateStarRating(donut.rating)}</p>
+		</div>
        
         <div class="donuts__item_quantity">
           <button class="button button--background" onclick="donutDecreaseCount(${donut.id
@@ -524,7 +532,47 @@ const generateDonuts = () => {
 };
 
 generateDonuts();
-christmasCheck(); //Denna ligger här för man kommer behöva stylea texten på munkarna efter de har genererats
+christmasCheck(); 
+
+/**
+* Slideshow section
+* 
+*/
+/* Come back to make it work on not just "donutsArray" */
+function prevImage(e) {
+	const index = e.currentTarget.id.replace('prev-', '');
+	const imgContainer = document.querySelector(`#img-${index}`);
+	const currentSrc = imgContainer.getAttribute('src');
+
+	if (currentSrc === donutsArray[index].images[0]) {
+		imgContainer.setAttribute('src', donutsArray[index].images[1]);
+	} else {
+		imgContainer.setAttribute('src', donutsArray[index].images[0]);
+	}
+}
+
+function nextImage(e) {
+	const index = e.currentTarget.id.replace('next-', '');
+	const imgContainer = document.querySelector(`#img-${index}`);
+	const currentSrc = imgContainer.getAttribute('src');
+
+	if (currentSrc === donutsArray[index].images[0]) {
+		imgContainer.setAttribute('src', donutsArray[index].images[1]);
+	} else {
+		imgContainer.setAttribute('src', donutsArray[index].images[0]);
+	}
+}
+
+const prevBtns = document.querySelectorAll('button.prev');
+const nextBtns = document.querySelectorAll('button.next');
+
+prevBtns.forEach((btn) => {
+	btn.addEventListener('click', prevImage);
+});
+
+nextBtns.forEach((btn) => {
+	btn.addEventListener('click', nextImage);
+});
 
 /*********************************************************
  * Input field validation
@@ -772,16 +820,14 @@ const renderFromFilter = () => {
 			<article class="donuts__item" data-id=${donut.id}>
 				<h2>${donut.name}</h2>
 				<div class="donuts__item_image">
-					<img
-						src="${donut.images[1]}"
-						alt="A picture of a donut"
-					/>
+					<button id ="prev-filter${donut.id}" class="prev">&#10094;</button>
+					<img id = "img-filter${donut.id}" src="${donut.images[0]}" alt="A picture of a donut"/>
+					<button id ="next-filter${donut.id}" class="next">&#10095;</button>
+   				</div>
+				<div class="donuts__item_info">
+					<p>${donut.price} kr</p>
+					<p>${generateStarRating(donut.rating)}</p>
 				</div>
-								<div class="donuts__item_info">
-										<p>${donut.price} kr</p>
-										<p>${generateStarRating(donut.rating)}</p>
-								</div>
-			
 				<div class="donuts__item_quantity">
 					<button class="button button--background" onclick="donutDecreaseCount(${donut.id
 			})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
@@ -807,16 +853,14 @@ const renderFromCategories = () => {
 					<article class="donuts__item" data-id=${donut.id}>
 						<h2>${donut.name}</h2>
 						<div class="donuts__item_image">
-							<img
-								src="${donut.images[1]}"
-								alt="A picture of a donut"
-							/>
+							<button id ="prev-${donut.id}" class="prev">&#10094;</button>
+							<img id = "img-${donut.id}" src="${donut.images[0]}" alt="A picture of a donut"/>
+		 					<button id ="next-${donut.id}" class="next">&#10095;</button>
+   						</div>
+						<div class="donuts__item_info">
+								<p>${donut.price} kr</p>
+								<p>${generateStarRating(donut.rating)}</p>
 						</div>
-										<div class="donuts__item_info">
-												<p>${donut.price} kr</p>
-												<p>${generateStarRating(donut.rating)}</p>
-										</div>
-
 						<div class="donuts__item_quantity">
 							<button class="button button--background" onclick="donutDecreaseCount(${donut.id
 					})"><i class="fa-solid fa-minus" title="Decrease count"></i></button>
