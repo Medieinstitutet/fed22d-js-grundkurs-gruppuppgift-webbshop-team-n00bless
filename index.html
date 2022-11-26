@@ -35,7 +35,12 @@
 	<body>
 		<header class="navbar">
 			<div class="navbar__heading">
-				<img src="./img/gotfrid.png" width="200" height="200" alt="A picture of Gotfrid the owner of the donut shop">
+				<img
+					src="./img/gotfrid.png"
+					width="200"
+					height="200"
+					alt="A picture of Gotfrid the owner of the donut shop"
+				/>
 				<h1>Gottfrids <span>Munkar</span></h1>
 				<button
 					id="cart-icon"
@@ -57,14 +62,24 @@
 					<i id="searchButton" class="fa-solid fa-magnifying-glass"></i>
 					<input type="text" name="searchQuery" placeholder="Search..." />
 				</div>
-				<button
-					aria-label="Filter"
-					class="button"
-					aria-expanded="false"
-					aria-controls="filterMenu"
-				>
-					<i class="icon fa-solid fa-sliders"></i>
-				</button>
+				<div>
+					<button
+						aria-label="Reset filter"
+						class="button"
+						id="filterMenuResetButton"
+					>
+						<i class="icon fa-solid fa-rotate-left"></i>
+					</button>
+					<button
+						id="filterMenuButton"
+						aria-label="Filter"
+						class="button"
+						aria-expanded="false"
+						aria-controls="filterMenu"
+					>
+						<i class="icon fa-solid fa-sliders"></i>
+					</button>
+				</div>
 			</div>
 			<div class="navbar__dropdown" style="display: none" id="filterMenu">
 				<div class="navbar__dropdown_item">
@@ -152,8 +167,7 @@
 				<h2>Beställningssektion</h2>
 				<article>
 					<h2>Varukorg</h2>
-					<ul>
-					</ul>
+					<ul></ul>
 					<p id="freight-sum">Frakt: <span>25</span>kr</p>
 					<p id="cart-sum">Totalpris: <span>0</span>kr</p>
 					<p id="delivery-time">
