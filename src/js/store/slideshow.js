@@ -4,28 +4,21 @@ import donutsArray from './donuts';
  *
  */
 function generateSlideshow() {
-  function prevImage(e) {
-    const index = e.currentTarget.id.replace('prev-', '');
-    const imgContainer = document.querySelector(`#img-${index}`);
-    const currentSrc = imgContainer.getAttribute('src');
-    console.log('prev');
+  function switchImage(e) {
+    const index = e.currentTarget.id.replace('prev-', '').replace('next-', '');
+    const img0 = document.querySelector(`#img-0-${index}`);
+    const img1 = document.querySelector(`#img-1-${index}`);
 
-    if (currentSrc === donutsArray[index].images[0]) {
-      imgContainer.setAttribute('src', donutsArray[index].images[1]);
+    if (img0.classList.contains('hiddenImg')) {
+      img0.classList.remove('hiddenImg');
+      img0.classList.add('showImg');
+      img1.classList.add('hiddenImg');
+      img1.classList.remove('showImg');
     } else {
-      imgContainer.setAttribute('src', donutsArray[index].images[0]);
-    }
-  }
-
-  function nextImage(e) {
-    const index = e.currentTarget.id.replace('next-', '');
-    const imgContainer = document.querySelector(`#img-${index}`);
-    const currentSrc = imgContainer.getAttribute('src');
-    console.log('next');
-    if (currentSrc === donutsArray[index].images[0]) {
-      imgContainer.setAttribute('src', donutsArray[index].images[1]);
-    } else {
-      imgContainer.setAttribute('src', donutsArray[index].images[0]);
+      img0.classList.add('hiddenImg');
+      img0.classList.remove('showImg');
+      img1.classList.remove('hiddenImg');
+      img1.classList.add('showImg');
     }
   }
 
@@ -33,11 +26,11 @@ function generateSlideshow() {
   const nextBtns = document.querySelectorAll('button.next');
 
   prevBtns.forEach((btn) => {
-    btn.addEventListener('click', prevImage);
+    btn.addEventListener('click', switchImage);
   });
 
   nextBtns.forEach((btn) => {
-    btn.addEventListener('click', nextImage);
+    btn.addEventListener('click', switchImage);
   });
 }
 

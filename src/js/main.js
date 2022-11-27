@@ -420,7 +420,8 @@ const generateDonuts = () => {
         <h2>${donut.name}</h2>
 				<div class="donuts__item_image">
 					<button id ="prev-${donut.id}" class="prev">&#10094;</button>
-					<img id = "img-${donut.id}" src="${donut.images[0]}" alt="A picture of a donut"/>
+					<img id = "img-0-${donut.id}" src="${donut.images[0]}" alt="A picture of a donut"/>
+          <img id = "img-1-${donut.id}" class = "hiddenImg" src="${donut.images[1]}" alt="A picture of a donut"/>
 					<button id ="next-${donut.id}" class="next">&#10095;</button>
 				</div>
 				<div class="donuts__item_info">
@@ -884,6 +885,14 @@ const startTimer = (duration) => {
     }
   }, 1000);
 };
+
+// in progress
+// const cartToogleSwitch = function () {
+//   console.log('test');
+// };
+
+// const cartToogle = document.querySelector('#cart-icon');
+// cartToogle.addEventListener('click', cartToogleSwitch);
 
 generateDonuts();
 generateCategories();

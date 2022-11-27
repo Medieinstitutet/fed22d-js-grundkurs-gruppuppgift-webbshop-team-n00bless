@@ -38,9 +38,34 @@
 		}
 
 		&_image {
-			img {
-				z-index: -1;
-				filter: drop-shadow(9px 100px 8px rgba(39, 39, 39, 0.5));
+			/*work in progress*/
+			.hiddenImg {
+				animation: spin 0.5s linear;
+				display: none;
+				@keyframes spin {
+					from { 
+						transform: rotate(360deg); 
+						opacity: 0;
+					}
+					to { 
+						transform: rotate(0deg); 
+						opacity: 1;
+					}
+				}
+			}
+			.showImg {
+				animation: spin1 0.5s linear;
+				display:inline-block;
+				@keyframes spin1 {
+					from { 
+						transform: rotate(0deg); 
+						opacity: 0;
+					}
+					to { 
+						transform: rotate(360deg); 
+						opacity: 1;
+					}
+				}
 			}
 			button {
 				cursor: pointer;

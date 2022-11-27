@@ -4,7 +4,7 @@ const donutsArray = [
     name: 'Chokladmunk med vaniljfyllning',
     price: 23,
     categories: ['glazed', 'filled'],
-    images: ['img/chocolate-iced-custard-filled.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
+    images: ['img/chocolate-iced-custard-filled.jpeg', 'img/cinnamon-apple-filled.jpeg'],
     rating: 5,
     discount: false,
   },
