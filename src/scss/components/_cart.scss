@@ -1,7 +1,7 @@
 @use '../base/functions' as fn;
 #cart {
-    background-color: fn.getColor(white);
     margin: auto;
+    border-radius: 5%;
     max-width: 750px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     padding: 1rem;

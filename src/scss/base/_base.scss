@@ -6,10 +6,11 @@ html {
 
 body {
 	padding: 0 1rem;
-	background-image: url("/img/mainbg.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
+	background-image: url("/img/bgpattern.webp");
+	background-repeat: repeat;
+	background-size: 750px;
 	background-attachment: fixed;
+	background-color: fn.getColor(white);
 }
 
 input {
@@ -107,4 +108,41 @@ ul {
 	border: unset;
 	border-radius: 0.5rem;
 	padding: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: fn.getColor(grey, '400');
+	}
+	header.navbar {
+		background-color: fn.getColor(grey, '400');
+	}
+	
+
+	#cart {
+		background-color: fn.getColor(grey, '400');
+		color: fn.getColor(white);
+	}
+	footer {
+		background-color: fn.getColor(grey, '400');
+		color: fn.getColor(white);
+	}
+}	
+
+
+@media (prefers-color-scheme: light) {
+	body {
+		background-color: fn.getColor(white);
+	}
+
+	header.navbar {
+		background-color: fn.getColor(white);
+  	}
+	#cart {
+		background-color: fn.getColor(white);
+	}
+
+	footer {
+		background-color: fn.getColor(white);
+	}
 }

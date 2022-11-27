@@ -2,7 +2,7 @@
 .donuts {
 	display: flex;
 	align-items: center;
-	justify-content:space-around;
+	justify-content:center;
 	flex-direction: row;
 	flex-wrap: wrap;
 
@@ -44,6 +44,9 @@
 			}
 			button {
 				cursor: pointer;
+				background-color: fn.getColor(orange);
+				color: fn.getColor(white);
+				border-radius: 0.5rem;
 			}
 		}
 
