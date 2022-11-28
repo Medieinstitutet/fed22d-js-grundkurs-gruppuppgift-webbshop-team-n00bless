@@ -284,7 +284,7 @@ const checkForSpecialRules = (cartSum, cartCount) => {
     style: 'currency',
     currency: 'SEK',
   }).format(freightSum);
-    /* const cartSumInSEK = new Intl.NumberFormat('sv-SE', {
+  /* const cartSumInSEK = new Intl.NumberFormat('sv-SE', {
           style: 'currency', currency: 'SEK'
       }).format(cartSum); <-- never displayed */
   const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
@@ -709,11 +709,15 @@ const addCategorySort = (category) => {
     filterSet.add(category);
   }
 
-  filteredDonutsArray = [];
-  for (const donut of donutsArray) {
-    for (const cat of donut.categories) {
-      if (filterSet.has(cat) && !filteredDonutsArray.find((filteredDonut) => filteredDonut.id === donut.id)) {
-        filteredDonutsArray.push(donut);
+  if (filterSet.size === 0) {
+    filteredDonutsArray = [...donutsArray];
+  } else {
+    filteredDonutsArray = [];
+    for (const donut of donutsArray) {
+      for (const cat of donut.categories) {
+        if (filterSet.has(cat) && !filteredDonutsArray.find((filteredDonut) => filteredDonut.id === donut.id)) {
+          filteredDonutsArray.push(donut);
+        }
       }
     }
   }
