@@ -18,11 +18,11 @@ let filteredDonutsArray = [...donutsArray];
 const donutsArrayLucia = [
   // placeholder, add 1 to basket free of charge 13/12
   {
-    id: 11,
+    id: 13,
     name: 'Luciamunk',
     price: 1,
     categories: ['sprinkles', 'filled'],
-    images: ['img/chocolate-iced-custard-filled.jpeg', 'img/chocolate-iced-custard-filled.jpeg'],
+    images: ['img/new-york-cheesecake.webp', 'img/new-york-cheesecake.webp'],
     rating: 5,
   },
 ];
@@ -886,13 +886,29 @@ const startTimer = (duration) => {
   }, 1000);
 };
 
-// in progress
-// const cartToogleSwitch = function () {
-//   console.log('test');
-// };
+const cartToogleSwitch = () => {
+  if (cartSection.style.display === 'none') {
+    donutSection.style.display = 'none';
+    navbarMenu.style.display = 'none';
+    cartSection.style.display = 'block';
+    if (navbarDropDown.style.display === 'flex') {
+      navbarDropDown.style.display = 'none';
+    }
+  } else {
+    donutSection.style.display = 'flex';
+    navbarMenu.style.display = 'flex';
+    cartSection.style.display = 'none';
+  }
+};
 
-// const cartToogle = document.querySelector('#cart-icon');
-// cartToogle.addEventListener('click', cartToogleSwitch);
+const cartToogle = document.querySelector('#cart-icon');
+cartToogle.addEventListener('click', cartToogleSwitch);
+
+const donutSection = document.querySelector('section.donuts');
+const cartSection = document.querySelector('section#cart');
+const navbarMenu = document.querySelector('.navbar__menu');
+const navbarDropDown = document.querySelector('.navbar__dropdown');
+cartSection.style.display = 'none';
 
 generateDonuts();
 generateCategories();
