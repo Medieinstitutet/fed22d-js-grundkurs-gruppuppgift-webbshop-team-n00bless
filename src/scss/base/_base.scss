@@ -13,6 +13,13 @@ body {
 	background-color: fn.getColor(white);
 }
 
+.christmas {
+	background-image: url("/img/christmasbg.webp");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
 input {
 	border: none;
 	color: fn.getColor(grey);
@@ -111,19 +118,11 @@ ul {
 }
 
 @media (prefers-color-scheme: dark) {
-	body {
+	body, header.navbar {
 		background-color: fn.getColor(grey, '400');
 	}
-	header.navbar {
-		background-color: fn.getColor(grey, '400');
-	}
-	
 
-	#cart {
-		background-color: fn.getColor(grey, '400');
-		color: fn.getColor(white);
-	}
-	footer {
+	#cart, footer {
 		background-color: fn.getColor(grey, '400');
 		color: fn.getColor(white);
 	}
@@ -131,18 +130,7 @@ ul {
 
 
 @media (prefers-color-scheme: light) {
-	body {
-		background-color: fn.getColor(white);
-	}
-
-	header.navbar {
-		background-color: fn.getColor(white);
-  	}
-	#cart {
-		background-color: fn.getColor(white);
-	}
-
-	footer {
+	body, header.navbar, #cart, footer {
 		background-color: fn.getColor(white);
 	}
 }

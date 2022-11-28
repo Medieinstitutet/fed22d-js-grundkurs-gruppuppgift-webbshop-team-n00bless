@@ -41,10 +41,7 @@ const date = thisDate.getDate();
 /* Christmas rule */
 const christmasCheck = () => {
   if (month === 11 && date === 24) {
-    document.body.style.backgroundImage = "url('/img/christmasbg.webp')";
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundAttachment = 'fixed';
+    document.body.classList.add('christmas');
     const christmasPrizeColor = document.querySelectorAll('.donuts__item_info p:first-child');
     for (let i = 0; i < christmasPrizeColor.length; ++i) {
       christmasPrizeColor[i].style.color = 'red';
