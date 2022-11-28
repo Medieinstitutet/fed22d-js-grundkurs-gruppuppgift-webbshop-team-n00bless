@@ -1,6 +1,6 @@
+import { gsap } from 'gsap';
 import donutsArray from './store/donuts';
 import generateSlideshow from './store/slideshow';
-import { gsap } from 'gsap';
 
 /* Kategorier:
 filling
@@ -104,7 +104,12 @@ const updateCartDOM = () => {
   cartCounterDisplay.textContent = cartCounter;
 
   checkForSpecialRules(cartSum, cartCount);
-  gsap.to(cartCounterDisplay, {scaleY: 0.5, scaleX: 0.5, repeat: 1, yoyo: true});
+  gsap.to(cartCounterDisplay, {
+    scaleY: 0.5,
+    scaleX: 0.5,
+    repeat: 1,
+    yoyo: true
+  });
 };
 
 const donutIncreaseCount = (id) => {
@@ -887,7 +892,7 @@ let maxPriceValue = 0;
 
 const renderFromPriceRange = () => {
   if (minPriceValue !== 0 && maxPriceValue > minPriceValue) {
-    let filteredArray = filteredDonutsArray.filter(donut => (
+    const filteredArray = filteredDonutsArray.filter((donut) => (
       donut.price >= minPriceValue && donut.price <= maxPriceValue
     ));
     console.log(filteredArray);
@@ -897,16 +902,16 @@ const renderFromPriceRange = () => {
     filteredDonutsArray = [...donutsArray];
     generateDonuts();
   }
-}
+};
 
 const updatePriceRange = (input) => {
-  let valueToUpdate = Number(input.value);
+  const valueToUpdate = Number(input.value);
   return valueToUpdate;
-} 
+};
 
 minPriceInput.addEventListener('keyup', () => {
   minPriceValue = updatePriceRange(minPriceInput);
-  renderFromPriceRange()
+  renderFromPriceRange();
   console.log(minPriceValue);
 });
 maxPriceInput.addEventListener('keyup', () => {
@@ -915,9 +920,6 @@ maxPriceInput.addEventListener('keyup', () => {
   renderFromPriceRange();
   console.log(maxPriceValue);
 });
-
-
-
 
 // Timer
 // 15 min
