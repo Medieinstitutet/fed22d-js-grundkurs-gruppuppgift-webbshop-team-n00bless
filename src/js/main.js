@@ -672,18 +672,18 @@ const searchQuery = (query) => {
   }
 };
 
-const updatePriceRangeFilter = (e) => {
-  const value = Number(e.target.value);
-  console.log(e);
+// const updatePriceRangeFilter = (e) => {
+//   const value = Number(e.target.value);
+//   console.log(e);
 
-  if (e.target.id === 'priceMinRange') {
-    currentMinPrice = value;
-  } else {
-    currentMaxPrice = value;
-  }
+//   if (e.target.id === 'priceMinRange') {
+//     currentMinPrice = value;
+//   } else {
+//     currentMaxPrice = value;
+//   }
 
-  generateDonuts();
-};
+//   generateDonuts();
+// };
 
 filterButton.addEventListener('click', () => {
   filterButton.setAttribute('aria-expanded', !filterMenuVisible);
@@ -723,8 +723,8 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-priceInputMin.addEventListener('change', updatePriceRangeFilter);
-priceInputMax.addEventListener('change', updatePriceRangeFilter);
+// priceInputMin.addEventListener('change', updatePriceRangeFilter);
+// priceInputMax.addEventListener('change', updatePriceRangeFilter);
 
 // eslint-disable-next-line no-unused-vars
 const addCategorySort = (category) => {
