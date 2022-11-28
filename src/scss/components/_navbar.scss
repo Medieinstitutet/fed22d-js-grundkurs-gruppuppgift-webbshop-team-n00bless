@@ -1,138 +1,137 @@
 @use '../base/functions' as fn;
 
 @keyframes fadeIn {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-	from {
-		opacity: 1;
-	}
-	to {
-		opacity: 0;
-	}
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 header {
-	background-color: fn.getColor(white);
-
+  background-color: fn.getColor(white);
+  border-radius: 0 0 1rem 1rem;
 }
 
 .navbar {
-	&__heading {
-		display: flex;
-		min-height: 200px;
-		
-		h1 {
-			color: fn.getColor(pink);
-			font-size: clamp(2rem, 3.5vw, 5rem);
-			position: relative;
-			margin-bottom: 3rem;
-			// transform: rotate(-2deg);
+  &__heading {
+    display: flex;
+    min-height: 200px;
 
-			span {
-				color: fn.getColor(orange);
-				position: absolute;
-				top: clamp(20px, 3.5vw, 60px);
-				left: 1rem;
+    h1 {
+      color: fn.getColor(pink);
+      font-size: clamp(2rem, 3.5vw, 5rem);
+      position: relative;
+      margin-bottom: 3rem;
+      // transform: rotate(-2deg);
 
-			}
-		}
+      span {
+        color: fn.getColor(orange);
+        position: absolute;
+        top: clamp(20px, 3.5vw, 60px);
+        left: 1rem;
+      }
+    }
 
-		#cart-icon {
-			position: fixed;
-			top: 1rem;
-			right: 2.5rem;
-			cursor: pointer;
-		}
+    #cart-icon {
+      position: fixed;
+      top: 1rem;
+      right: 2.5rem;
+      cursor: pointer;
+    }
 
-		img {
-			position: absolute;
-			margin-left: auto;
-			margin-right: auto;
-			left: 0;
-			right: 0;
-			text-align: center;
-		}
-	}
+    img {
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+  }
 
-	&__menu {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		width: 100%;
-		border: 1px solid fn.getColor(grey, '200');
-		border-radius: 1rem;
-		padding: 0.25rem 1rem;
+  &__menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: 1px solid fn.getColor(grey, '200');
+    border-radius: 1rem;
+    padding: 0.25rem 1rem;
 
-		.button {
-			cursor: pointer;
-		}
-		// &_input {
-		// }
-	}
+    .button {
+      cursor: pointer;
+    }
+    // &_input {
+    // }
+  }
 
-	&__dropdown {
-		// display: flex;
-		// display: none;
-		flex-direction: column;
-		gap: 1rem;
-		padding: 0.5rem 1rem;
-		border-bottom: 1px solid fn.getColor(grey, '200');
-		opacity: 0;
-		transform: scale(0);
-		transition: 0.2s ease opacity, 0.2s ease transform;
+  &__dropdown {
+    // display: flex;
+    // display: none;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid fn.getColor(grey, '200');
+    opacity: 0;
+    transform: scale(0);
+    transition: 0.2s ease opacity, 0.2s ease transform;
 
-		&_item {
-			display: flex;
-			flex-direction: column;
-			gap: 0.25rem;
+    &_item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
 
-			&_filter {
-				display: flex;
-				align-items: center;
-				justify-content: space-evenly;
-				flex-wrap: wrap;
-				background-color: fn.getColor(orange);
-				color: #fff;
-				border: unset;
-				border-radius: 0.5rem;
-				padding: 0.5rem;
+      &_filter {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        background-color: fn.getColor(orange);
+        color: #fff;
+        border: unset;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
 
-				div {
-					display: flex;
-					align-items: center;
-					padding: 0 2rem;
+        div {
+          display: flex;
+          align-items: center;
+          padding: 0 2rem;
 
-					p {
-						margin: 0;
-					}
+          p {
+            margin: 0;
+          }
 
-					.fa-arrow-up-wide-short {
-						cursor: pointer;
-					}
-					
-					input {
-						margin: 0 0.5rem;
-						border: 1px solid fn.getColor(grey, '200');
-						border-radius: 0.5rem;
-						padding: 0.25rem 0.5rem;
-						height: fit-content;
-					}
-				}
-			}
+          .fa-arrow-up-wide-short {
+            cursor: pointer;
+          }
 
-			&_categories {
-				display: flex;
-				// margin: 0;
-				// grid-template-columns: repeat(3, 1fr);
-				gap: 2.25rem;
-			}
-		}
-	}
+          // input {
+          //   margin: 0 0.5rem;
+          //   border: 1px solid fn.getColor(grey, '200');
+          //   border-radius: 0.5rem;
+          //   padding: 0.25rem 0.5rem;
+          //   height: fit-content;
+          // }
+        }
+      }
+
+      &_categories {
+        display: flex;
+        // margin: 0;
+        // grid-template-columns: repeat(3, 1fr);
+        gap: 2.25rem;
+      }
+    }
+  }
 }

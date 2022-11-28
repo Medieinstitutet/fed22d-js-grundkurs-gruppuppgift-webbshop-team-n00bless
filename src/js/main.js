@@ -284,7 +284,7 @@ const checkForSpecialRules = (cartSum, cartCount) => {
     style: 'currency',
     currency: 'SEK',
   }).format(freightSum);
-    /* const cartSumInSEK = new Intl.NumberFormat('sv-SE', {
+  /* const cartSumInSEK = new Intl.NumberFormat('sv-SE', {
           style: 'currency', currency: 'SEK'
       }).format(cartSum); <-- never displayed */
   const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
@@ -412,7 +412,8 @@ const generateDonuts = () => {
   donutListEl.innerHTML = '';
 
   for (const donut of filteredDonutsArray) {
-    donutListEl.innerHTML += /* html */ `
+    if (donut.price >= currentMinPrice && donut.price <= currentMaxPrice) {
+      donutListEl.innerHTML += /* html */ `
       <article class="donuts__item" data-id=${donut.id}>
         <h2>${donut.name}</h2>
 				<div class="donuts__item_image">
@@ -445,6 +446,7 @@ const generateDonuts = () => {
 				>Lägg till för <span>${donut.price}</span> kr</button>
       </article>
     `;
+    }
   }
 
   generateButtonListeners();
@@ -653,7 +655,12 @@ const resetButton = document.querySelector('#filterMenuResetButton');
 const filterElement = document.querySelector('#filterMenu');
 const searchInput = document.querySelector('[name="searchQuery"]');
 const searchButton = document.querySelector('#searchButton');
+const priceInputMin = document.querySelector('#priceMinRange');
+const priceInputMax = document.querySelector('#priceMaxRange');
+
 let filterMenuVisible = false;
+let currentMinPrice = 0;
+let currentMaxPrice = 999;
 
 const searchQuery = (query) => {
   if (query && query !== '') {
@@ -663,6 +670,19 @@ const searchQuery = (query) => {
 
     generateDonuts();
   }
+};
+
+const updatePriceRangeFilter = (e) => {
+  const value = Number(e.target.value);
+  console.log(e);
+
+  if (e.target.id === 'priceMinRange') {
+    currentMinPrice = value;
+  } else {
+    currentMaxPrice = value;
+  }
+
+  generateDonuts();
 };
 
 filterButton.addEventListener('click', () => {
@@ -687,6 +707,8 @@ filterButton.addEventListener('click', () => {
 
 resetButton.addEventListener('click', () => {
   filteredDonutsArray = [...donutsArray];
+  currentMinPrice = 0;
+  currentMaxPrice = 999;
   generateDonuts();
 });
 
@@ -701,6 +723,9 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+priceInputMin.addEventListener('change', updatePriceRangeFilter);
+priceInputMax.addEventListener('change', updatePriceRangeFilter);
+
 // eslint-disable-next-line no-unused-vars
 const addCategorySort = (category) => {
   if (filterSet.has(category)) {
@@ -709,11 +734,15 @@ const addCategorySort = (category) => {
     filterSet.add(category);
   }
 
-  filteredDonutsArray = [];
-  for (const donut of donutsArray) {
-    for (const cat of donut.categories) {
-      if (filterSet.has(cat) && !filteredDonutsArray.find((filteredDonut) => filteredDonut.id === donut.id)) {
-        filteredDonutsArray.push(donut);
+  if (filterSet.size === 0) {
+    filteredDonutsArray = [...donutsArray];
+  } else {
+    filteredDonutsArray = [];
+    for (const donut of donutsArray) {
+      for (const cat of donut.categories) {
+        if (filterSet.has(cat) && !filteredDonutsArray.find((filteredDonut) => filteredDonut.id === donut.id)) {
+          filteredDonutsArray.push(donut);
+        }
       }
     }
   }
