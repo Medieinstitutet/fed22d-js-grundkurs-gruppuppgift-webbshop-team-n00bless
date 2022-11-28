@@ -847,6 +847,47 @@ function initSortPriceUp() {
   toogleIconPrice.style.transform = 'rotate(deg0)';
 }
 
+/* Price range */
+
+const minPriceInput = document.querySelector('#price-range-min');
+const maxPriceInput = document.querySelector('#price-range-max');
+let minPriceValue = 0;
+let maxPriceValue = 0;
+
+const renderFromPriceRange = () => {
+  if (minPriceValue !== 0 && maxPriceValue > minPriceValue) {
+    let filteredArray = filteredDonutsArray.filter(donut => (
+      donut.price >= minPriceValue && donut.price <= maxPriceValue
+    ));
+    console.log(filteredArray);
+    filteredDonutsArray = filteredArray;
+    generateDonuts();
+  } else {
+    filteredDonutsArray = [...donutsArray];
+    generateDonuts();
+  }
+}
+
+const updatePriceRange = (input) => {
+  let valueToUpdate = Number(input.value);
+  return valueToUpdate;
+} 
+
+minPriceInput.addEventListener('keyup', () => {
+  minPriceValue = updatePriceRange(minPriceInput);
+  renderFromPriceRange()
+  console.log(minPriceValue);
+});
+maxPriceInput.addEventListener('keyup', () => {
+  updatePriceRange(maxPriceInput);
+  maxPriceValue = updatePriceRange(maxPriceInput);
+  renderFromPriceRange();
+  console.log(maxPriceValue);
+});
+
+
+
+
 // Timer
 // 15 min
 // Reset
