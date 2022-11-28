@@ -1,5 +1,6 @@
 import donutsArray from './store/donuts';
 import generateSlideshow from './store/slideshow';
+import { gsap } from 'gsap';
 
 /* Kategorier:
 filling
@@ -103,6 +104,7 @@ const updateCartDOM = () => {
   cartCounterDisplay.textContent = cartCounter;
 
   checkForSpecialRules(cartSum, cartCount);
+  gsap.to(cartCounterDisplay, {scaleY: 0.5, scaleX: 0.5, repeat: 1, yoyo: true});
 };
 
 const donutIncreaseCount = (id) => {
