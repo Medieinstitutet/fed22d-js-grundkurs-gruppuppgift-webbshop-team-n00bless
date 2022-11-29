@@ -160,31 +160,37 @@
           <fieldset>
             <legend>Kontaktuppgifter</legend>
             <label for="name">För- och efternamn</label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              pattern="[A-Za-zÅåÄäÖö\s]+"
-              title="Endast små och stora bokstäver"
-              required
-            >
+            <div class="input-container">
+              <input
+                id="name"
+                type="text"
+                name="name"
+              >
+            </div>
             <label for="address">Adress</label>
-            <input id="address" type="text" name="address" required >
+            <div class="input-container">
+              <input id="address" type="text" name="address">
+            </div>
             <label for="post-code">Postkod</label>
-            <input
-              id="post-code"
-              type="text"
-              name="post-code"
-              pattern="[0-9]{5}"
-              title="5 siffror utan mellanslag"
-              required
-            >
+            <div class="input-container">
+              <input
+                id="post-code"
+                type="text"
+                name="post-code"
+              >
+            </div>
             <label for="city">Stad</label>
-            <input id="city" type="text" name="city" required >
+            <div class="input-container">
+              <input id="city" type="text" name="city">
+            </div>
             <label for="tel">Telefonnummer</label>
-            <input id="tel" type="tel" name="tel" required >
+            <div class="input-container">  
+              <input id="tel" type="tel" name="tel">
+            </div>
             <label for="email">Mailadress</label>
-            <input id="email" type="email" name="email" required >
+            <div class="input-container">  
+              <input id="email" type="email" name="email">  
+            </div>
           </fieldset>
           <fieldset class="payment-method">
             <legend>Betalningssätt</legend>

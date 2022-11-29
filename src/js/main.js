@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { gsap } from 'gsap';
 import donutsArray from './store/donuts';
 import generateSlideshow from './store/slideshow';
@@ -502,6 +503,26 @@ const orderButton = document.querySelector('#order-btn');
 const cardForm = document.querySelector('#card-payment-form');
 const invoiceForm = document.querySelector('#invoice-payment-form');
 
+const inputErrorMessage = (validationProp, id, specialMsg, siblingAfter) => {
+  if (document.querySelector(`#${id}-err`) !== null) {
+    document.querySelector(`#${id}-err`).remove();
+  }
+  if (!validationProp) {
+    siblingAfter.insertAdjacentHTML('afterend', /* html */`
+    <p class="error-msg" id="${id}-err">
+      ${specialMsg}
+    </p>
+      `);
+    // eslint-disable-next-line no-param-reassign
+    siblingAfter.style.boxShadow = '0px 0px 3px 3px rgba(240, 0, 0, .8)';
+  //   // siblingAfter.style.border = '3px rgba(240, 0, 0, 0.8) solid';
+  } else {
+    siblingAfter.removeAttribute('style');
+  }
+};
+
+// Skriv för- och efternamn och använd endast bokstäver
+
 const formValidation = {
   name: false,
   address: false,
@@ -562,32 +583,38 @@ const activateOrderButton = () => {
   }
 };
 
-nameInputField.addEventListener('keyup', () => {
-  formValidation.name = nameInputField.value.indexOf(' ') > 0;
+nameInputField.addEventListener('change', () => {
+  // eslint-disable-next-line max-len
+  formValidation.name = nameInputField.value.indexOf(' ') > 0 && /[A-zÀ-ÿ]/.test(nameInputField.value) && /[!-@[-`{-¿]/.test(nameInputField.value) !== true; // Check for space after at least one letter, special letters and no special characters.
+  // eslint-disable-next-line max-len
+  inputErrorMessage(formValidation.name, 'name', 'Ange för- och efternamn och använd endast bokstäver', nameInputField);
   activateOrderButton();
 });
 
-addressInputField.addEventListener('keyup', () => {
+addressInputField.addEventListener('change', () => {
   formValidation.address = /\d/.test(addressInputField.value) ? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value) : false;
+  inputErrorMessage(formValidation.address, 'address', 'Ange adress inklusive gatunummer', addressInputField);
   activateOrderButton();
 });
 
-postCodeInputField.addEventListener('keyup', () => {
-  formValidation.postCode = postCodeInputField.value.length === 5;
+postCodeInputField.addEventListener('change', () => {
+  formValidation.postCode = postCodeInputField.value.length === 5 && /[0-9]/.test(postCodeInputField.value);
+  inputErrorMessage(formValidation.postCode, 'post-code', 'Ange postkod med 5 siffror utan mellanslag', postCodeInputField);
   activateOrderButton();
+  console.log(formValidation.postCode);
 });
 
-cityInputField.addEventListener('keyup', () => {
+cityInputField.addEventListener('change', () => {
   formValidation.city = cityInputField.value !== '';
   activateOrderButton();
 });
 
-telInputField.addEventListener('keyup', () => {
+telInputField.addEventListener('change', () => {
   formValidation.tel = cityInputField.value !== '';
   activateOrderButton();
 });
 
-emailInputField.addEventListener('keyup', () => {
+emailInputField.addEventListener('change', () => {
   formValidation.email = cityInputField.value !== '';
   activateOrderButton();
 });
@@ -623,23 +650,23 @@ for (const radio of paymentOptionRadios) {
   });
 }
 
-cardNumberInputField.addEventListener('keyup', () => {
+cardNumberInputField.addEventListener('change', () => {
   cardPaymentValidation.cardNumber = /\d/.test(cardNumberInputField.value);
   console.log(/\d/.test(cardNumberInputField.value));
   activateOrderButton();
 });
 
-cardExpirationInputField.addEventListener('keyup', () => {
+cardExpirationInputField.addEventListener('change', () => {
   cardPaymentValidation.expirationDate = cardExpirationInputField.value !== '';
   activateOrderButton();
 });
 
-cvcInputField.addEventListener('keyup', () => {
+cvcInputField.addEventListener('change', () => {
   cardPaymentValidation.cvc = cvcInputField.value !== '';
   activateOrderButton();
 });
 
-socialSecurityInputField.addEventListener('keyup', () => {
+socialSecurityInputField.addEventListener('change', () => {
   formValidation.payment = /\d/.test(socialSecurityInputField.value);
   activateOrderButton();
 });
