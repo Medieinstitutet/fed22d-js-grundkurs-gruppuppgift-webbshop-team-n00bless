@@ -18,14 +18,13 @@
     <link rel="stylesheet" href="scss/style.scss" />
 
     <meta name="theme-color" content="#fafafa" />
-    <script src="https://kit.fontawesome.com/75888dd569.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/75888dd569.js" crossorigin="anonymous" defer></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
+    <link rel="preload"
       href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
+      as="style" onload="this.onload=null;this.rel='stylesheet'"><!--To speed up page parsing-->
   </head>
 
   <body>
@@ -130,8 +129,10 @@
           <h2>Cake Batter Donut</h2>
           <div>
             <img
-              src="https://raw.githubusercontent.com/aaronfrost/DonutsApi/main/static/images/cake-batter-doughnut.jpg"
-              alt=""
+              src="img/chocolate-iced-cake.webp"
+              alt="Bild på en munk"
+              width="200"
+              height="200"
             />
           </div>
           <p>Pris <span>25kr</span></p>
