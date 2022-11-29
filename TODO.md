@@ -10,7 +10,7 @@
 + [x] Summan och totala antalet munkar i varukorgen samt vid ikonen längst upp till höger ska bara uppdateras vid tryck på "Lägg till"
 + [ ] Större varukorg vid desktop
 + [ ] Ta bort pattern och verifiera endast i JS
-+ [ ] Ta bort />
++ [x] Ta bort />
 + [ ] Ändra alt-text till svenska
 + [ ] Fixa jultema bild som är anpassad för både dark/light mode (med transparans)
 + [ ] Göra om sorteringsknapparna till buttons (redan på G)
