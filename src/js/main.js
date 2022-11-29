@@ -65,7 +65,7 @@ weekendPrice();
 const cartItems = [];
 const cartTotalSum = 0;
 const donutListEl = document.querySelector('.donuts');
-
+const addedCartMsg = document.querySelector('#addedCartMsg');
 let donutListElQuantityButtons = donutListEl.querySelectorAll('.donuts__item_quantity > button');
 let donutListElAddToCartButtons = donutListEl.querySelectorAll('.donuts__item_addcart');
 
@@ -101,7 +101,7 @@ const updateCartDOM = () => {
   const cartCounterDisplay = document.querySelector('#cart-counter');
   const cartCounter = cartCount;
   cartCounterDisplay.textContent = cartCounter;
-
+  showAddedMessage();
   checkForSpecialRules(cartSum, cartCount);
   gsap.to(cartCounterDisplay, {
     scaleY: 0.5,
@@ -109,6 +109,16 @@ const updateCartDOM = () => {
     repeat: 1,
     yoyo: true
   });
+};
+
+addedCartMsg.classList.add('hidden');
+const showAddedMessage = () => {
+  addedCartMsg.classList.remove('hidden');
+  setTimeout(clearMessage, 2000);
+};
+
+const clearMessage = () => {
+  addedCartMsg.classList.add('hidden');
 };
 
 const donutIncreaseCount = (id) => {
