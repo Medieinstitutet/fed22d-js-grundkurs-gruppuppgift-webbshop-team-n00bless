@@ -111,6 +111,11 @@ ul {
   color: fn.getColor(orange);
 }
 
+.icon[class*="arrow"] {
+  font-size: 1.5rem;
+  color: fn.getColor(white);
+}
+
 .icon__counter {
   font-size: 2.5rem;
   background-color: fn.getColor(pink);
