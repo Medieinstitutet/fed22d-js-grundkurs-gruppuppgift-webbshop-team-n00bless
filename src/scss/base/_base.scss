@@ -20,6 +20,10 @@ body {
   background-attachment: fixed;
 }
 
+.hidden {
+  display: none;
+}
+
 input {
   border: none;
   color: fn.getColor(grey);

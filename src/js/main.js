@@ -17,11 +17,10 @@ const filterSet = new Set();
 let filteredDonutsArray = [...donutsArray];
 
 const donutsArrayLucia = [
-  // placeholder, add 1 to basket free of charge 13/12
   {
     id: 13,
     name: 'Luciamunk',
-    price: 1,
+    price: 0,
     categories: ['sprinkles', 'filled'],
     images: ['img/new-york-cheesecake.webp', 'img/new-york-cheesecake.webp'],
     rating: 5,
@@ -958,17 +957,17 @@ const startTimer = (duration) => {
 };
 
 const cartToogleSwitch = () => {
-  if (cartSection.style.display === 'none') {
-    donutSection.style.display = 'none';
-    navbarMenu.style.display = 'none';
-    cartSection.style.display = 'block';
+  if (cartSection.classList.contains('hidden')) {
+    donutSection.classList.add('hidden');
+    navbarMenu.classList.add('hidden');
+    cartSection.classList.toggle('hidden');
     if (navbarDropDown.style.display === 'flex') {
       navbarDropDown.style.display = 'none';
     }
   } else {
-    donutSection.style.display = 'flex';
-    navbarMenu.style.display = 'flex';
-    cartSection.style.display = 'none';
+    donutSection.classList.toggle('hidden');
+    navbarMenu.classList.toggle('hidden');
+    cartSection.classList.toggle('hidden');
   }
 };
 
@@ -979,7 +978,7 @@ const donutSection = document.querySelector('section.donuts');
 const cartSection = document.querySelector('section#cart');
 const navbarMenu = document.querySelector('.navbar__menu');
 const navbarDropDown = document.querySelector('.navbar__dropdown');
-cartSection.style.display = 'none';
+cartSection.classList.add('hidden');
 
 generateDonuts();
 generateCategories();
