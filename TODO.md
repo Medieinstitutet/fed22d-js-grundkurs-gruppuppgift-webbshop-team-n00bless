@@ -3,12 +3,12 @@
 
 # JS
 + [x] Prisintervallsfunktionen behöver fungera
-+ [ ] Ta bort grejer från varukorgen
++ [x] Ta bort grejer från varukorgen
 + [x] Slideshow
 + [ ] Kolla igenom 10%-regeln
 + [x] Visuell förändring vid ändring av totalpriset
 + [x] Summan och totala antalet munkar i varukorgen samt vid ikonen längst upp till höger ska bara uppdateras vid tryck på "Lägg till"
-+ [ ] Större varukorg vid desktop
++ [x] Större varukorg vid desktop (typ..)
 + [ ] Ta bort pattern och verifiera endast i JS
 + [x] Ta bort />
 + [ ] Ändra alt-text till svenska
