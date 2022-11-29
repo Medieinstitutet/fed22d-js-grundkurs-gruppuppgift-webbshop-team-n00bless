@@ -1,41 +1,40 @@
 <!DOCTYPE html>
 <html class="no-js" lang="sv">
   <head>
-    <meta charset="utf-8" >
+    <meta charset="utf-8" />
     <title>Gottfrids munkar</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" >
-    <meta name="description" content="Gottfrids Munkar - smaker för alla!" >
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Gottfrids Munkar - smaker för alla!" />
 
-    <meta property="og:title" content="Gottfrids Munkar - smaker för alla!" >
-    <meta property="og:type" content="webpage" >
-    <meta property="og:url" content="" >
-    <meta property="og:image" content="" >
+    <meta property="og:title" content="Gottfrids Munkar - smaker för alla!" />
+    <meta property="og:type" content="webpage" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
 
-    <link rel="manifest" href="site.webmanifest" >
-    <link rel="apple-touch-icon" href="icon.png" >
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="scss/style.scss" >
+    <link rel="stylesheet" href="scss/style.scss" />
 
-    <meta name="theme-color" content="#fafafa" >
+    <meta name="theme-color" content="#fafafa" />
     <script src="https://kit.fontawesome.com/75888dd569.js" crossorigin="anonymous" defer></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" >
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin >
-    <link rel="preload"
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-      as="style" onload="this.onload=null;this.rel='stylesheet'"><!--To speed up page parsing-->
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <!--To speed up page parsing-->
   </head>
 
   <body>
     <header class="navbar">
       <div class="navbar__heading">
-        <img
-          src="./img/gottfrid.webp"
-          width="200"
-          height="200"
-          alt="En bild på munksbutiksägaren Gottfrid"
-        >
+        <img src="./img/gottfrid.webp" width="200" height="200" alt="En bild på munksbutiksägaren Gottfrid" />
         <h1>Gottfrids <span>Munkar</span></h1>
         <button id="cart-icon" class="button" aria-label="Shopping Cart">
           <span class="fa-layers fa-fw">
@@ -47,7 +46,7 @@
       <div class="navbar__menu">
         <div class="navbar__menu_input">
           <i id="searchButton" class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" name="searchQuery" placeholder="Search..." >
+          <input type="text" name="searchQuery" placeholder="Search..." />
         </div>
         <div>
           <button aria-label="Reset filter" class="button" id="filterMenuResetButton">
@@ -69,14 +68,14 @@
           <p>Välj kategorier</p>
           <ul class="navbar__dropdown_item_categories">
             <li class="checkbox">
-              <label class="checkbox__input"><input type="checkbox" name="filled" >Fyllning </label>
+              <label class="checkbox__input"><input type="checkbox" name="filled" />Fyllning </label>
             </li>
             <li class="checkbox">
-              <label class="checkbox__input"><input type="checkbox" name="glazed" >Glaserade </label>
+              <label class="checkbox__input"><input type="checkbox" name="glazed" />Glaserade </label>
             </li>
             <li class="checkbox">
               <label class="checkbox__input">
-                <input type="checkbox" name="sprinkles" >
+                <input type="checkbox" name="sprinkles" />
                 Strössel
               </label>
             </li>
@@ -97,11 +96,11 @@
           <div class="navbar__dropdown_item_filter">
             <div>
               <p>Från</p>
-              <input id="price-range-min" type="number" min="0" max="999" placeholder="0">
+              <input id="price-range-min" type="number" min="0" max="999" placeholder="0" />
             </div>
             <div>
               <p>Till</p>
-              <input id="price-range-max" type="number" min="0" max="999" placeholder="100">
+              <input id="price-range-max" type="number" min="0" max="999" placeholder="100" />
             </div>
 
             <div>
@@ -117,8 +116,8 @@
               <button id="name-sort" aria-label="Namn sortering" class="button">
                 <i class="icon fa-solid fa-arrow-up-wide-short"></i>
               </button>
-            <div>
-
+              <div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -128,17 +127,12 @@
         <article class="donuts__item">
           <h2>Cake Batter Donut</h2>
           <div>
-            <img
-              src="img/chocolate-iced-cake.webp"
-              alt="Bild på en munk"
-              width="200"
-              height="200"
-            >
+            <img src="img/chocolate-iced-cake.webp" alt="Bild på en munk" width="200" height="200" />
           </div>
           <p>Pris <span>25kr</span></p>
           <div class="quantity">
             <button>-</button>
-            <input type="text" >
+            <input type="text" />
             <button>+</button>
           </div>
           <button>Lägg till</button>
@@ -154,67 +148,67 @@
           <p id="cart-sum">Totalpris: <span>0</span>kr</p>
           <p id="delivery-time">Beställningen skickas 30 minuter efter orderläggning.</p>
           <label for="discount-code">Mata in eventuell rabattkod</label>
-          <input id="discount-code" type="text" name="discount-code" >
+          <input id="discount-code" type="text" name="discount-code" />
         </article>
         <form action="./order_landing_page.html">
-          <fieldset>
+          <fieldset class="contact-details">
             <legend>Kontaktuppgifter</legend>
-            <label for="name">För- och efternamn</label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              pattern="[A-Za-zÅåÄäÖö\s]+"
-              title="Endast små och stora bokstäver"
-              required
-            >
-            <label for="address">Adress</label>
-            <input id="address" type="text" name="address" required >
-            <label for="post-code">Postkod</label>
-            <input
-              id="post-code"
-              type="text"
-              name="post-code"
-              pattern="[0-9]{5}"
-              title="5 siffror utan mellanslag"
-              required
-            >
-            <label for="city">Stad</label>
-            <input id="city" type="text" name="city" required >
-            <label for="tel">Telefonnummer</label>
-            <input id="tel" type="tel" name="tel" required >
-            <label for="email">Mailadress</label>
-            <input id="email" type="email" name="email" required >
+            <div>
+              <label for="name">För- och efternamn</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                pattern="[A-Za-zÅåÄäÖö\s]+"
+                title="Endast små och stora bokstäver"
+                required
+              />
+            </div>
+            <div><label for="address">Adress</label> <input id="address" type="text" name="address" required /></div>
+            <div>
+              <label for="post-code">Postkod</label>
+              <input
+                id="post-code"
+                type="text"
+                name="post-code"
+                pattern="[0-9]{5}"
+                title="5 siffror utan mellanslag"
+                required
+              />
+            </div>
+            <div><label for="city">Stad</label> <input id="city" type="text" name="city" required /></div>
+            <div><label for="tel">Telefonnummer</label> <input id="tel" type="tel" name="tel" required /></div>
+            <div><label for="email">Mailadress</label> <input id="email" type="email" name="email" required /></div>
           </fieldset>
           <fieldset class="payment-method">
             <legend>Betalningssätt</legend>
             <label>
               Kort
-              <input type="radio" name="payment-method" id="card-radio" value="card" >
+              <input type="radio" name="payment-method" id="card-radio" value="card" />
             </label>
             <label>
               Faktura
-              <input type="radio" name="payment-method" id="invoice-radio" value="invoice" >
+              <input type="radio" name="payment-method" id="invoice-radio" value="invoice" />
             </label>
           </fieldset>
           <fieldset id="card-payment-form" class="payment-form">
             <legend>Kort</legend>
             <label for="card-number">Kortnummer</label>
-            <input id="card-number" type="text" inputmode="numeric" name="card-number" >
+            <input id="card-number" type="text" inputmode="numeric" name="card-number" />
             <label for="date">Utgångsdatum</label>
-            <input id="date" type="text" name="date" >
+            <input id="date" type="text" name="date" />
             <label for="cvc">CVC</label>
-            <input id="cvc" type="text" name="cvc" >
+            <input id="cvc" type="text" name="cvc" />
           </fieldset>
           <fieldset id="invoice-payment-form" class="payment-form">
             <legend>Faktura</legend>
             <label for="social-security-number">Personnummer</label>
-            <input id="social-security-number" type="text" inputmode="numeric" name="social-security-number" >
+            <input id="social-security-number" type="text" inputmode="numeric" name="social-security-number" />
           </fieldset>
           <label for="personal-data">Personuppgifter</label>
-          <input id="personal-data" type="checkbox" name="personal-data" required >
+          <input id="personal-data" type="checkbox" name="personal-data" required />
           <label for="newsletter">Prenumerera på nyhetsbrev?</label>
-          <input id="newsletter" type="checkbox" name="newsletter" >
+          <input id="newsletter" type="checkbox" name="newsletter" />
           <button type="submit" disabled id="order-btn">Beställ</button>
           <button type="reset">Rensa</button>
         </form>
@@ -222,7 +216,7 @@
     </main>
     <footer>
       <address>
-        Gottfrids Munkar <br >
+        Gottfrids Munkar <br />
         Munkgatan 12, Snasköping.
       </address>
       <p>&#169; Justin Thyme AB</p>

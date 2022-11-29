@@ -6,6 +6,16 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   padding: 1rem;
   margin-top: 2rem;
+
+  form {
+    .contact-details {
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
   article {
     ul {
       li {
@@ -32,6 +42,21 @@
             width: 30px;
             padding: 0.5rem 1rem;
           }
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    form {
+      .contact-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.25rem;
+
+        div {
+          display: flex;
+          flex-direction: column;
         }
       }
     }
