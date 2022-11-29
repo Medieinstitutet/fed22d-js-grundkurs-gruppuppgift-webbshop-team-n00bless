@@ -300,6 +300,14 @@ const updateCartQuantity = (event) => {
  * Special Rules
  ********************************************************* */
 
+const formatSumAndFreight = (number) => {
+  const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
+    style: 'currency',
+    currency: 'SEK',
+  }).format(number);
+  return cartSumAndFreightSumInSEK;
+};
+
 const checkForSpecialRules = (cartSum, cartCount) => {
   const freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
   const freightSumDisplay = document.getElementById('freight-sum');
@@ -316,12 +324,12 @@ const checkForSpecialRules = (cartSum, cartCount) => {
   /* const cartSumInSEK = new Intl.NumberFormat('sv-SE', {
           style: 'currency', currency: 'SEK'
       }).format(cartSum); <-- never displayed */
-  const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
-    style: 'currency',
-    currency: 'SEK',
-  }).format(cartSumAndFreightSum);
+  // const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
+  //   style: 'currency',
+  //   currency: 'SEK',
+  // }).format(cartSumAndFreightSum);
 
-  cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+  cartSumDisplay.textContent = `Totalpris: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
   freightSumDisplay.textContent = `Frakt: ${FreightSumInSEK}.`;
   deliveryTime.textContent = 'Beställningen skickas 30 minuter efter orderläggning.';
 
@@ -345,16 +353,18 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 
   /* Monday before 10:00 rule */
   if (day === 1 && hour <= 10) {
-    cartSumAndFreightSum = Math.round(cartSumAndFreightSumInSEK * 0.9); // 10 % discount
-    cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${cartSumAndFreightSumInSEK}.`;
+    cartSumAndFreightSum = Math.round(formatSumAndFreight(cartSumAndFreightSum) * 0.9); // 10 % discount
+    cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${formatSumAndFreight(
+      cartSumAndFreightSum
+    )}.`;
   } else {
-    cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+    cartSumDisplay.textContent = `Totalpris: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
   }
 
   /* More than 15 donuts in total rule */
   if (cartCount >= 15) {
     cartSumAndFreightSum = cartSum; // no freight cost added
-    cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+    cartSumDisplay.textContent = `Totalpris: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
     freightSumDisplay.textContent = 'Fraktfritt.';
   } else {
     cartSumAndFreightSum = cartSum + freightSum;
@@ -393,7 +403,7 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 
     if (weekNumber % 2 === 0 && day === 5 && cartSumAndFreightSum >= 25) {
       cartSumAndFreightSum -= 25;
-      cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${cartSumAndFreightSumInSEK}.`;
+      cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
     }
   };
 
