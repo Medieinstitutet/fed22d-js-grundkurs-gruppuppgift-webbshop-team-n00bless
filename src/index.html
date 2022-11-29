@@ -18,25 +18,23 @@
     <link rel="stylesheet" href="scss/style.scss" />
 
     <meta name="theme-color" content="#fafafa" />
-    <script src="https://kit.fontawesome.com/75888dd569.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/75888dd569.js" crossorigin="anonymous" defer></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-      rel="stylesheet"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <!--To speed up page parsing-->
   </head>
 
   <body>
     <header class="navbar">
       <div class="navbar__heading">
-        <img
-          src="./img/gottfrid.webp"
-          width="200"
-          height="200"
-          alt="A picture of Gotfrid the owner of the donut shop"
-        />
+        <img src="./img/gottfrid.webp" width="200" height="200" alt="En bild på munksbutiksägaren Gottfrid" />
         <h1>Gottfrids <span>Munkar</span></h1>
         <button id="cart-icon" class="button" aria-label="Shopping Cart">
           <span class="fa-layers fa-fw">
@@ -45,6 +43,9 @@
           </span>
         </button>
       </div>
+
+      <div id="addedCartMsg"><span>Tillagd i varukorg.</span></div>
+
       <div class="navbar__menu">
         <div class="navbar__menu_input">
           <i id="searchButton" class="fa-solid fa-magnifying-glass"></i>
@@ -98,25 +99,27 @@
           <div class="navbar__dropdown_item_filter">
             <div>
               <p>Från</p>
-              <input id="price-range-min" type="number" min="0" max="999" placeholder="0">
+              <input id="price-range-min" type="number" min="0" max="999" placeholder="0" />
             </div>
             <div>
               <p>Till</p>
-              <input id="price-range-max" type="number" min="0" max="999" placeholder="100">
+              <input id="price-range-max" type="number" min="0" max="999" placeholder="100" />
             </div>
+
             <div>
               <p>Pris</p>
-              <div id="price-sort">
-                <i class="fa-solid fa-arrow-up-wide-short"></i>
-              </div>
+              <button id="price-sort" aria-label="Pris sortering" class="button">
+                <i class="icon fa-solid fa-arrow-up-wide-short"></i>
+              </button>
               <p>Rating</p>
-              <div id="rating-sort">
-                <i class="fa-solid fa-arrow-up-wide-short"></i>
-              </div>
+              <button id="rating-sort" aria-label="Rating sortering" class="button">
+                <i class="icon fa-solid fa-arrow-up-wide-short"></i>
+              </button>
               <p>Namn</p>
-              <div id="name-sort">
-                <i class="fa-solid fa-arrow-up-wide-short"></i>
-              </div>
+              <button id="name-sort" aria-label="Namn sortering" class="button">
+                <i class="icon fa-solid fa-arrow-up-wide-short"></i>
+              </button>
+              <div></div>
             </div>
           </div>
         </div>
@@ -127,10 +130,7 @@
         <article class="donuts__item">
           <h2>Cake Batter Donut</h2>
           <div>
-            <img
-              src="https://raw.githubusercontent.com/aaronfrost/DonutsApi/main/static/images/cake-batter-doughnut.jpg"
-              alt=""
-            />
+            <img src="img/chocolate-iced-cake.webp" alt="Bild på en munk" width="200" height="200" />
           </div>
           <p>Pris <span>25kr</span></p>
           <div class="quantity">
@@ -154,34 +154,34 @@
           <input id="discount-code" type="text" name="discount-code" />
         </article>
         <form action="./order_landing_page.html">
-          <fieldset>
+          <fieldset class="contact-details">
             <legend>Kontaktuppgifter</legend>
-            <label for="name">För- och efternamn</label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              pattern="[A-Za-zÅåÄäÖö\s]+"
-              title="Endast små och stora bokstäver"
-              required
-            />
-            <label for="address">Adress</label>
-            <input id="address" type="text" name="address" required />
-            <label for="post-code">Postkod</label>
-            <input
-              id="post-code"
-              type="text"
-              name="post-code"
-              pattern="[0-9]{5}"
-              title="5 siffror utan mellanslag"
-              required
-            />
-            <label for="city">Stad</label>
-            <input id="city" type="text" name="city" required />
-            <label for="tel">Telefonnummer</label>
-            <input id="tel" type="tel" name="tel" required />
-            <label for="email">Mailadress</label>
-            <input id="email" type="email" name="email" required />
+            <div>
+              <label for="name">För- och efternamn</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                pattern="[A-Za-zÅåÄäÖö\s]+"
+                title="Endast små och stora bokstäver"
+                required
+              />
+            </div>
+            <div><label for="address">Adress</label> <input id="address" type="text" name="address" required /></div>
+            <div>
+              <label for="post-code">Postkod</label>
+              <input
+                id="post-code"
+                type="text"
+                name="post-code"
+                pattern="[0-9]{5}"
+                title="5 siffror utan mellanslag"
+                required
+              />
+            </div>
+            <div><label for="city">Stad</label> <input id="city" type="text" name="city" required /></div>
+            <div><label for="tel">Telefonnummer</label> <input id="tel" type="tel" name="tel" required /></div>
+            <div><label for="email">Mailadress</label> <input id="email" type="email" name="email" required /></div>
           </fieldset>
           <fieldset class="payment-method">
             <legend>Betalningssätt</legend>
