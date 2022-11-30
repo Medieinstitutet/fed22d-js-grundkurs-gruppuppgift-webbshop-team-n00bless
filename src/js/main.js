@@ -21,7 +21,7 @@ const donutsArrayLucia = [
   {
     id: 13,
     name: 'Luciamunk',
-    price: 0,
+    totPrice: 0,
     categories: ['sprinkles', 'filled'],
     images: ['img/new-york-cheesecake.webp', 'img/new-york-cheesecake.webp'],
     rating: 5,
