@@ -529,6 +529,7 @@ const invoiceRadioInput = document.querySelector('#invoice-radio');
 const paymentOptionRadios = Array.from(document.querySelectorAll('[name="payment-method"]'));
 
 const personalDataCheckbox = document.querySelector('[name="personal-data"]');
+const newsletterCheckbox = document.querySelector('[name="newsletter"]');
 
 const orderButton = document.querySelector('#order-btn');
 
@@ -617,9 +618,9 @@ const activateOrderButton = () => {
 
 nameInputField.addEventListener('change', () => {
   // eslint-disable-next-line max-len
-  formValidation.name = nameInputField.value.indexOf(' ') > 0 && /[A-zÀ-ÿ]/.test(nameInputField.value) && /[!-@[-`{-¿]/.test(nameInputField.value) !== true; // Check for space after at least one letter, special letters and no special characters.
+  formValidation.name = nameInputField.value.indexOf(' ') > 0 && /^[A-zÀ-ÿ\s]*$/.test(nameInputField.value); // Check for space after at least one letter, special letters and no special characters.
   // eslint-disable-next-line max-len
-  inputErrorMessage(formValidation.name, 'name', 'Ange för- och efternamn och använd endast bokstäver', nameInputField);
+  inputErrorMessage(formValidation.name, 'name', 'Ange för- och efternamn med endast bokstäver', nameInputField);
   activateOrderButton();
 });
 
@@ -630,19 +631,21 @@ addressInputField.addEventListener('change', () => {
 });
 
 postCodeInputField.addEventListener('change', () => {
-  formValidation.postCode = postCodeInputField.value.length === 5 && /[0-9]/.test(postCodeInputField.value);
+  formValidation.postCode = postCodeInputField.value.length === 5 && /^[0-9]*$/.test(postCodeInputField.value);
   inputErrorMessage(formValidation.postCode, 'post-code', 'Ange postkod med 5 siffror utan mellanslag', postCodeInputField);
   activateOrderButton();
   console.log(formValidation.postCode);
 });
 
 cityInputField.addEventListener('change', () => {
-  formValidation.city = cityInputField.value !== '';
+  formValidation.city = /^[A-zÀ-ÿ\s]*$/.test(cityInputField.value);
+  inputErrorMessage(formValidation.city, 'city', 'Ange stad med endast bokstäver', cityInputField);
   activateOrderButton();
 });
 
 telInputField.addEventListener('change', () => {
-  formValidation.tel = cityInputField.value !== '';
+  formValidation.tel = /^[-+0-9\s]*$/.test(telInputField.value);
+  inputErrorMessage(formValidation.tel, 'tel', 'Ange telefonnummer med siffror och eventuell landskod', telInputField);
   activateOrderButton();
 });
 
@@ -658,26 +661,14 @@ for (const radio of paymentOptionRadios) {
       case 'card':
         cardForm.style.display = 'flex';
         invoiceForm.style.display = 'none';
-        cardNumberInputField.setAttribute('required', '');
-        cardExpirationInputField.setAttribute('required', '');
-        cvcInputField.setAttribute('required', '');
-        socialSecurityInputField.removeAttribute('required');
         break;
       case 'invoice':
         cardForm.style.display = 'none';
         invoiceForm.style.display = 'flex';
-        socialSecurityInputField.setAttribute('required', '');
-        cardNumberInputField.removeAttribute('required');
-        cardExpirationInputField.removeAttribute('required');
-        cvcInputField.removeAttribute('required');
         break;
       default:
         cardForm.style.display = 'flex';
         invoiceForm.style.display = 'none';
-        cardNumberInputField.setAttribute('required', '');
-        cardExpirationInputField.setAttribute('required', '');
-        cvcInputField.setAttribute('required', '');
-        socialSecurityInputField.removeAttribute('required');
     }
   });
 }
@@ -713,7 +704,18 @@ document.querySelector('form').addEventListener('reset', (event) => {
   // eslint-disable-next-line no-restricted-globals
   if (confirm('Är du säker att du vill återställa formuläret?')) {
     event.preventDefault();
-    reset();
+    for (const input of document.querySelectorAll('form .input-container input')) { // Reset value in all form inputs
+      input.value = '';
+    }
+    cardRadioInput.checked = false;
+    invoiceRadioInput.checked = false;
+    personalDataCheckbox.checked = false;
+    newsletterCheckbox.checked = false;
+    cardForm.style.display = 'none';
+    invoiceForm.style.display = 'none';
+    // reset();
+  } else {
+    event.preventDefault();
   }
 });
 

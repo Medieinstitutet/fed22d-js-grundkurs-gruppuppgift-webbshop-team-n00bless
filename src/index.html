@@ -152,7 +152,7 @@
         </article>
         <form action="./order_landing_page.html">
           <fieldset class="contact-details">
-            <legend>Kontaktuppgifter</legend>
+            <legend><h3>Kontaktuppgifter</h3></legend>
             <label for="name">För- och efternamn</label>
             <div class="input-container">
               <input
@@ -198,18 +198,18 @@
             </label>
           </fieldset>
           <fieldset id="card-payment-form" class="payment-form">
-            <legend>Kort</legend>
+            <legend><h3>Kort</h3></legend>
             <label for="card-number">Kortnummer</label>
-            <input id="card-number" type="text" inputmode="numeric" name="card-number" />
+            <div class="input-container"><input id="card-number" type="text" inputmode="numeric" name="card-number" /></div>
             <label for="date">Utgångsdatum</label>
-            <input id="date" type="text" name="date" />
+            <div class="input-container"><input id="date" type="text" name="date" /></div>
             <label for="cvc">CVC</label>
-            <input id="cvc" type="text" name="cvc" />
+            <div class="input-container"><input id="cvc" type="text" name="cvc" /></div>
           </fieldset>
           <fieldset id="invoice-payment-form" class="payment-form">
-            <legend>Faktura</legend>
+            <legend><h3>Faktura</h3></legend>
             <label for="social-security-number">Personnummer</label>
-            <input id="social-security-number" type="text" inputmode="numeric" name="social-security-number" />
+            <div class="input-container"><input id="social-security-number" type="text" inputmode="numeric" name="social-security-number" /></div>
           </fieldset>
           <label for="personal-data">Personuppgifter</label>
           <input id="personal-data" type="checkbox" name="personal-data" required />

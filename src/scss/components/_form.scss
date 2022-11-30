@@ -1,14 +1,15 @@
 form {
+    margin-top: 15px;
     fieldset {
         display: flex;
         flex-direction: column;
 
         legend {
-            margin-bottom: 15px;
+            margin-top: 15px;
         }
 
         label {
-            margin-bottom: 5px;
+            margin-top: 15px;
         }
         
         .input-container {
@@ -17,7 +18,8 @@ form {
                 border: 1px black solid;
                 min-width: 200px;
                 width: 30%;
-                margin-bottom: 15px;
+                margin: 0;
+                margin-top: 10px;
             }
 
             .error-msg {
@@ -34,7 +36,7 @@ form {
             border: 1px black solid;
             min-width: 200px;
             width: 30%;
-            margin-bottom: 15px;
+            margin: 0;
         }
 
         input[type="radio"] {
@@ -51,6 +53,7 @@ form {
         display: flex;
         flex-direction: row;
         gap: 30px;
+        margin-top: 15px;
     }
 }
 
