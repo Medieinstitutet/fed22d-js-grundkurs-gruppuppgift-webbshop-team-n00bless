@@ -126,12 +126,16 @@ const updateCartDOM = () => {
   cartCounterDisplay.textContent = cartCounter;
   showAddedMessage();
   checkForSpecialRules(cartSum, cartCount);
-  gsap.to(cartCounterDisplay, {
+  gsap.fromTo(cartCounterDisplay, {
+    scaleY: 0.25,
+    scaleX: 0.25
+  }, {
     scaleY: 0.5,
     scaleX: 0.5,
     repeat: 1,
-    yoyo: true,
+    yoyo: true
   });
+  cartCounterDisplay.style.transform = 'scale(.25, .25)';
 };
 
 addedCartMsg.classList.add('hidden');
