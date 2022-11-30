@@ -11,34 +11,32 @@
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
 
-    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAic2hvcnRfbmFtZSI6ICIiLA0KICAibmFtZSI6ICIiLA0KICAiaWNvbnMiOiBbew0KICAgICJzcmMiOiAiaWNvbi5wbmciLA0KICAgICJ0eXBlIjogImltYWdlL3BuZyIsDQogICAgInNpemVzIjogIjE5MngxOTIiDQogIH1dLA0KICAic3RhcnRfdXJsIjogIi8/dXRtX3NvdXJjZT1ob21lc2NyZWVuIiwNCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZhZmFmYSIsDQogICJ0aGVtZV9jb2xvciI6ICIjZmFmYWZhIg0KfQ0K" />
+    <link rel="manifest" href="data:application/manifest+json;base64,ewogICJzaG9ydF9uYW1lIjogIiIsCiAgIm5hbWUiOiAiIiwKICAiaWNvbnMiOiBbewogICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciLAogICAgInNpemVzIjogIjE5MngxOTIiCiAgfV0sCiAgInN0YXJ0X3VybCI6ICIvP3V0bV9zb3VyY2U9aG9tZXNjcmVlbiIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZhZmFmYSIsCiAgInRoZW1lX2NvbG9yIjogIiNmYWZhZmEiCn0K" />
     <link rel="apple-touch-icon" href="icon.png" />
     <!-- Place favicon.ico in the root directory -->
 
     
 
     <meta name="theme-color" content="#fafafa" />
-    <script src="https://kit.fontawesome.com/75888dd569.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/75888dd569.js" crossorigin="anonymous" defer></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-      rel="stylesheet"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
-    <script type="module" crossorigin src="./assets/index.367f83a8.js"></script>
-    <link rel="stylesheet" href="./assets/index.b8372fe1.css">
+    <!--To speed up page parsing-->
+    <script type="module" crossorigin src="./assets/index.4190c8b8.js"></script>
+    <link rel="stylesheet" href="./assets/index.bd0b2986.css">
   </head>
 
   <body>
     <header class="navbar">
       <div class="navbar__heading">
-        <img
-          src="./img/gottfrid.webp"
-          width="200"
-          height="200"
-          alt="A picture of Gotfrid the owner of the donut shop"
-        />
+        <img src="./assets/gottfrid.b055648a.webp" width="200" height="200" alt="En bild på munksbutiksägaren Gottfrid" />
         <h1>Gottfrids <span>Munkar</span></h1>
         <button id="cart-icon" class="button" aria-label="Shopping Cart">
           <span class="fa-layers fa-fw">
@@ -47,6 +45,9 @@
           </span>
         </button>
       </div>
+
+      <div id="addedCartMsg"><span>Tillagd i varukorg.</span></div>
+
       <div class="navbar__menu">
         <div class="navbar__menu_input">
           <i id="searchButton" class="fa-solid fa-magnifying-glass"></i>
@@ -100,25 +101,27 @@
           <div class="navbar__dropdown_item_filter">
             <div>
               <p>Från</p>
-              <input id="price-range-min" type="number" min="0" max="999" placeholder="0">
+              <input id="price-range-min" type="number" min="0" max="999" placeholder="0" />
             </div>
             <div>
               <p>Till</p>
-              <input id="price-range-max" type="number" min="0" max="999" placeholder="100">
+              <input id="price-range-max" type="number" min="0" max="999" placeholder="100" />
             </div>
+
             <div>
               <p>Pris</p>
-              <div id="price-sort">
-                <i class="fa-solid fa-arrow-up-wide-short"></i>
-              </div>
+              <button id="price-sort" aria-label="Pris sortering" class="button">
+                <i class="icon fa-solid fa-arrow-up-wide-short"></i>
+              </button>
               <p>Rating</p>
-              <div id="rating-sort">
-                <i class="fa-solid fa-arrow-up-wide-short"></i>
-              </div>
+              <button id="rating-sort" aria-label="Rating sortering" class="button">
+                <i class="icon fa-solid fa-arrow-up-wide-short"></i>
+              </button>
               <p>Namn</p>
-              <div id="name-sort">
-                <i class="fa-solid fa-arrow-up-wide-short"></i>
-              </div>
+              <button id="name-sort" aria-label="Namn sortering" class="button">
+                <i class="icon fa-solid fa-arrow-up-wide-short"></i>
+              </button>
+              <div></div>
             </div>
           </div>
         </div>
@@ -129,10 +132,7 @@
         <article class="donuts__item">
           <h2>Cake Batter Donut</h2>
           <div>
-            <img
-              src="https://raw.githubusercontent.com/aaronfrost/DonutsApi/main/static/images/cake-batter-doughnut.jpg"
-              alt=""
-            />
+            <img src="img/chocolate-iced-cake.webp" alt="Bild på en munk" width="200" height="200" />
           </div>
           <p>Pris <span>25kr</span></p>
           <div class="quantity">
@@ -156,34 +156,40 @@
           <input id="discount-code" type="text" name="discount-code" />
         </article>
         <form action="./order_landing_page.html">
-          <fieldset>
-            <legend>Kontaktuppgifter</legend>
+          <fieldset class="contact-details">
+            <legend><h3>Kontaktuppgifter</h3></legend>
             <label for="name">För- och efternamn</label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              pattern="[A-Za-zÅåÄäÖö\s]+"
-              title="Endast små och stora bokstäver"
-              required
-            />
+            <div class="input-container">
+              <input
+                id="name"
+                type="text"
+                name="name"
+              >
+            </div>
             <label for="address">Adress</label>
-            <input id="address" type="text" name="address" required />
+            <div class="input-container">
+              <input id="address" type="text" name="address">
+            </div>
             <label for="post-code">Postkod</label>
-            <input
-              id="post-code"
-              type="text"
-              name="post-code"
-              pattern="[0-9]{5}"
-              title="5 siffror utan mellanslag"
-              required
-            />
+            <div class="input-container">
+              <input
+                id="post-code"
+                type="text"
+                name="post-code"
+              >
+            </div>
             <label for="city">Stad</label>
-            <input id="city" type="text" name="city" required />
+            <div class="input-container">
+              <input id="city" type="text" name="city">
+            </div>
             <label for="tel">Telefonnummer</label>
-            <input id="tel" type="tel" name="tel" required />
+            <div class="input-container">  
+              <input id="tel" type="tel" name="tel">
+            </div>
             <label for="email">Mailadress</label>
-            <input id="email" type="email" name="email" required />
+            <div class="input-container">  
+              <input id="email" type="email" name="email">  
+            </div>
           </fieldset>
           <fieldset class="payment-method">
             <legend>Betalningssätt</legend>
@@ -197,18 +203,18 @@
             </label>
           </fieldset>
           <fieldset id="card-payment-form" class="payment-form">
-            <legend>Kort</legend>
+            <legend><h3>Kort</h3></legend>
             <label for="card-number">Kortnummer</label>
-            <input id="card-number" type="text" inputmode="numeric" name="card-number" />
+            <div class="input-container"><input id="card-number" type="text" inputmode="numeric" name="card-number" /></div>
             <label for="date">Utgångsdatum</label>
-            <input id="date" type="text" name="date" />
+            <div class="input-container"><input id="date" type="text" name="date" /></div>
             <label for="cvc">CVC</label>
-            <input id="cvc" type="text" name="cvc" />
+            <div class="input-container"><input id="cvc" type="text" name="cvc" /></div>
           </fieldset>
           <fieldset id="invoice-payment-form" class="payment-form">
-            <legend>Faktura</legend>
+            <legend><h3>Faktura</h3></legend>
             <label for="social-security-number">Personnummer</label>
-            <input id="social-security-number" type="text" inputmode="numeric" name="social-security-number" />
+            <div class="input-container"><input id="social-security-number" type="text" inputmode="numeric" name="social-security-number" /></div>
           </fieldset>
           <label for="personal-data">Personuppgifter</label>
           <input id="personal-data" type="checkbox" name="personal-data" required />
@@ -222,7 +228,7 @@
     <footer>
       <address>
         Gottfrids Munkar <br />
-        Munkgatan 12, Snasköping.
+        Munkgatan 12, Snaskköping.
       </address>
       <p>&#169; Justin Thyme AB</p>
     </footer>
