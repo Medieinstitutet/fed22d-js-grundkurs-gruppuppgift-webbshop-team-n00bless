@@ -120,7 +120,8 @@ header {
         div {
           display: flex;
           align-items: center;
-          padding: 0 2rem;
+          justify-content: center;
+          padding: 0.2rem 2rem;
 
           p {
             margin: 0;
@@ -129,6 +130,12 @@ header {
           .fa-arrow-up-wide-short {
             cursor: pointer;
           }
+
+          input {
+            justify-content: center;
+            align-items: center;
+          }
+          
 
           // input {
           //   margin: 0 0.5rem;
@@ -142,6 +149,8 @@ header {
 
       &_categories {
         display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         // margin: 0;
         // grid-template-columns: repeat(3, 1fr);
         gap: 2.25rem;
