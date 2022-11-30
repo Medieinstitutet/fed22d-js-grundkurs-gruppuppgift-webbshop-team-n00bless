@@ -42,25 +42,24 @@
 		}
 
 		&_image {
-			/*work in progress*/
 			.hiddenImg {
 				animation: spin 0.5s linear;
 				display: none;
-				@keyframes spin {
-					from { 
-						transform: rotate(360deg); 
-						opacity: 0;
-					}
-					to { 
-						transform: rotate(0deg); 
-						opacity: 1;
-					}
-				}
+				// @keyframes spin {
+				// 	from { 
+				// 		transform: rotate(360deg); 
+				// 		opacity: 0;
+				// 	}
+				// 	to { 
+				// 		transform: rotate(0deg); 
+				// 		opacity: 1;
+				// 	}
+				// }
 			}
 			.showImg {
-				animation: spin1 0.5s linear;
+				animation: spin 0.3s linear;
 				display:inline-block;
-				@keyframes spin1 {
+				@keyframes spin {
 					from { 
 						transform: rotate(0deg); 
 						opacity: 0;

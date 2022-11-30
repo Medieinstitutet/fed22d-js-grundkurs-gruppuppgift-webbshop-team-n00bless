@@ -136,8 +136,10 @@ const updateCartDOM = () => {
 
 addedCartMsg.classList.add('hidden');
 const showAddedMessage = () => {
-  addedCartMsg.classList.remove('hidden');
-  setTimeout(clearMessage, 2000);
+  if (cartSection.classList.contains('hidden')) {
+    addedCartMsg.classList.remove('hidden');
+    setTimeout(clearMessage, 2000);
+  }
 };
 
 const clearMessage = () => {
@@ -486,7 +488,8 @@ const generateDonuts = () => {
 						data-id=${donut.id}
 						data-type='decrease'
 					><i class="fa-solid fa-minus" title="Decrease count"></i></button>
-          <input type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
+          <label for ="quantity"></label>
+          <input id ="quantity "type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
           >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
           <button 
 						class="button button--background" 
@@ -1040,6 +1043,7 @@ const startTimer = (duration) => {
 const cartToogleSwitch = () => {
   if (cartSection.classList.contains('hidden')) {
     donutSection.classList.add('hidden');
+    addedCartMsg.classList.add('hidden');
     navbarMenu.classList.add('hidden');
     cartSection.classList.toggle('hidden');
     if (navbarDropDown.style.display === 'flex') {
