@@ -10,7 +10,7 @@ function generateSlideshow() {
     const img1 = document.querySelector(`#img-1-${index}`);
 
     if (img0.classList.contains('hiddenImg')) {
-      img0.classList.remove('hiddenImg');
+      img0.classList.toggle('hiddenImg');
       img0.classList.add('showImg');
       img1.classList.add('hiddenImg');
       img1.classList.remove('showImg');

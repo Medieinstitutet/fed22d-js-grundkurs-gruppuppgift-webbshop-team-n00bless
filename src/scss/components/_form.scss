@@ -1,21 +1,42 @@
 form {
+    margin-top: 15px;
     fieldset {
         display: flex;
         flex-direction: column;
 
         legend {
-            margin-bottom: 15px;
+            margin-top: 15px;
         }
 
         label {
-            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+        
+        .input-container {
+
+            input {
+                border: 1px black solid;
+                min-width: 200px;
+                width: 30%;
+                margin: 0;
+                margin-top: 10px;
+            }
+
+            .error-msg {
+                position: relative;
+                top: 5px;
+                font-size: .9rem;
+                color: rgba(240, 0, 0, .8);
+                margin: 0;
+                margin-bottom: 10px;
+            }
         }
 
         input {
             border: 1px black solid;
             min-width: 200px;
             width: 30%;
-            margin-bottom: 15px;
+            margin: 0;
         }
 
         input[type="radio"] {
@@ -32,5 +53,14 @@ form {
         display: flex;
         flex-direction: row;
         gap: 30px;
+        margin-top: 15px;
     }
+}
+
+@media screen and (min-width: 1032px) {
+    
+            .input-container {
+                display: flex;
+                gap: 10px;
+        }
 }

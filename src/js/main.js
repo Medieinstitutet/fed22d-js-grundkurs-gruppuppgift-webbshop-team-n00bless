@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { gsap } from 'gsap';
 import donutsArray from './store/donuts';
 import generateSlideshow from './store/slideshow';
@@ -68,8 +69,7 @@ const donutListEl = document.querySelector('.donuts');
 const addedCartMsg = document.querySelector('#addedCartMsg');
 let donutListElQuantityButtons = donutListEl.querySelectorAll('.donuts__item_quantity > button');
 let donutListElAddToCartButtons = donutListEl.querySelectorAll('.donuts__item_addcart');
-
-const generateButtonListeners = () => {
+const generateShopButtonListeners = () => {
   donutListElQuantityButtons = donutListEl.querySelectorAll('.donuts__item_quantity > button');
   donutListElAddToCartButtons = donutListEl.querySelectorAll('.donuts__item_addcart');
 
@@ -92,11 +92,34 @@ const generateButtonListeners = () => {
   }
 };
 
+const cartListEl = document.querySelector('#cart article ul');
+
+let cartListElButtons = cartListEl.querySelectorAll('button');
+let cartListElInput = cartListEl.querySelector('.donuts__item_quantity input');
+const generateCartButtonListeners = () => {
+  if (cartItems.length > 0) {
+    cartListElButtons = cartListEl.querySelectorAll('button');
+    cartListElInput = cartListEl.querySelector('input');
+
+    for (const button of cartListElButtons) {
+      button.addEventListener('click', (e) => {
+        updateCartQuantity(e);
+      });
+    }
+
+    cartListElInput.addEventListener('change', (e) => {
+      updateCartQuantity(e);
+    });
+  }
+};
+
 const updateCartDOM = () => {
   /* To get total price of cart */
   const cartSum = cartItems.reduce((accumulator, object) => accumulator + object.totPrice, 0);
   /* To check if there is more than 15 donuts in total in cart */
   const cartCount = cartItems.reduce((accumulator, object) => accumulator + object.count, 0);
+
+  console.log(cartSum, cartCount);
 
   const cartCounterDisplay = document.querySelector('#cart-counter');
   const cartCounter = cartCount;
@@ -107,7 +130,7 @@ const updateCartDOM = () => {
     scaleY: 0.5,
     scaleX: 0.5,
     repeat: 1,
-    yoyo: true
+    yoyo: true,
   });
 };
 
@@ -138,14 +161,14 @@ const donutIncreaseCount = (id) => {
   const price = donutObject.price * currentCount >= 0 ? donutObject.price * currentCount : donutObject.price;
   donutEl.querySelector('.donuts__item_addcart span').innerText = price;
 
-  for (const donut of cartItems) {
-    if (donut.id === id && donut.count > 0) {
-      donut.count -= 1;
-      donut.totPrice = donut.count * donut.price;
-      console.log(cartItems);
-      renderCart();
-    }
-  }
+  // for (const donut of cartItems) {
+  //   if (donut.id === id && donut.count > 0) {
+  //     donut.count -= 1;
+  //     donut.totPrice = donut.count * donut.price;
+  //     console.log(cartItems);
+  //     renderCart();
+  //   }
+  // }
 };
 
 const donutDecreaseCount = (id) => {
@@ -163,14 +186,14 @@ const donutDecreaseCount = (id) => {
   const price = donutObject.price * currentCount >= 0 ? donutObject.price * currentCount : donutObject.price;
   donutEl.querySelector('.donuts__item_addcart span').innerText = price;
 
-  for (const donut of cartItems) {
-    if (donut.id === id && donut.count > 0) {
-      donut.count -= 1;
-      donut.totPrice = donut.count * donut.price;
-      console.log(cartItems);
-      renderCart();
-    }
-  }
+  // for (const donut of cartItems) {
+  //   if (donut.id === id && donut.count > 0) {
+  //     donut.count -= 1;
+  //     donut.totPrice = donut.count * donut.price;
+  //     console.log(cartItems);
+  //     renderCart();
+  //   }
+  // }
 };
 
 const donutAddToCart = (id) => {
@@ -185,7 +208,7 @@ const donutAddToCart = (id) => {
     //   startTimer(60 * 15);
     // }
 
-    // const totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0);
+    const totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0);
     // console.log(totalCartSum);
     // let donutsCost;
     // for (const donut of donutsArray) {
@@ -195,7 +218,7 @@ const donutAddToCart = (id) => {
     // }
     document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`).value = '0';
 
-    if (cartTotalSum + donutsCost > 2000) {
+    if (totalCartSum + donutsCost > 2000) {
       alert('Du kan inte beställa för mer än 2000kr');
       return;
     }
@@ -217,75 +240,83 @@ const donutAddToCart = (id) => {
 
     updateCartDOM();
     renderCart();
-
-    // if (currentCount > 0 && cartItems.length > 0) {
-    // if (currentCount > 0) {
-    //   for (const item of cartItems) {
-    //     if (item.id === id) {
-    //       item.count += currentCount;
-    //       item.totPrice += currentCount * item.price;
-    //       updateCartDOM();
-    //       renderCart();
-    //       return;
-    //     }
-    //   }
-
-    //   for (const donut of donutsArray) {
-    //     if (donut.id === id) {
-    //       cartItems.push({
-    //         ...donut,
-    //         count: currentCount,
-    //         totPrice: currentCount * donut.price,
-    //       });
-    //       updateCartDOM();
-    //       renderCart();
-    //       return;
-    //     }
-    //   }
-    // }
   }
 };
 
 const renderCart = () => {
-  let cartItemsToRender = '';
+  cartListEl.innerHTML = '';
   for (const donut of cartItems) {
-    console.log(donut);
-    const donutElement = /* html */ `
+    cartListEl.innerHTML += /* html */ `
 			<li data-id="cart-${donut.id}">
 				<div className="name">
 					<img src=${donut.images[0]} width="30" height="30"/>
 					<p>${donut.name}</p>
 				</div>
 				<div className="donuts__item_quantity">
-					<button 
-						class="button button--background"
-						onClick="updateCartQuantity('cart-${donut.id}', 'dec')"
-					>-</button>
-					<input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
-					<button 
+          <button 
+            data-id=${donut.id}
+            data-type='decrease'
+            class="button button--background"
+          >-</button>
+          <input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
+          <button 
+            data-id=${donut.id}
+            data-type='increase'
+            class="button button--background" 
+          >+</button>
+          <p>${donut.totPrice} kr</p>
+          <button 
+            data-id=${donut.id}
+            data-type='remove'
 						class="button button--background" 
-						onClick="updateCartQuantity('cart-${donut.id}', 'inc')"
-					>+</button>
-					<p>${donut.totPrice} kr</p>
+					>Ta bort vara</button>
 				</div>
 			</li>`;
-    cartItemsToRender += donutElement;
   }
-  document.querySelector('#cart article ul').innerHTML = cartItemsToRender;
+
+  generateCartButtonListeners();
   updateCartDOM();
 };
 
-const updateCartQuantity = (id, button) => {
-  const donutInCart = cartItems.find((donut) => `cart-${donut.id}` === id);
-  donutInCart.count = button === 'dec' ? donutInCart.count - 1 : donutInCart.count + 1;
-  const cartDonutInput = document.querySelector(`input[data-id="${id}"]`);
-  cartDonutInput.value = donutInCart.count;
+const updateCartQuantity = (event) => {
+  const id = Number(event.target.getAttribute('data-id'));
+  const type = event.target.getAttribute('data-type');
+  const donutInCart = cartItems.find((donut) => donut.id === id);
+
+  console.log(donutInCart);
+
+  if (type === 'decrease') {
+    if (donutInCart.count - 1 <= 0) {
+      const index = cartItems.findIndex((item) => item.id === id);
+      cartItems.splice(index, 1);
+    } else {
+      donutInCart.count -= 1;
+      donutInCart.totPrice -= donutInCart.price;
+      cartListElInput.value = donutInCart.count;
+    }
+  } else if (type === 'increase' && donutInCart.totPrice + donutInCart.price <= 2000) {
+    donutInCart.count += 1;
+    donutInCart.totPrice += donutInCart.price;
+    cartListElInput.value = donutInCart.count;
+  } else if (type === 'remove') {
+    const index = cartItems.findIndex((item) => item.id === id);
+    cartItems.splice(index, 1);
+  }
+
   renderCart();
 };
 
 /** *******************************************************
  * Special Rules
  ********************************************************* */
+
+const formatSumAndFreight = (number) => {
+  const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
+    style: 'currency',
+    currency: 'SEK',
+  }).format(number);
+  return cartSumAndFreightSumInSEK;
+};
 
 const checkForSpecialRules = (cartSum, cartCount) => {
   const freightSum = Math.round(25 + cartSum * 0.1); // 25 kr standard fee + 10% of total
@@ -303,12 +334,12 @@ const checkForSpecialRules = (cartSum, cartCount) => {
   /* const cartSumInSEK = new Intl.NumberFormat('sv-SE', {
           style: 'currency', currency: 'SEK'
       }).format(cartSum); <-- never displayed */
-  const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
-    style: 'currency',
-    currency: 'SEK',
-  }).format(cartSumAndFreightSum);
+  // const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
+  //   style: 'currency',
+  //   currency: 'SEK',
+  // }).format(cartSumAndFreightSum);
 
-  cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+  cartSumDisplay.textContent = `Totalpris: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
   freightSumDisplay.textContent = `Frakt: ${FreightSumInSEK}.`;
   deliveryTime.textContent = 'Beställningen skickas 30 minuter efter orderläggning.';
 
@@ -332,16 +363,18 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 
   /* Monday before 10:00 rule */
   if (day === 1 && hour <= 10) {
-    cartSumAndFreightSum = Math.round(cartSumAndFreightSumInSEK * 0.9); // 10 % discount
-    cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${cartSumAndFreightSumInSEK}.`;
+    cartSumAndFreightSum = Math.round(formatSumAndFreight(cartSumAndFreightSum) * 0.9); // 10 % discount
+    cartSumDisplay.textContent = `Totalpris: Måndagsrabatt: 10 % på hela beställningen ${formatSumAndFreight(
+      cartSumAndFreightSum
+    )}.`;
   } else {
-    cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+    cartSumDisplay.textContent = `Totalpris: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
   }
 
   /* More than 15 donuts in total rule */
   if (cartCount >= 15) {
     cartSumAndFreightSum = cartSum; // no freight cost added
-    cartSumDisplay.textContent = `Totalpris: ${cartSumAndFreightSumInSEK}.`;
+    cartSumDisplay.textContent = `Totalpris: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
     freightSumDisplay.textContent = 'Fraktfritt.';
   } else {
     cartSumAndFreightSum = cartSum + freightSum;
@@ -380,7 +413,7 @@ const checkForSpecialRules = (cartSum, cartCount) => {
 
     if (weekNumber % 2 === 0 && day === 5 && cartSumAndFreightSum >= 25) {
       cartSumAndFreightSum -= 25;
-      cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${cartSumAndFreightSumInSEK}.`;
+      cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
     }
   };
 
@@ -434,7 +467,12 @@ const generateDonuts = () => {
         <h2>${donut.name}</h2>
 				<div class="donuts__item_image">
 					<button id ="prev-${donut.id}" class="prev">&#10094;</button>
-					<img id = "img-0-${donut.id}" src="${donut.images[0]}" alt="A picture of a donut"/>
+					<img 
+            id = "img-0-${donut.id}" 
+            src="${donut.images[0]}" 
+            alt="A picture of a donut" 
+            width="310" 
+            height ="310"/>
           <img id = "img-1-${donut.id}" class = "hiddenImg" src="${donut.images[1]}" alt="A picture of a donut"/>
 					<button id ="next-${donut.id}" class="next">&#10095;</button>
 				</div>
@@ -465,7 +503,7 @@ const generateDonuts = () => {
     }
   }
 
-  generateButtonListeners();
+  generateShopButtonListeners();
   generateSlideshow();
 };
 
@@ -500,11 +538,32 @@ const invoiceRadioInput = document.querySelector('#invoice-radio');
 const paymentOptionRadios = Array.from(document.querySelectorAll('[name="payment-method"]'));
 
 const personalDataCheckbox = document.querySelector('[name="personal-data"]');
+const newsletterCheckbox = document.querySelector('[name="newsletter"]');
 
 const orderButton = document.querySelector('#order-btn');
 
 const cardForm = document.querySelector('#card-payment-form');
 const invoiceForm = document.querySelector('#invoice-payment-form');
+
+const inputErrorMessage = (validationProp, id, specialMsg, siblingAfter) => {
+  if (document.querySelector(`#${id}-err`) !== null) {
+    document.querySelector(`#${id}-err`).remove();
+  }
+  if (!validationProp) {
+    siblingAfter.insertAdjacentHTML('afterend', /* html */`
+    <p class="error-msg" id="${id}-err">
+      ${specialMsg}
+    </p>
+      `);
+    // eslint-disable-next-line no-param-reassign
+    siblingAfter.style.boxShadow = '0px 0px 3px 3px rgba(240, 0, 0, .8)';
+  //   // siblingAfter.style.border = '3px rgba(240, 0, 0, 0.8) solid';
+  } else {
+    siblingAfter.removeAttribute('style');
+  }
+};
+
+// Skriv för- och efternamn och använd endast bokstäver
 
 const formValidation = {
   name: false,
@@ -566,33 +625,42 @@ const activateOrderButton = () => {
   }
 };
 
-nameInputField.addEventListener('keyup', () => {
-  formValidation.name = nameInputField.value.indexOf(' ') > 0;
+nameInputField.addEventListener('change', () => {
+  // eslint-disable-next-line max-len
+  formValidation.name = nameInputField.value.indexOf(' ') > 0 && /^[A-zÀ-ÿ\s]*$/.test(nameInputField.value); // Check for space after at least one letter, special letters and no special characters.
+  // eslint-disable-next-line max-len
+  inputErrorMessage(formValidation.name, 'name', 'Ange för- och efternamn med endast bokstäver', nameInputField);
   activateOrderButton();
 });
 
-addressInputField.addEventListener('keyup', () => {
+addressInputField.addEventListener('change', () => {
   formValidation.address = /\d/.test(addressInputField.value) ? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value) : false;
+  inputErrorMessage(formValidation.address, 'address', 'Ange adress inklusive gatunummer', addressInputField);
   activateOrderButton();
 });
 
-postCodeInputField.addEventListener('keyup', () => {
-  formValidation.postCode = postCodeInputField.value.length === 5;
+postCodeInputField.addEventListener('change', () => {
+  formValidation.postCode = postCodeInputField.value.length === 5 && /^[0-9]*$/.test(postCodeInputField.value);
+  inputErrorMessage(formValidation.postCode, 'post-code', 'Ange postkod med 5 siffror utan mellanslag', postCodeInputField);
+  activateOrderButton();
+  console.log(formValidation.postCode);
+});
+
+cityInputField.addEventListener('change', () => {
+  formValidation.city = /^[A-zÀ-ÿ\s]*$/.test(cityInputField.value);
+  inputErrorMessage(formValidation.city, 'city', 'Ange stad med endast bokstäver', cityInputField);
   activateOrderButton();
 });
 
-cityInputField.addEventListener('keyup', () => {
-  formValidation.city = cityInputField.value !== '';
+telInputField.addEventListener('change', () => {
+  formValidation.tel = /^[-+0-9\s]*$/.test(telInputField.value);
+  inputErrorMessage(formValidation.tel, 'tel', 'Ange telefonnummer med siffror och eventuell landskod', telInputField);
   activateOrderButton();
 });
 
-telInputField.addEventListener('keyup', () => {
-  formValidation.tel = cityInputField.value !== '';
-  activateOrderButton();
-});
-
-emailInputField.addEventListener('keyup', () => {
-  formValidation.email = cityInputField.value !== '';
+emailInputField.addEventListener('change', () => {
+  formValidation.email = /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(emailInputField.value) && emailInputField.value.indexOf('.') !== 0 && emailInputField.value.indexOf('@') !== 0;
+  inputErrorMessage(formValidation.email, 'email', 'Ange mailadress med bokstäver, punkt och @-tecken', emailInputField);
   activateOrderButton();
 });
 
@@ -603,47 +671,35 @@ for (const radio of paymentOptionRadios) {
       case 'card':
         cardForm.style.display = 'flex';
         invoiceForm.style.display = 'none';
-        cardNumberInputField.setAttribute('required', '');
-        cardExpirationInputField.setAttribute('required', '');
-        cvcInputField.setAttribute('required', '');
-        socialSecurityInputField.removeAttribute('required');
         break;
       case 'invoice':
         cardForm.style.display = 'none';
         invoiceForm.style.display = 'flex';
-        socialSecurityInputField.setAttribute('required', '');
-        cardNumberInputField.removeAttribute('required');
-        cardExpirationInputField.removeAttribute('required');
-        cvcInputField.removeAttribute('required');
         break;
       default:
         cardForm.style.display = 'flex';
         invoiceForm.style.display = 'none';
-        cardNumberInputField.setAttribute('required', '');
-        cardExpirationInputField.setAttribute('required', '');
-        cvcInputField.setAttribute('required', '');
-        socialSecurityInputField.removeAttribute('required');
     }
   });
 }
 
-cardNumberInputField.addEventListener('keyup', () => {
+cardNumberInputField.addEventListener('change', () => {
   cardPaymentValidation.cardNumber = /\d/.test(cardNumberInputField.value);
   console.log(/\d/.test(cardNumberInputField.value));
   activateOrderButton();
 });
 
-cardExpirationInputField.addEventListener('keyup', () => {
+cardExpirationInputField.addEventListener('change', () => {
   cardPaymentValidation.expirationDate = cardExpirationInputField.value !== '';
   activateOrderButton();
 });
 
-cvcInputField.addEventListener('keyup', () => {
+cvcInputField.addEventListener('change', () => {
   cardPaymentValidation.cvc = cvcInputField.value !== '';
   activateOrderButton();
 });
 
-socialSecurityInputField.addEventListener('keyup', () => {
+socialSecurityInputField.addEventListener('change', () => {
   formValidation.payment = /\d/.test(socialSecurityInputField.value);
   activateOrderButton();
 });
@@ -658,7 +714,22 @@ document.querySelector('form').addEventListener('reset', (event) => {
   // eslint-disable-next-line no-restricted-globals
   if (confirm('Är du säker att du vill återställa formuläret?')) {
     event.preventDefault();
-    reset();
+    for (const input of document.querySelectorAll('form .input-container input')) { // Reset value in all form inputs
+      input.value = '';
+      input.removeAttribute('style');
+    }
+    cardRadioInput.checked = false;
+    invoiceRadioInput.checked = false;
+    personalDataCheckbox.checked = false;
+    newsletterCheckbox.checked = false;
+    cardForm.style.display = 'none';
+    invoiceForm.style.display = 'none';
+    for (const element of document.querySelectorAll('.input-container p')) { // Remove error messages
+      element.remove();
+    }
+    // reset();
+  } else {
+    event.preventDefault();
   }
 });
 
@@ -901,9 +972,9 @@ let maxPriceValue = 0;
 
 const renderFromPriceRange = () => {
   if (minPriceValue !== 0 && maxPriceValue > minPriceValue) {
-    const filteredArray = filteredDonutsArray.filter((donut) => (
-      donut.price >= minPriceValue && donut.price <= maxPriceValue
-    ));
+    const filteredArray = filteredDonutsArray.filter(
+      (donut) => donut.price >= minPriceValue && donut.price <= maxPriceValue
+    );
     console.log(filteredArray);
     filteredDonutsArray = filteredArray;
     generateDonuts();
