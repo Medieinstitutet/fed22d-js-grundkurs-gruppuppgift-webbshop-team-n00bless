@@ -548,26 +548,6 @@ const orderButton = document.querySelector('#order-btn');
 const cardForm = document.querySelector('#card-payment-form');
 const invoiceForm = document.querySelector('#invoice-payment-form');
 
-const inputErrorMessage = (validationProp, id, specialMsg, siblingAfter) => {
-  if (document.querySelector(`#${id}-err`) !== null) {
-    document.querySelector(`#${id}-err`).remove();
-  }
-  if (!validationProp) {
-    siblingAfter.insertAdjacentHTML('afterend', /* html */`
-    <p class="error-msg" id="${id}-err">
-      ${specialMsg}
-    </p>
-      `);
-    // eslint-disable-next-line no-param-reassign
-    siblingAfter.style.boxShadow = '0px 0px 3px 3px rgba(240, 0, 0, .8)';
-  //   // siblingAfter.style.border = '3px rgba(240, 0, 0, 0.8) solid';
-  } else {
-    siblingAfter.removeAttribute('style');
-  }
-};
-
-// Skriv för- och efternamn och använd endast bokstäver
-
 const formValidation = {
   name: false,
   address: false,
@@ -576,7 +556,7 @@ const formValidation = {
   tel: false,
   email: false,
   payment: false,
-  personalData: false,
+  personalData: false
 };
 
 const cardPaymentValidation = {
@@ -584,6 +564,8 @@ const cardPaymentValidation = {
   expirationDate: false,
   cvc: false,
 };
+
+let socialSecurityNumberValidation = false;
 
 const validateInput = (validatedInputs) => {
   for (const prop in validatedInputs) {
@@ -604,17 +586,12 @@ const validatePaymentInputs = () => {
     }
     formValidation.payment = true;
   } else if (invoiceRadioInput.checked) {
-    if (socialSecurityInputField.value === '') {
+    if (!socialSecurityNumberValidation) {
       formValidation.payment = false;
       return;
     }
     formValidation.payment = true;
   }
-};
-
-const submitOrder = () => {
-  alert('Order lagd!');
-  console.log('Order lagd!');
 };
 
 const activateOrderButton = () => {
@@ -628,41 +605,65 @@ const activateOrderButton = () => {
   }
 };
 
+const inputErrorMessage = (validationProp, id, specialMsg, siblingAfter) => {
+  if (document.querySelector(`#${id}-err`) !== null) {
+    document.querySelector(`#${id}-err`).remove();
+  }
+  if (!validationProp) {
+    siblingAfter.insertAdjacentHTML('afterend', /* html */`
+    <p class="error-msg" id="${id}-err">
+      ${specialMsg}
+    </p>
+      `);
+    // eslint-disable-next-line no-param-reassign
+    siblingAfter.style.boxShadow = '0px 0px 3px 3px rgba(240, 0, 0, .8)';
+  } else {
+    siblingAfter.removeAttribute('style');
+  }
+};
+
+const submitOrder = () => {
+  alert('Order lagd!');
+  console.log('Order lagd!');
+};
+
 nameInputField.addEventListener('change', () => {
-  // eslint-disable-next-line max-len
-  formValidation.name = nameInputField.value.indexOf(' ') > 0 && /^[A-zÀ-ÿ\s]*$/.test(nameInputField.value); // Check for space after at least one letter, special letters and no special characters.
-  // eslint-disable-next-line max-len
+  const { value } = nameInputField;
+  formValidation.name = value.indexOf(' ') > 0 && /^[A-zÀ-ÿ\s]*$/.test(value); // Check for space after at least one letter, special letters and no special characters.
   inputErrorMessage(formValidation.name, 'name', 'Ange för- och efternamn med endast bokstäver', nameInputField);
   activateOrderButton();
 });
 
 addressInputField.addEventListener('change', () => {
-  formValidation.address = /\d/.test(addressInputField.value) ? /[A-Za-zÅåÄäÖö]/.test(addressInputField.value) : false;
-  inputErrorMessage(formValidation.address, 'address', 'Ange adress inklusive gatunummer', addressInputField);
+  const { value } = addressInputField;
+  formValidation.address = /\d/.test(value) ? /^[A-zÀ-ÿ\s\d]*$/.test(value) : false; // Check if only letters and digits are used
+  inputErrorMessage(formValidation.address, 'address', 'Ange adress inklusive gatunummer med bokstäver och siffror', addressInputField);
   activateOrderButton();
 });
 
 postCodeInputField.addEventListener('change', () => {
-  formValidation.postCode = postCodeInputField.value.length === 5 && /^[0-9]*$/.test(postCodeInputField.value);
+  const { value } = postCodeInputField;
+  formValidation.postCode = value.length === 5 && /^[0-9]*$/.test(value); // Check if length is 5 and only digits are used
   inputErrorMessage(formValidation.postCode, 'post-code', 'Ange postkod med 5 siffror utan mellanslag', postCodeInputField);
   activateOrderButton();
   console.log(formValidation.postCode);
 });
 
 cityInputField.addEventListener('change', () => {
-  formValidation.city = /^[A-zÀ-ÿ\s]*$/.test(cityInputField.value);
+  formValidation.city = /^[A-zÀ-ÿ\s]*$/.test(cityInputField.value); // Check if only letters are used
   inputErrorMessage(formValidation.city, 'city', 'Ange stad med endast bokstäver', cityInputField);
   activateOrderButton();
 });
 
 telInputField.addEventListener('change', () => {
-  formValidation.tel = /^[-+0-9\s]*$/.test(telInputField.value);
+  formValidation.tel = /^[-+0-9\s]*$/.test(telInputField.value); // Check if only digits and telephone related characters are used
   inputErrorMessage(formValidation.tel, 'tel', 'Ange telefonnummer med siffror och eventuell landskod', telInputField);
   activateOrderButton();
 });
 
 emailInputField.addEventListener('change', () => {
-  formValidation.email = /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(emailInputField.value) && emailInputField.value.indexOf('.') !== 0 && emailInputField.value.indexOf('@') !== 0;
+  const { value } = emailInputField;
+  formValidation.email = /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(value) && value.indexOf('.') !== 0 && value.indexOf('@') !== 0; // Check if only letters and email related characters are used, email doesn't start with . or @
   inputErrorMessage(formValidation.email, 'email', 'Ange mailadress med bokstäver, punkt och @-tecken', emailInputField);
   activateOrderButton();
 });
@@ -687,23 +688,30 @@ for (const radio of paymentOptionRadios) {
 }
 
 cardNumberInputField.addEventListener('change', () => {
-  cardPaymentValidation.cardNumber = /\d/.test(cardNumberInputField.value);
-  console.log(/\d/.test(cardNumberInputField.value));
+  const { value } = cardNumberInputField;
+  cardPaymentValidation.cardNumber = /^\d*$/.test(value) && value.length === 16; // Check if only digits are used and length is 16.
+  inputErrorMessage(cardPaymentValidation.cardNumber, 'card-number', 'Ange kortnummer med 16 siffror utan mellanslag', cardNumberInputField);
   activateOrderButton();
 });
 
 cardExpirationInputField.addEventListener('change', () => {
-  cardPaymentValidation.expirationDate = cardExpirationInputField.value !== '';
+  const { value } = cardExpirationInputField;
+  cardPaymentValidation.expirationDate = /^[\d/]*$/.test(value) && value.length === 5 && value.indexOf('/') === 2; // Check for index of / and if only digits and / are used
+  inputErrorMessage(cardPaymentValidation.expirationDate, 'date', 'Ange månad och år för när kortet går ut separerat med /', cardExpirationInputField);
   activateOrderButton();
 });
 
 cvcInputField.addEventListener('change', () => {
-  cardPaymentValidation.cvc = cvcInputField.value !== '';
+  const { value } = cvcInputField;
+  cardPaymentValidation.cvc = value.length === 3 && /^\d*$/.test(value); // Check if only digits are used and the length is 3
+  inputErrorMessage(cardPaymentValidation.cvc, 'cvc', 'Ange kortets säkerhetskod med 3 siffror', cvcInputField);
   activateOrderButton();
 });
 
 socialSecurityInputField.addEventListener('change', () => {
-  formValidation.payment = /\d/.test(socialSecurityInputField.value);
+  const { value } = socialSecurityInputField;
+  socialSecurityNumberValidation = /^\d*$/.test(value) && (value.length === 10 || value.length === 12); // Check if only digits are used and the length is 10 or 12
+  inputErrorMessage(socialSecurityNumberValidation, 'social-security-number', 'Ange ditt personnummer med endast 10 eller 12 siffror utan bindestreck.', socialSecurityInputField);
   activateOrderButton();
 });
 
