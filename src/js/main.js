@@ -650,7 +650,8 @@ telInputField.addEventListener('change', () => {
 });
 
 emailInputField.addEventListener('change', () => {
-  formValidation.email = cityInputField.value !== '';
+  formValidation.email = /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(emailInputField.value) && emailInputField.value.indexOf('.') !== 0 && emailInputField.value.indexOf('@') !== 0;
+  inputErrorMessage(formValidation.email, 'email', 'Ange mailadress med bokstäver, punkt och @-tecken', emailInputField);
   activateOrderButton();
 });
 
@@ -706,6 +707,7 @@ document.querySelector('form').addEventListener('reset', (event) => {
     event.preventDefault();
     for (const input of document.querySelectorAll('form .input-container input')) { // Reset value in all form inputs
       input.value = '';
+      input.removeAttribute('style');
     }
     cardRadioInput.checked = false;
     invoiceRadioInput.checked = false;
@@ -713,6 +715,9 @@ document.querySelector('form').addEventListener('reset', (event) => {
     newsletterCheckbox.checked = false;
     cardForm.style.display = 'none';
     invoiceForm.style.display = 'none';
+    for (const element of document.querySelectorAll('.input-container p')) { // Remove error messages
+      element.remove();
+    }
     // reset();
   } else {
     event.preventDefault();
