@@ -32,7 +32,8 @@ input {
     rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 
   &:focus-visible {
-    outline: none;
+    outline: max(2px, 0.15em) solid fn.getColor(orange);
+    outline-offset: max(2px, 0.15em);
   }
 }
 
@@ -115,7 +116,7 @@ ul {
   color: fn.getColor(orange);
 }
 
-.icon[class*="arrow"] {
+.icon[class*='arrow'] {
   font-size: 1.5rem;
   color: fn.getColor(white);
 }
@@ -123,8 +124,8 @@ ul {
 .icon__counter {
   font-size: 2.5rem;
   background-color: fn.getColor(pink);
-  top: -0.6rem;
-  right: -0.8rem;
+  // top: -0.6rem;
+  // right: -0.8rem;
 }
 
 .select {
