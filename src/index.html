@@ -66,7 +66,7 @@
           </button>
         </div>
       </div>
-      <div class="navbar__dropdown" style="display: none" id="filterMenu">
+      <div class="navbar__dropdown" id="filterMenu">
         <div class="navbar__dropdown_item">
           <p>Välj kategorier</p>
           <ul class="navbar__dropdown_item_categories">
@@ -98,12 +98,12 @@
           <p>Välj prisspann</p>
           <div class="navbar__dropdown_item_filter">
             <div>
-              <p>Från</p>
-              <input id="price-range-min" type="number" min="0" max="999" placeholder="0" />
+              <label for="price-range-min">Från</label>
+              <input id="price-range-min" name="price-range-min" type="number" min="0" max="999" placeholder="0" />
             </div>
             <div>
-              <p>Till</p>
-              <input id="price-range-max" type="number" min="0" max="999" placeholder="100" />
+              <label for="price-range-max">Till</label>
+              <input id="price-range-max" name="price-range-max" type="number" min="0" max="999" placeholder="100" />
             </div>
 
             <div class ="sorting">
