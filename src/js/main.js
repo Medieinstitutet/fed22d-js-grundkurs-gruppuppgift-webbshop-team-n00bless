@@ -804,6 +804,8 @@ document.querySelector('form').addEventListener('reset', (event) => {
       // Reset value in all form inputs
       input.value = '';
       input.removeAttribute('style');
+      cartItems.length = 0;
+      renderCart();
     }
     cardRadioInput.checked = false;
     invoiceRadioInput.checked = false;
