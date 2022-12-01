@@ -89,6 +89,7 @@ const generateShopButtonListeners = () => {
   for (const button of donutListElAddToCartButtons) {
     button.addEventListener('click', () => {
       donutAddToCart(button.getAttribute('data-id'));
+      activateOrderButton();
     });
   }
 };
@@ -308,6 +309,7 @@ const updateCartQuantity = (event) => {
   } else if (type === 'remove') {
     const index = cartItems.findIndex((item) => item.id === id);
     cartItems.splice(index, 1);
+    activateOrderButton();
   }
 
   renderCart();
@@ -606,12 +608,15 @@ const validatePaymentInputs = () => {
 
 const activateOrderButton = () => {
   validatePaymentInputs();
-  if (validateInput(formValidation)) {
+  console.log(cartItems.length);
+  if (validateInput(formValidation) && cartItems.length > 0) {
     orderButton.removeAttribute('disabled');
-    inputForm.setAttribute('onsubmit', 'submitOrder()');
+    orderButton.addEventListener('click', submitOrder);
+    // inputForm.setAttribute('onsubmit', 'submitOrder()');
   } else {
     orderButton.setAttribute('disabled', '');
-    inputForm.removeAttribute('onsubmit');
+    orderButton.removeEventListener('click', submitOrder);
+    // inputForm.removeAttribute('onsubmit');
   }
 };
 
@@ -632,9 +637,25 @@ const inputErrorMessage = (validationProp, id, specialMsg, siblingAfter) => {
   }
 };
 
-const submitOrder = () => {
-  alert('Order lagd!');
-  console.log('Order lagd!');
+const submitOrder = (e) => {
+  e.preventDefault();
+  const chosenPaymentMethod = cardRadioInput.checked ? 'kort' : 'faktura';
+  let namesToRender;
+  if (cartItems.length > 1) {
+    const orderedDonutNames = cartItems.map((donut, i) => (i === cartItems.length - 1 ? ` och ${donut.name}` : ` ${donut.name}`)).toString(); // All names of donuts in cart to string and add "och" before last name
+    const lastIndexOfComma = orderedDonutNames.lastIndexOf(',');
+    namesToRender = orderedDonutNames.slice(0, lastIndexOfComma) + orderedDonutNames.slice(lastIndexOfComma + 1); // Remove last comma if cartItems.length > 1
+  } else {
+    namesToRender = ` ${cartItems[0].name}`;
+  }
+  alert(
+    `Order lagd! 
+    Du har beställt följande:${namesToRender}.
+    ${document.getElementById('cart-sum').innerText}
+    Du har valt att betala med ${chosenPaymentMethod}.
+    ${document.getElementById('delivery-time').innerText}`
+  );
+  reset();
 };
 
 nameInputField.addEventListener('change', () => {
