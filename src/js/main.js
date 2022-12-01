@@ -492,7 +492,7 @@ const generateDonuts = () => {
 						data-id=${donut.id}
 						data-type='decrease'
 					><i class="fa-solid fa-minus" title="Decrease count"></i></button>
-          <label for ="quantity"></label>
+          <label for ="quantity">st</label>
           <input id ="quantity "type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
           >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
           <button 
@@ -521,7 +521,11 @@ const generateCategories = () => {
     }
   }
 };
+// let hideQuantityLabel = document.querySelectorAll('label[for=quantity]');
 
+// for (hideQuantityLabel of donutsArray) {
+//   hideQuantityLabel.style.display = 'none';
+// }
 /** *******************************************************
  * Input field validation
  ********************************************************* */
@@ -856,7 +860,7 @@ const inputButtons = document.querySelectorAll('.navbar__dropdown_item_categorie
 for (const input of inputButtons) {
   input.addEventListener('click', (e) => addCategorySort(e.target.name));
 }
-
+/* Sorting, Need to fix animation on buttonpress */
 const toogleIconPrice = document.querySelector('#price-sort');
 const toogleIconRating = document.querySelector('#rating-sort');
 const toogleIconName = document.querySelector('#name-sort');
@@ -865,117 +869,54 @@ toogleIconPrice.style.transform = 'scale(-1, 1)';
 toogleIconRating.style.transform = 'scale(-1, 1)';
 toogleIconName.style.transform = 'scale(-1, 1)';
 
-toogleIconPrice.addEventListener('click', initSortPriceDown);
-toogleIconRating.addEventListener('click', initSortRatingDown);
-toogleIconName.addEventListener('click', initSortNameDown);
+toogleIconPrice.addEventListener('click', sortPrice);
+toogleIconRating.addEventListener('click', sortRating);
+toogleIconName.addEventListener('click', sortName);
 
 /* Name */
-const sortNameDown = (a, b) => {
-  toogleIconName.removeEventListener('click', initSortNameDown);
-  toogleIconName.addEventListener('click', initSortNameUp);
-  if (a.name < b.name) {
-    return -1;
+let sortNameToggle = false;
+function sortName() {
+  sortNameToggle = !sortNameToggle;
+  // toogleIconName.classList.toggle('sortingup');
+  // toogleIconName.classList.toggle('sortingdown');
+  if (sortNameToggle) {
+    filteredDonutsArray.reverse((a, b) => a.name - b.name);
+    generateDonuts();
+    // filteredDonutsArray.sort((a, b) => a.name - b.name).reverse();
+  } else {
+    filteredDonutsArray.reverse((a, b) => b.name - a.name);
+    generateDonuts();
   }
-
-  return 1;
-};
-
-function initSortNameDown() {
-  filteredDonutsArray.sort(sortNameDown);
-  generateDonuts();
-
-  toogleIconName.style.transition = '0.6s ease';
-  toogleIconName.style.transform = 'rotate(-0.5turn)';
 }
-const sortNameUp = (a, b) => {
-  toogleIconName.removeEventListener('click', initSortNameUp);
-  toogleIconName.addEventListener('click', initSortNameDown);
-  if (a.name < b.name) {
-    return 1;
+/* price */
+let sortPriceToggle = false;
+function sortPrice() {
+  sortPriceToggle = !sortPriceToggle;
+  // toogleIconName.classList.toggle('sortingup');
+  // toogleIconName.classList.toggle('sortingdown');
+  if (sortPriceToggle) {
+    filteredDonutsArray.sort((a, b) => a.price - b.price);
+    generateDonuts();
+    // filteredDonutsArray.sort((a, b) => a.price - b.price).reverse();
+  } else {
+    filteredDonutsArray.sort((a, b) => b.price - a.price);
+    generateDonuts();
   }
-
-  return -1;
-};
-
-function initSortNameUp() {
-  filteredDonutsArray.sort(sortNameUp);
-  generateDonuts();
-
-  toogleIconName.style.transition = '0.6s ease';
-  toogleIconName.style.transform = 'scale(-1, 1)';
-  toogleIconName.style.transform = 'rotate(deg0)';
 }
-/* Rating */
-const sortRatingDown = (a, b) => {
-  toogleIconRating.removeEventListener('click', initSortRatingDown);
-  toogleIconRating.addEventListener('click', initSortRatingUp);
-  if (a.rating < b.rating) {
-    return -1;
+/* rating */
+let sortRatingToggle = false;
+function sortRating() {
+  sortRatingToggle = !sortRatingToggle;
+  // toogleIconName.classList.toggle('sortingup');
+  // toogleIconName.classList.toggle('sortingdown');
+  if (sortRatingToggle) {
+    filteredDonutsArray.sort((a, b) => a.rating - b.rating);
+    generateDonuts();
+    // filteredDonutsArray.sort((a, b) => a.rating - b.rating).reverse();
+  } else {
+    filteredDonutsArray.sort((a, b) => b.rating - a.rating);
+    generateDonuts();
   }
-
-  return 1;
-};
-
-function initSortRatingDown() {
-  filteredDonutsArray.sort(sortRatingDown);
-  generateDonuts();
-
-  toogleIconRating.style.transition = '0.6s ease';
-  toogleIconRating.style.transform = 'rotate(-0.5turn)';
-}
-const sortRatingUp = (a, b) => {
-  toogleIconRating.removeEventListener('click', initSortRatingUp);
-  toogleIconRating.addEventListener('click', initSortRatingDown);
-  if (a.rating < b.rating) {
-    return 1;
-  }
-
-  return -1;
-};
-
-function initSortRatingUp() {
-  filteredDonutsArray.sort(sortRatingUp);
-  generateDonuts();
-
-  toogleIconRating.style.transition = '0.6s ease';
-  toogleIconRating.style.transform = 'scale(-1, 1)';
-  toogleIconRating.style.transform = 'rotate(deg0)';
-}
-/* Price */
-const sortPriceDown = (a, b) => {
-  toogleIconPrice.removeEventListener('click', initSortPriceDown);
-  toogleIconPrice.addEventListener('click', initSortPriceUp);
-  if (a.price < b.price) {
-    return -1;
-  }
-
-  return 1;
-};
-
-function initSortPriceDown() {
-  filteredDonutsArray.sort(sortPriceDown);
-  generateDonuts();
-
-  toogleIconPrice.style.transition = '0.6s ease';
-  toogleIconPrice.style.transform = 'rotate(-0.5turn)';
-}
-const sortPriceUp = (a, b) => {
-  toogleIconPrice.removeEventListener('click', initSortPriceUp);
-  toogleIconPrice.addEventListener('click', initSortPriceDown);
-  if (a.price < b.price) {
-    return 1;
-  }
-
-  return -1;
-};
-
-function initSortPriceUp() {
-  filteredDonutsArray.sort(sortPriceUp);
-  generateDonuts();
-
-  toogleIconPrice.style.transition = '0.6s ease';
-  toogleIconPrice.style.transform = 'scale(-1, 1)';
-  toogleIconPrice.style.transform = 'rotate(deg0)';
 }
 
 /* Price range */
