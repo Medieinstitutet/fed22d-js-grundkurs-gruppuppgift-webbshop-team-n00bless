@@ -24,7 +24,6 @@ header {
 }
 
 .navbar {
-
   #addedCartMsg {
     position: fixed;
     font-size: 2rem;
@@ -61,7 +60,15 @@ header {
       position: fixed;
       top: 1rem;
       right: 2.5rem;
+      background-color: fn.getColor(grey, '400');
+      padding: 1rem;
+      border-radius: 50%;
       cursor: pointer;
+      z-index: 99;
+
+      .fa-layers {
+        position: unset;
+      }
     }
 
     img {
@@ -147,7 +154,6 @@ header {
           //   transition: 0.6s ease;
           //   transform: rotate(-0.5turn);
           // }
-          
 
           // input {
           //   margin: 0 0.5rem;
