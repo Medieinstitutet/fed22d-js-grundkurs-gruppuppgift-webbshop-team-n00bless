@@ -818,7 +818,7 @@ resetButton.addEventListener('click', () => {
   currentMinPrice = 0;
   currentMaxPrice = 999;
   filterSet.clear();
-  for (const input of document.querySelectorAll('ul li label input')) { // Reset filter checkboxes
+  for (const input of document.querySelectorAll('.category-checkbox')) { // Reset filter checkboxes
     input.checked = false;
   }
   generateDonuts();
