@@ -24,6 +24,7 @@ const donutsArrayLucia = [
     totPrice: 0,
     categories: ['sprinkles', 'filled'],
     images: ['img/new-york-cheesecake.webp', 'img/new-york-cheesecake.webp'],
+    alt: ['Mandelströsslad munk med vit mjukost.', 'Mandelströsslad munk med vit mjukost.'],
     rating: 5,
   },
 ];
@@ -255,7 +256,7 @@ const renderCart = () => {
     cartListEl.innerHTML += /* html */ `
 			<li data-id="cart-${donut.id}">
 				<div className="name">
-					<img src=${donut.images[0]} width="30" height="30"/>
+					<img src=${donut.images[0]} alt="${donut.alt[0]}" width="30" height="30"/>
 					<p>${donut.name}</p>
 				</div>
 				<div className="donuts__item_quantity">
@@ -476,10 +477,10 @@ const generateDonuts = () => {
 					<img 
             id = "img-0-${donut.id}" 
             src="${donut.images[0]}" 
-            alt="A picture of a donut" 
+            alt="${donut.alt[0]}"
             width="310" 
-            height ="310"/>
-          <img id = "img-1-${donut.id}" class = "hiddenImg" src="${donut.images[1]}" alt="A picture of a donut"/>
+            height="310">
+          <img id = "img-1-${donut.id}" class = "hiddenImg" src="${donut.images[1]}" alt="${donut.alt[1]}">
 					<button id ="next-${donut.id}" class="next">&#10095;</button>
 				</div>
 				<div class="donuts__item_info">
