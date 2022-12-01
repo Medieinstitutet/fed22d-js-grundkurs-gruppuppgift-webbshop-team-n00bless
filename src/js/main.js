@@ -953,14 +953,27 @@ toogleIconName.addEventListener('click', sortName);
 let sortNameToggle = false;
 function sortName() {
   sortNameToggle = !sortNameToggle;
-  // toogleIconName.classList.toggle('sortingup');
-  // toogleIconName.classList.toggle('sortingdown');
   if (sortNameToggle) {
     filteredDonutsArray.reverse((a, b) => a.name - b.name);
+    gsap.to(
+      toogleIconName,
+      {
+        duration: 1,
+        scaleX: (-1),
+        rotation: '0_cw',
+      },
+    );
     generateDonuts();
-    // filteredDonutsArray.sort((a, b) => a.name - b.name).reverse();
   } else {
     filteredDonutsArray.reverse((a, b) => b.name - a.name);
+    gsap.to(
+      toogleIconName,
+      {
+        duration: 1,
+        scaleX: (1),
+        rotation: '180_cw',
+      },
+    );
     generateDonuts();
   }
 }
@@ -968,14 +981,27 @@ function sortName() {
 let sortPriceToggle = false;
 function sortPrice() {
   sortPriceToggle = !sortPriceToggle;
-  // toogleIconName.classList.toggle('sortingup');
-  // toogleIconName.classList.toggle('sortingdown');
   if (sortPriceToggle) {
     filteredDonutsArray.sort((a, b) => a.price - b.price);
+    gsap.to(
+      toogleIconPrice,
+      {
+        duration: 1,
+        scaleX: (-1),
+        rotation: '0_cw',
+      },
+    );
     generateDonuts();
-    // filteredDonutsArray.sort((a, b) => a.price - b.price).reverse();
   } else {
     filteredDonutsArray.sort((a, b) => b.price - a.price);
+    gsap.to(
+      toogleIconPrice,
+      {
+        duration: 1,
+        scaleX: (1),
+        rotation: '180_cw',
+      },
+    );
     generateDonuts();
   }
 }
@@ -983,14 +1009,27 @@ function sortPrice() {
 let sortRatingToggle = false;
 function sortRating() {
   sortRatingToggle = !sortRatingToggle;
-  // toogleIconName.classList.toggle('sortingup');
-  // toogleIconName.classList.toggle('sortingdown');
   if (sortRatingToggle) {
     filteredDonutsArray.sort((a, b) => a.rating - b.rating);
+    gsap.to(
+      toogleIconRating,
+      {
+        duration: 1,
+        scaleX: (-1),
+        rotation: '0_cw',
+      },
+    );
     generateDonuts();
-    // filteredDonutsArray.sort((a, b) => a.rating - b.rating).reverse();
   } else {
     filteredDonutsArray.sort((a, b) => b.rating - a.rating);
+    gsap.to(
+      toogleIconRating,
+      {
+        duration: 1,
+        scaleX: (1),
+        rotation: '180_cw',
+      },
+    );
     generateDonuts();
   }
 }
