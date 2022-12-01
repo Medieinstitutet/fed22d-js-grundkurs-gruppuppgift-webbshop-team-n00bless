@@ -29,8 +29,8 @@
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <!--To speed up page parsing-->
-    <script type="module" crossorigin src="./assets/index.4190c8b8.js"></script>
-    <link rel="stylesheet" href="./assets/index.bd0b2986.css">
+    <script type="module" crossorigin src="./assets/index.a95bdfa8.js"></script>
+    <link rel="stylesheet" href="./assets/index.c78613f1.css">
   </head>
 
   <body>
@@ -46,7 +46,7 @@
         </button>
       </div>
 
-      <div id="addedCartMsg"><span>Tillagd i varukorg.</span></div>
+      <div id="addedCartMsg"><span>Varukorgen uppdaterad.</span></div>
 
       <div class="navbar__menu">
         <div class="navbar__menu_input">
@@ -68,7 +68,7 @@
           </button>
         </div>
       </div>
-      <div class="navbar__dropdown" style="display: none" id="filterMenu">
+      <div class="navbar__dropdown" id="filterMenu">
         <div class="navbar__dropdown_item">
           <p>Välj kategorier</p>
           <ul class="navbar__dropdown_item_categories">
@@ -100,15 +100,15 @@
           <p>Välj prisspann</p>
           <div class="navbar__dropdown_item_filter">
             <div>
-              <p>Från</p>
-              <input id="price-range-min" type="number" min="0" max="999" placeholder="0" />
+              <label for="price-range-min">Från</label>
+              <input id="price-range-min" name="price-range-min" type="number" min="0" max="999" placeholder="0" />
             </div>
             <div>
-              <p>Till</p>
-              <input id="price-range-max" type="number" min="0" max="999" placeholder="100" />
+              <label for="price-range-max">Till</label>
+              <input id="price-range-max" name="price-range-max" type="number" min="0" max="999" placeholder="100" />
             </div>
 
-            <div>
+            <div class ="sorting">
               <p>Pris</p>
               <button id="price-sort" aria-label="Pris sortering" class="button">
                 <i class="icon fa-solid fa-arrow-up-wide-short"></i>
@@ -121,7 +121,6 @@
               <button id="name-sort" aria-label="Namn sortering" class="button">
                 <i class="icon fa-solid fa-arrow-up-wide-short"></i>
               </button>
-              <div></div>
             </div>
           </div>
         </div>
