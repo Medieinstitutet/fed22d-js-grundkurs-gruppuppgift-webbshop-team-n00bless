@@ -32,7 +32,8 @@ input {
     rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 
   &:focus-visible {
-    outline: none;
+    outline: max(2px, 0.15em) solid fn.getColor(orange);
+    outline-offset: max(2px, 0.15em);
   }
 }
 
