@@ -718,7 +718,7 @@ emailInputField.addEventListener('change', () => {
   const { value } = emailInputField;
   // eslint-disable-next-line operator-linebreak
   formValidation.email =
-    /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(value) && value.indexOf('.') !== 0 && value.indexOf('@') !== 0; // Check if only letters and email related characters are used, email doesn't start with . or @
+    /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(value) && value.indexOf('.') > 0 && value.indexOf('@') > 0; // Check if only letters and email related characters are used, email doesn't start with . or @
   inputErrorMessage(
     formValidation.email,
     'email',
