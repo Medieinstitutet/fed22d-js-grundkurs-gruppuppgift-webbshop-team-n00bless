@@ -89,6 +89,7 @@ const generateShopButtonListeners = () => {
   for (const button of donutListElAddToCartButtons) {
     button.addEventListener('click', () => {
       donutAddToCart(button.getAttribute('data-id'));
+      activateOrderButton();
     });
   }
 };
@@ -317,6 +318,7 @@ const updateCartQuantity = (event) => {
   } else if (type === 'remove') {
     const index = cartItems.findIndex((item) => item.id === id);
     cartItems.splice(index, 1);
+    activateOrderButton();
   }
 
   renderCart();
@@ -615,12 +617,15 @@ const validatePaymentInputs = () => {
 
 const activateOrderButton = () => {
   validatePaymentInputs();
-  if (validateInput(formValidation)) {
+  console.log(cartItems.length);
+  if (validateInput(formValidation) && cartItems.length > 0) {
     orderButton.removeAttribute('disabled');
-    inputForm.setAttribute('onsubmit', 'submitOrder()');
+    orderButton.addEventListener('click', submitOrder);
+    // inputForm.setAttribute('onsubmit', 'submitOrder()');
   } else {
     orderButton.setAttribute('disabled', '');
-    inputForm.removeAttribute('onsubmit');
+    orderButton.removeEventListener('click', submitOrder);
+    // inputForm.removeAttribute('onsubmit');
   }
 };
 
@@ -644,9 +649,25 @@ const inputErrorMessage = (validationProp, id, specialMsg, siblingAfter) => {
   }
 };
 
-const submitOrder = () => {
-  alert('Order lagd!');
-  console.log('Order lagd!');
+const submitOrder = (e) => {
+  e.preventDefault();
+  const chosenPaymentMethod = cardRadioInput.checked ? 'kort' : 'faktura';
+  let namesToRender;
+  if (cartItems.length > 1) {
+    const orderedDonutNames = cartItems.map((donut, i) => (i === cartItems.length - 1 ? ` och ${donut.name}` : ` ${donut.name}`)).toString(); // All names of donuts in cart to string and add "och" before last name
+    const lastIndexOfComma = orderedDonutNames.lastIndexOf(',');
+    namesToRender = orderedDonutNames.slice(0, lastIndexOfComma) + orderedDonutNames.slice(lastIndexOfComma + 1); // Remove last comma if cartItems.length > 1
+  } else {
+    namesToRender = ` ${cartItems[0].name}`;
+  }
+  alert(
+    `Order lagd! 
+    Du har beställt följande:${namesToRender}.
+    ${document.getElementById('cart-sum').innerText}
+    Du har valt att betala med ${chosenPaymentMethod}.
+    ${document.getElementById('delivery-time').innerText}`
+  );
+  reset();
 };
 
 nameInputField.addEventListener('change', () => {
@@ -697,7 +718,7 @@ emailInputField.addEventListener('change', () => {
   const { value } = emailInputField;
   // eslint-disable-next-line operator-linebreak
   formValidation.email =
-    /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(value) && value.indexOf('.') !== 0 && value.indexOf('@') !== 0; // Check if only letters and email related characters are used, email doesn't start with . or @
+    /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(value) && value.indexOf('.') > 0 && value.indexOf('@') > 0; // Check if only letters and email related characters are used, email doesn't start with . or @
   inputErrorMessage(
     formValidation.email,
     'email',
@@ -783,6 +804,8 @@ document.querySelector('form').addEventListener('reset', (event) => {
       // Reset value in all form inputs
       input.value = '';
       input.removeAttribute('style');
+      cartItems.length = 0;
+      renderCart();
     }
     cardRadioInput.checked = false;
     invoiceRadioInput.checked = false;
@@ -930,14 +953,27 @@ toogleIconName.addEventListener('click', sortName);
 let sortNameToggle = false;
 function sortName() {
   sortNameToggle = !sortNameToggle;
-  // toogleIconName.classList.toggle('sortingup');
-  // toogleIconName.classList.toggle('sortingdown');
   if (sortNameToggle) {
     filteredDonutsArray.reverse((a, b) => a.name - b.name);
+    gsap.to(
+      toogleIconName,
+      {
+        duration: 1,
+        scaleX: (-1),
+        rotation: '0_cw',
+      },
+    );
     generateDonuts();
-    // filteredDonutsArray.sort((a, b) => a.name - b.name).reverse();
   } else {
     filteredDonutsArray.reverse((a, b) => b.name - a.name);
+    gsap.to(
+      toogleIconName,
+      {
+        duration: 1,
+        scaleX: (1),
+        rotation: '180_cw',
+      },
+    );
     generateDonuts();
   }
 }
@@ -945,14 +981,27 @@ function sortName() {
 let sortPriceToggle = false;
 function sortPrice() {
   sortPriceToggle = !sortPriceToggle;
-  // toogleIconName.classList.toggle('sortingup');
-  // toogleIconName.classList.toggle('sortingdown');
   if (sortPriceToggle) {
     filteredDonutsArray.sort((a, b) => a.price - b.price);
+    gsap.to(
+      toogleIconPrice,
+      {
+        duration: 1,
+        scaleX: (-1),
+        rotation: '0_cw',
+      },
+    );
     generateDonuts();
-    // filteredDonutsArray.sort((a, b) => a.price - b.price).reverse();
   } else {
     filteredDonutsArray.sort((a, b) => b.price - a.price);
+    gsap.to(
+      toogleIconPrice,
+      {
+        duration: 1,
+        scaleX: (1),
+        rotation: '180_cw',
+      },
+    );
     generateDonuts();
   }
 }
@@ -960,14 +1009,27 @@ function sortPrice() {
 let sortRatingToggle = false;
 function sortRating() {
   sortRatingToggle = !sortRatingToggle;
-  // toogleIconName.classList.toggle('sortingup');
-  // toogleIconName.classList.toggle('sortingdown');
   if (sortRatingToggle) {
     filteredDonutsArray.sort((a, b) => a.rating - b.rating);
+    gsap.to(
+      toogleIconRating,
+      {
+        duration: 1,
+        scaleX: (-1),
+        rotation: '0_cw',
+      },
+    );
     generateDonuts();
-    // filteredDonutsArray.sort((a, b) => a.rating - b.rating).reverse();
   } else {
     filteredDonutsArray.sort((a, b) => b.rating - a.rating);
+    gsap.to(
+      toogleIconRating,
+      {
+        duration: 1,
+        scaleX: (1),
+        rotation: '180_cw',
+      },
+    );
     generateDonuts();
   }
 }
