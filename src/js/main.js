@@ -127,15 +127,19 @@ const updateCartDOM = () => {
   cartCounterDisplay.textContent = cartCounter;
   showAddedMessage();
   checkForSpecialRules(cartSum, cartCount);
-  gsap.fromTo(cartCounterDisplay, {
-    scaleY: 0.25,
-    scaleX: 0.25
-  }, {
-    scaleY: 0.5,
-    scaleX: 0.5,
-    repeat: 1,
-    yoyo: true
-  });
+  gsap.fromTo(
+    cartCounterDisplay,
+    {
+      scaleY: 0.25,
+      scaleX: 0.25,
+    },
+    {
+      scaleY: 0.5,
+      scaleX: 0.5,
+      repeat: 1,
+      yoyo: true,
+    }
+  );
   cartCounterDisplay.style.transform = 'scale(.25, .25)';
 };
 
@@ -548,7 +552,7 @@ const socialSecurityInputField = document.querySelector('[name="social-security-
 const cardRadioInput = document.querySelector('#card-radio');
 const invoiceRadioInput = document.querySelector('#invoice-radio');
 
-const paymentOptionRadios = Array.from(document.querySelectorAll('[name="payment-method"]'));
+const paymentOptionRadios = Array.from(document.querySelectorAll('[name="cart__form__payment"]'));
 
 const personalDataCheckbox = document.querySelector('[name="personal-data"]');
 const newsletterCheckbox = document.querySelector('[name="newsletter"]');
@@ -566,7 +570,7 @@ const formValidation = {
   tel: false,
   email: false,
   payment: false,
-  personalData: false
+  personalData: false,
 };
 
 const cardPaymentValidation = {
@@ -620,11 +624,14 @@ const inputErrorMessage = (validationProp, id, specialMsg, siblingAfter) => {
     document.querySelector(`#${id}-err`).remove();
   }
   if (!validationProp) {
-    siblingAfter.insertAdjacentHTML('afterend', /* html */`
+    siblingAfter.insertAdjacentHTML(
+      'afterend',
+      /* html */ `
     <p class="error-msg" id="${id}-err">
       ${specialMsg}
     </p>
-      `);
+      `
+    );
     // eslint-disable-next-line no-param-reassign
     siblingAfter.style.boxShadow = '0px 0px 3px 3px rgba(240, 0, 0, .8)';
   } else {
@@ -647,14 +654,24 @@ nameInputField.addEventListener('change', () => {
 addressInputField.addEventListener('change', () => {
   const { value } = addressInputField;
   formValidation.address = /\d/.test(value) ? /^[A-zÀ-ÿ\s\d]*$/.test(value) : false; // Check if only letters and digits are used
-  inputErrorMessage(formValidation.address, 'address', 'Ange adress inklusive gatunummer med bokstäver och siffror', addressInputField);
+  inputErrorMessage(
+    formValidation.address,
+    'address',
+    'Ange adress inklusive gatunummer med bokstäver och siffror',
+    addressInputField
+  );
   activateOrderButton();
 });
 
 postCodeInputField.addEventListener('change', () => {
   const { value } = postCodeInputField;
   formValidation.postCode = value.length === 5 && /^[0-9]*$/.test(value); // Check if length is 5 and only digits are used
-  inputErrorMessage(formValidation.postCode, 'post-code', 'Ange postkod med 5 siffror utan mellanslag', postCodeInputField);
+  inputErrorMessage(
+    formValidation.postCode,
+    'post-code',
+    'Ange postkod med 5 siffror utan mellanslag',
+    postCodeInputField
+  );
   activateOrderButton();
   console.log(formValidation.postCode);
 });
@@ -673,8 +690,15 @@ telInputField.addEventListener('change', () => {
 
 emailInputField.addEventListener('change', () => {
   const { value } = emailInputField;
-  formValidation.email = /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(value) && value.indexOf('.') !== 0 && value.indexOf('@') !== 0; // Check if only letters and email related characters are used, email doesn't start with . or @
-  inputErrorMessage(formValidation.email, 'email', 'Ange mailadress med bokstäver, punkt och @-tecken', emailInputField);
+  // eslint-disable-next-line operator-linebreak
+  formValidation.email =
+    /^[A-z0-9!#$%&'*+-/=?^_`{|}~.@]*$/.test(value) && value.indexOf('.') !== 0 && value.indexOf('@') !== 0; // Check if only letters and email related characters are used, email doesn't start with . or @
+  inputErrorMessage(
+    formValidation.email,
+    'email',
+    'Ange mailadress med bokstäver, punkt och @-tecken',
+    emailInputField
+  );
   activateOrderButton();
 });
 
@@ -700,14 +724,24 @@ for (const radio of paymentOptionRadios) {
 cardNumberInputField.addEventListener('change', () => {
   const { value } = cardNumberInputField;
   cardPaymentValidation.cardNumber = /^\d*$/.test(value) && value.length === 16; // Check if only digits are used and length is 16.
-  inputErrorMessage(cardPaymentValidation.cardNumber, 'card-number', 'Ange kortnummer med 16 siffror utan mellanslag', cardNumberInputField);
+  inputErrorMessage(
+    cardPaymentValidation.cardNumber,
+    'card-number',
+    'Ange kortnummer med 16 siffror utan mellanslag',
+    cardNumberInputField
+  );
   activateOrderButton();
 });
 
 cardExpirationInputField.addEventListener('change', () => {
   const { value } = cardExpirationInputField;
   cardPaymentValidation.expirationDate = /^[\d/]*$/.test(value) && value.length === 5 && value.indexOf('/') === 2; // Check for index of / and if only digits and / are used
-  inputErrorMessage(cardPaymentValidation.expirationDate, 'date', 'Ange månad och år för när kortet går ut separerat med /', cardExpirationInputField);
+  inputErrorMessage(
+    cardPaymentValidation.expirationDate,
+    'date',
+    'Ange månad och år för när kortet går ut separerat med /',
+    cardExpirationInputField
+  );
   activateOrderButton();
 });
 
@@ -721,7 +755,12 @@ cvcInputField.addEventListener('change', () => {
 socialSecurityInputField.addEventListener('change', () => {
   const { value } = socialSecurityInputField;
   socialSecurityNumberValidation = /^\d*$/.test(value) && (value.length === 10 || value.length === 12); // Check if only digits are used and the length is 10 or 12
-  inputErrorMessage(socialSecurityNumberValidation, 'social-security-number', 'Ange ditt personnummer med endast 10 eller 12 siffror utan bindestreck.', socialSecurityInputField);
+  inputErrorMessage(
+    socialSecurityNumberValidation,
+    'social-security-number',
+    'Ange ditt personnummer med endast 10 eller 12 siffror utan bindestreck.',
+    socialSecurityInputField
+  );
   activateOrderButton();
 });
 
@@ -735,7 +774,8 @@ document.querySelector('form').addEventListener('reset', (event) => {
   // eslint-disable-next-line no-restricted-globals
   if (confirm('Är du säker att du vill återställa formuläret?')) {
     event.preventDefault();
-    for (const input of document.querySelectorAll('form .input-container input')) { // Reset value in all form inputs
+    for (const input of document.querySelectorAll('form .input-container input')) {
+      // Reset value in all form inputs
       input.value = '';
       input.removeAttribute('style');
     }
@@ -745,7 +785,8 @@ document.querySelector('form').addEventListener('reset', (event) => {
     newsletterCheckbox.checked = false;
     cardForm.style.display = 'none';
     invoiceForm.style.display = 'none';
-    for (const element of document.querySelectorAll('.input-container p')) { // Remove error messages
+    for (const element of document.querySelectorAll('.input-container p')) {
+      // Remove error messages
       element.remove();
     }
     // reset();
@@ -818,7 +859,8 @@ resetButton.addEventListener('click', () => {
   currentMinPrice = 0;
   currentMaxPrice = 999;
   filterSet.clear();
-  for (const input of document.querySelectorAll('ul li label input')) { // Reset filter checkboxes
+  for (const input of document.querySelectorAll('ul li label input')) {
+    // Reset filter checkboxes
     input.checked = false;
   }
   generateDonuts();
