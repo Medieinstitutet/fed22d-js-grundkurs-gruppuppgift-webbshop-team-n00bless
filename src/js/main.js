@@ -93,10 +93,10 @@ const generateShopButtonListeners = () => {
   }
 };
 
-const cartListEl = document.querySelector('#cart article ul');
+const cartListEl = document.querySelector('.cart__items');
 
 let cartListElButtons = cartListEl.querySelectorAll('button');
-let cartListElInput = cartListEl.querySelector('.donuts__item_quantity input');
+let cartListElInput = cartListEl.querySelector('.cart__items_donut_quantity input');
 const generateCartButtonListeners = () => {
   if (cartItems.length > 0) {
     cartListElButtons = cartListEl.querySelectorAll('button');
@@ -258,30 +258,35 @@ const renderCart = () => {
   cartListEl.innerHTML = '';
   for (const donut of cartItems) {
     cartListEl.innerHTML += /* html */ `
-			<li data-id="cart-${donut.id}">
-				<div className="name">
-					<img src=${donut.images[0]} alt="${donut.alt[0]}" width="30" height="30"/>
-					<p>${donut.name}</p>
-				</div>
-				<div className="donuts__item_quantity">
-          <button 
-            data-id=${donut.id}
-            data-type='decrease'
-            class="button button--background"
-          >-</button>
-          <input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
-          <button 
-            data-id=${donut.id}
-            data-type='increase'
-            class="button button--background" 
-          >+</button>
-          <p>${donut.totPrice} kr</p>
-          <button 
-            data-id=${donut.id}
-            data-type='remove'
-						class="button button--background" 
-					>Ta bort vara</button>
-				</div>
+			<li class="cart__items_donut" data-id="cart-${donut.id}">
+        <img class="cart__item_donut_image" src=${donut.images[0]} alt="${donut.alt[0]}" width="75" height="75"/>
+				<div class="cart__items_donut_content">
+          <div class="cart__items_donut_upper">
+            <p>${donut.name}</p>
+            <p>${donut.totPrice} kr</p>
+          </div>
+          <div class="cart__items_donut_lower">
+            <div class="cart__items_donut_quantity">
+              <button 
+                data-id=${donut.id}
+                data-type='decrease'
+                class="button button--background"
+              >-</button>
+              <input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
+              <button 
+                data-id=${donut.id}
+                data-type='increase'
+                class="button button--background" 
+              >+</button>
+              
+              <button 
+                data-id=${donut.id}
+                data-type='remove'
+                class="button button--background" 
+              >Ta bort vara</button>
+            </div>
+          </div>
+        </div>
 			</li>`;
   }
 
@@ -552,7 +557,7 @@ const socialSecurityInputField = document.querySelector('[name="social-security-
 const cardRadioInput = document.querySelector('#card-radio');
 const invoiceRadioInput = document.querySelector('#invoice-radio');
 
-const paymentOptionRadios = Array.from(document.querySelectorAll('[name="cart__form__payment"]'));
+const paymentOptionRadios = Array.from(document.querySelectorAll('.cart__form_payment input'));
 
 const personalDataCheckbox = document.querySelector('[name="personal-data"]');
 const newsletterCheckbox = document.querySelector('[name="newsletter"]');

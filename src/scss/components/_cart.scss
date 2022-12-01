@@ -1,5 +1,6 @@
 @use '../base/functions' as fn;
-#cart {
+
+.cart {
   margin: auto;
   border-radius: 5%;
   max-width: 750px;
@@ -7,58 +8,162 @@
   padding: 1rem;
   margin-top: 2rem;
 
-  form {
-    .contact-details {
-      div {
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    p {
+      margin: 0;
+    }
+
+    @media only screen and (max-width: 500px) {
+      .cart__items_donut_quantity {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: space-evenly;
+
+        button:last-of-type {
+          margin: 0 auto;
+          width: 80%;
+        }
+      }
+    }
+
+    &_donut {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      &:not(:last-child) {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid fn.getColor(grey, '300');
+      }
+
+      &_content {
         display: flex;
         flex-direction: column;
+        width: 100%;
+      }
+
+      &_upper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.25rem;
+
+        p {
+          font-size: 1.2rem;
+        }
+      }
+
+      &_lower {
+        button:last-of-type {
+          margin-left: auto;
+        }
+      }
+
+      &_quantity {
+        display: flex;
+        align-items: center;
       }
     }
   }
 
-  article {
-    ul {
-      li {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        border: 2px grey solid;
-        padding: 5px;
-        margin-bottom: 10px;
+  &__prices {
+    margin-top: 1.5rem;
 
-        div {
-          display: flex;
-          align-items: center;
-          gap: 20px;
+    p {
+      margin: 0;
+    }
+
+    & > div {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__coupon {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    input {
+      max-width: 300px;
+    }
+  }
+
+  &__form {
+    &_contact {
+      .input-container {
+        input {
+          margin-top: 0;
+          width: 100%;
+          max-width: 300px;
         }
+      }
+    }
 
-        .donuts__item_quantity {
-          p {
-            width: 55px;
-          }
+    &_payment {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+    }
 
-          input {
-            width: 30px;
-            padding: 0.5rem 1rem;
-          }
+    &_card,
+    &_invoice {
+      div {
+        input {
+          margin-top: 0;
+          width: 100%;
+          max-width: 300px;
         }
+      }
+    }
+
+    &_approve {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+
+      div {
+        padding: 0.25rem;
+
+        input {
+          box-shadow: none;
+        }
+      }
+
+      button {
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        border: none;
+        margin-top: 1rem;
       }
     }
   }
 
   @media only screen and (min-width: 1200px) {
-    form {
-      .contact-details {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.25rem;
+    &__coupon {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
 
-        div {
-          display: flex;
-          flex-direction: column;
-        }
+    &__form_contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+
+      label {
+        margin: 0;
+      }
+
+      label,
+      div {
+        margin-bottom: 1rem;
       }
     }
   }
