@@ -215,9 +215,9 @@ const donutAddToCart = (id) => {
     const donutObject = donutsArray.find((item) => item.id === intId);
     const donutsCost = donutObject.price * currentCount;
 
-    // if (!isTimerStarted) {
-    //   startTimer(60 * 15);
-    // }
+    if (!isTimerStarted) {
+      startTimer(60 * 15);
+    }
 
     const totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0);
     // console.log(totalCartSum);
