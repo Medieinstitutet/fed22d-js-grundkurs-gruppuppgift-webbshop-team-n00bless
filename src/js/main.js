@@ -492,9 +492,10 @@ const generateDonuts = () => {
 						data-id=${donut.id}
 						data-type='decrease'
 					><i class="fa-solid fa-minus" title="Decrease count"></i></button>
-          <label for ="quantity">st</label>
+          <label for ="quantity">
           <input id ="quantity "type="number" value="0"  min="0" max="99" oninput="this.value = !!this.value && Math.abs(this.value)
           >= 0 ? Math.abs(this.value) : null"/> <!--No negative number or letters allowed-->
+          </label>
           <button 
 						class="button button--background" 
 						data-id=${donut.id}
@@ -521,9 +522,9 @@ const generateCategories = () => {
     }
   }
 };
-// let hideQuantityLabel = document.querySelectorAll('label[for=quantity]');
-
-// for (hideQuantityLabel of donutsArray) {
+// const hideQuantityLabel = document.querySelector('label[for="input"]');
+// console.log(hideQuantityLabel);
+// for (const Label of donutsArray) {
 //   hideQuantityLabel.style.display = 'none';
 // }
 /** *******************************************************

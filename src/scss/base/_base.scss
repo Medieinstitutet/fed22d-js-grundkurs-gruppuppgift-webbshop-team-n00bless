@@ -160,3 +160,13 @@ ul {
     background-color: fn.getColor(white);
   }
 }
+
+@media (prefers-color-scheme: light) {
+  body,
+  header.navbar,
+  #cart,
+  .donuts__item,
+  footer {
+    background-color: fn.getColor(white);
+  }
+}

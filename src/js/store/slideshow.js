@@ -1,7 +1,7 @@
 import donutsArray from './donuts';
 /**
- * Slideshow section
- *
+ * Slideshow
+ *This script is separeted from main.js for testing import/export with vite.
  */
 function generateSlideshow() {
   function switchImage(e) {
