@@ -13,6 +13,7 @@
 
     <link rel="manifest" href="data:application/manifest+json;base64,ewogICJzaG9ydF9uYW1lIjogIiIsCiAgIm5hbWUiOiAiIiwKICAiaWNvbnMiOiBbewogICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciLAogICAgInNpemVzIjogIjE5MngxOTIiCiAgfV0sCiAgInN0YXJ0X3VybCI6ICIvP3V0bV9zb3VyY2U9aG9tZXNjcmVlbiIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZhZmFmYSIsCiAgInRoZW1lX2NvbG9yIjogIiNmYWZhZmEiCn0K" />
     <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="icon" href="data:,">
     <!-- Place favicon.ico in the root directory -->
 
     
@@ -29,14 +30,19 @@
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <!--To speed up page parsing-->
-    <script type="module" crossorigin src="./assets/index.a95bdfa8.js"></script>
-    <link rel="stylesheet" href="./assets/index.c78613f1.css">
+    <script type="module" crossorigin src="./assets/index.e7f2a19a.js"></script>
+    <link rel="stylesheet" href="./assets/index.0d83f0f3.css">
   </head>
 
   <body>
     <header class="navbar">
       <div class="navbar__heading">
-        <img src="./assets/gottfrid.b055648a.webp" width="200" height="200" alt="En bild på munksbutiksägaren Gottfrid" />
+        <img
+          src="./assets/gottfrid.b055648a.webp"
+          width="200"
+          height="200"
+          alt="En leende, välkomnande man i glasögon och fluga."
+        />
         <h1>Gottfrids <span>Munkar</span></h1>
         <button id="cart-icon" class="button" aria-label="Shopping Cart">
           <span class="fa-layers fa-fw">
@@ -73,14 +79,14 @@
           <p>Välj kategorier</p>
           <ul class="navbar__dropdown_item_categories">
             <li class="checkbox">
-              <label class="checkbox__input"><input type="checkbox" name="filled" />Fyllning </label>
+              <label class="checkbox__input"><input type="checkbox" name="filled" class="category-checkbox"/>Fyllning </label>
             </li>
             <li class="checkbox">
-              <label class="checkbox__input"><input type="checkbox" name="glazed" />Glaserade </label>
+              <label class="checkbox__input"><input type="checkbox" name="glazed" class="category-checkbox"/>Glaserade </label>
             </li>
             <li class="checkbox">
               <label class="checkbox__input">
-                <input type="checkbox" name="sprinkles" />
+                <input type="checkbox" name="sprinkles" class="category-checkbox"/>
                 Strössel
               </label>
             </li>
@@ -108,7 +114,7 @@
               <input id="price-range-max" name="price-range-max" type="number" min="0" max="999" placeholder="100" />
             </div>
 
-            <div class ="sorting">
+            <div class="sorting">
               <p>Pris</p>
               <button id="price-sort" aria-label="Pris sortering" class="button">
                 <i class="icon fa-solid fa-arrow-up-wide-short"></i>
@@ -143,55 +149,57 @@
           <div class="rating"></div>
         </article>
       </section>
-      <section id="cart">
+      <section id="cart" class="cart">
         <h2>Beställningssektion</h2>
         <article>
-          <h2>Varukorg</h2>
-          <ul></ul>
-          <p id="freight-sum">Frakt: <span>25</span>kr</p>
-          <p id="cart-sum">Totalpris: <span>0</span>kr</p>
-          <p id="delivery-time">Beställningen skickas 30 minuter efter orderläggning.</p>
-          <label for="discount-code">Mata in eventuell rabattkod</label>
-          <input id="discount-code" type="text" name="discount-code" />
+          <h3>Varukorg</h3>
+          <ul class="cart__items"></ul>
+          <div class="cart__prices">
+            <div>
+              <p id="freight-sum">Frakt: <span>25</span>kr</p>
+              <p id="cart-sum">Totalpris: <span>0</span>kr</p>
+            </div>
+            <p id="delivery-time">Beställningen skickas 30 minuter efter orderläggning.</p>
+          </div>
+          <div class="cart__coupon">
+            <label for="discount-code">Mata in eventuell rabattkod</label>
+            <input id="discount-code" type="text" name="discount-code" />
+          </div>
         </article>
-        <form action="./order_landing_page.html">
-          <fieldset class="contact-details">
+        <form class="cart__form" action="./order_landing_page.html">
+          <fieldset class="cart__form_contact">
             <legend><h3>Kontaktuppgifter</h3></legend>
             <label for="name">För- och efternamn</label>
             <div class="input-container">
-              <input
-                id="name"
-                type="text"
-                name="name"
-              >
+              <input id="name" type="text" name="name" />
             </div>
             <label for="address">Adress</label>
             <div class="input-container">
-              <input id="address" type="text" name="address">
+              <input id="address" type="text" name="address" />
+            </div>
+            <label for="door-code">Ev. portkod (valfritt)</label>
+            <div class="input-container">
+              <input type="text" name="door-code">
             </div>
             <label for="post-code">Postkod</label>
             <div class="input-container">
-              <input
-                id="post-code"
-                type="text"
-                name="post-code"
-              >
+              <input id="post-code" type="text" name="post-code" />
             </div>
             <label for="city">Stad</label>
             <div class="input-container">
-              <input id="city" type="text" name="city">
+              <input id="city" type="text" name="city" />
             </div>
             <label for="tel">Telefonnummer</label>
-            <div class="input-container">  
-              <input id="tel" type="tel" name="tel">
+            <div class="input-container">
+              <input id="tel" type="tel" name="tel" />
             </div>
             <label for="email">Mailadress</label>
-            <div class="input-container">  
-              <input id="email" type="email" name="email">  
+            <div class="input-container">
+              <input id="email" type="email" name="email" />
             </div>
           </fieldset>
-          <fieldset class="payment-method">
-            <legend>Betalningssätt</legend>
+          <fieldset class="cart__form_payment">
+            <legend><h3>Betalningssätt</h3></legend>
             <label>
               Kort
               <input type="radio" name="payment-method" id="card-radio" value="card" />
@@ -201,26 +209,36 @@
               <input type="radio" name="payment-method" id="invoice-radio" value="invoice" />
             </label>
           </fieldset>
-          <fieldset id="card-payment-form" class="payment-form">
-            <legend><h3>Kort</h3></legend>
+          <fieldset id="card-payment-form" class="payment-form cart__form_card">
+            <legend><h4>Kort</h4></legend>
             <label for="card-number">Kortnummer</label>
-            <div class="input-container"><input id="card-number" type="text" inputmode="numeric" name="card-number" /></div>
+            <div class="input-container">
+              <input id="card-number" type="text" inputmode="numeric" name="card-number" />
+            </div>
             <label for="date">Utgångsdatum</label>
             <div class="input-container"><input id="date" type="text" name="date" /></div>
             <label for="cvc">CVC</label>
             <div class="input-container"><input id="cvc" type="text" name="cvc" /></div>
           </fieldset>
-          <fieldset id="invoice-payment-form" class="payment-form">
-            <legend><h3>Faktura</h3></legend>
+          <fieldset id="invoice-payment-form" class="payment-form cart__form_invoice">
+            <legend><h4>Faktura</h4></legend>
             <label for="social-security-number">Personnummer</label>
-            <div class="input-container"><input id="social-security-number" type="text" inputmode="numeric" name="social-security-number" /></div>
+            <div class="input-container">
+              <input id="social-security-number" type="text" inputmode="numeric" name="social-security-number" />
+            </div>
           </fieldset>
-          <label for="personal-data">Personuppgifter</label>
-          <input id="personal-data" type="checkbox" name="personal-data" required />
-          <label for="newsletter">Prenumerera på nyhetsbrev?</label>
-          <input id="newsletter" type="checkbox" name="newsletter" />
-          <button type="submit" disabled id="order-btn">Beställ</button>
-          <button type="reset">Rensa</button>
+          <div class="cart__form_approve">
+            <div>
+              <label for="personal-data">Godkänner du att vi hanterar dina personuppgifter?</label>
+              <input id="personal-data" type="checkbox" name="personal-data" required />
+            </div>
+            <div>
+              <label for="newsletter">Vill du prenumerera på vårt nyhetsbrev?</label>
+              <input id="newsletter" type="checkbox" name="newsletter" checked/>
+            </div>
+            <button type="submit" disabled id="order-btn">Beställ</button>
+            <button type="reset">Rensa</button>
+          </div>
         </form>
       </section>
     </main>
