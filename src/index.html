@@ -13,7 +13,7 @@
 
     <link rel="manifest" href="site.webmanifest" />
     <link rel="apple-touch-icon" href="icon.png" />
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="data:," />
     <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="scss/style.scss" />
@@ -57,7 +57,7 @@
           <i id="searchButton" class="fa-solid fa-magnifying-glass"></i>
           <input type="text" name="searchQuery" placeholder="Search..." />
         </div>
-        <div>
+        <div class="navbar__menu_buttons">
           <button aria-label="Reset filter" class="button" id="filterMenuResetButton">
             <i class="icon fa-solid fa-rotate-left"></i>
           </button>
@@ -77,14 +77,18 @@
           <p>Välj kategorier</p>
           <ul class="navbar__dropdown_item_categories">
             <li class="checkbox">
-              <label class="checkbox__input"><input type="checkbox" name="filled" class="category-checkbox"/>Fyllning </label>
+              <label class="checkbox__input"
+                ><input type="checkbox" name="filled" class="category-checkbox" />Fyllning
+              </label>
             </li>
             <li class="checkbox">
-              <label class="checkbox__input"><input type="checkbox" name="glazed" class="category-checkbox"/>Glaserade </label>
+              <label class="checkbox__input"
+                ><input type="checkbox" name="glazed" class="category-checkbox" />Glaserade
+              </label>
             </li>
             <li class="checkbox">
               <label class="checkbox__input">
-                <input type="checkbox" name="sprinkles" class="category-checkbox"/>
+                <input type="checkbox" name="sprinkles" class="category-checkbox" />
                 Strössel
               </label>
             </li>
@@ -177,7 +181,7 @@
             </div>
             <label for="door-code">Ev. portkod (valfritt)</label>
             <div class="input-container">
-              <input type="text" name="door-code">
+              <input type="text" name="door-code" />
             </div>
             <label for="post-code">Postkod</label>
             <div class="input-container">
@@ -232,7 +236,7 @@
             </div>
             <div>
               <label for="newsletter">Vill du prenumerera på vårt nyhetsbrev?</label>
-              <input id="newsletter" type="checkbox" name="newsletter" checked/>
+              <input id="newsletter" type="checkbox" name="newsletter" checked />
             </div>
             <button type="submit" disabled id="order-btn">Beställ</button>
             <button type="reset">Rensa</button>
