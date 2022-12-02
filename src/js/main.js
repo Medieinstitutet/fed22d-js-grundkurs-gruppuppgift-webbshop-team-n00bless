@@ -958,11 +958,9 @@ toogleIconName.addEventListener('click', sortName);
 let sortNameToggle = false;
 function sortName() {
   sortNameToggle = !sortNameToggle;
-  console.log(sortNameToggle);
   if (sortNameToggle) {
     // eslint-disable-next-line no-nested-ternary
     filteredDonutsArray.sort((a, b) => ((a.name > b.name) ? 1 : (b.name > a.name) ? -1 : 0));
-    console.log(filteredDonutsArray);
     gsap.to(
       toogleIconName,
       {
@@ -975,7 +973,6 @@ function sortName() {
   } else {
     // eslint-disable-next-line no-nested-ternary
     filteredDonutsArray.sort((b, a) => ((a.name > b.name) ? 1 : (b.name > a.name) ? -1 : 0));
-    console.log(filteredDonutsArray);
     gsap.to(
       toogleIconName,
       {
