@@ -273,7 +273,8 @@ const renderCart = () => {
                 data-type='decrease'
                 class="button button--background"
               >-</button>
-              <input type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
+              <label for ="quantity-${donut.id}-cart">Antal</label>
+              <input id = "quantity-${donut.id}-cart" type="number" value="${donut.count}" data-id="cart-${donut.id}"/>
               <button 
                 data-id=${donut.id}
                 data-type='increase'
@@ -290,7 +291,7 @@ const renderCart = () => {
         </div>
 			</li>`;
   }
-
+  hideDonutInputLabels();
   generateCartButtonListeners();
   updateCartDOM();
 };
@@ -1140,9 +1141,3 @@ cartSection.classList.add('hidden');
 generateDonuts();
 generateCategories();
 christmasCheck();
-
-// div[class^="something"] { }
-// const christmasPrizeColor = document.querySelectorAll('.donuts__item_info p:first-child');
-// for (let i = 0; i < christmasPrizeColor.length; ++i) {
-//   christmasPrizeColor[i].style.color = 'red';
-// }
