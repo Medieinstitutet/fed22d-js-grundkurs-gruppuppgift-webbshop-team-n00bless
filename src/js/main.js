@@ -430,7 +430,7 @@ const checkForSpecialRules = (cartSum, cartCount) => {
     const days = Math.floor((thisDate - startDate) / (24 * 60 * 60 * 1000));
     const weekNumber = Math.ceil(days / 7);
 
-    if (weekNumber % 2 === 0 && day === 5 && cartSumAndFreightSum >= 25) {
+    if (weekNumber % 2 === 0 && day === 2 && cartSumAndFreightSum >= 25) {
       cartSumAndFreightSum -= 25;
       cartSumDisplay.textContent = `Totalpris efter 25 kr rabatt: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
     }
