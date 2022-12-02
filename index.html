@@ -11,9 +11,9 @@
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
 
-    <link rel="manifest" href="data:application/manifest+json;base64,ewogICJzaG9ydF9uYW1lIjogIiIsCiAgIm5hbWUiOiAiIiwKICAiaWNvbnMiOiBbewogICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciLAogICAgInNpemVzIjogIjE5MngxOTIiCiAgfV0sCiAgInN0YXJ0X3VybCI6ICIvP3V0bV9zb3VyY2U9aG9tZXNjcmVlbiIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZhZmFmYSIsCiAgInRoZW1lX2NvbG9yIjogIiNmYWZhZmEiCn0K" />
+    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAic2hvcnRfbmFtZSI6ICIiLA0KICAibmFtZSI6ICIiLA0KICAiaWNvbnMiOiBbew0KICAgICJzcmMiOiAiaWNvbi5wbmciLA0KICAgICJ0eXBlIjogImltYWdlL3BuZyIsDQogICAgInNpemVzIjogIjE5MngxOTIiDQogIH1dLA0KICAic3RhcnRfdXJsIjogIi8/dXRtX3NvdXJjZT1ob21lc2NyZWVuIiwNCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZhZmFmYSIsDQogICJ0aGVtZV9jb2xvciI6ICIjZmFmYWZhIg0KfQ0K" />
     <link rel="apple-touch-icon" href="icon.png" />
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="data:," />
     <!-- Place favicon.ico in the root directory -->
 
     
@@ -30,8 +30,8 @@
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <!--To speed up page parsing-->
-    <script type="module" crossorigin src="./assets/index.5ea89c9b.js"></script>
-    <link rel="stylesheet" href="./assets/index.0d83f0f3.css">
+    <script type="module" crossorigin src="./assets/index.2d1ea50f.js"></script>
+    <link rel="stylesheet" href="./assets/index.347e9019.css">
   </head>
 
   <body>
@@ -59,7 +59,7 @@
           <i id="searchButton" class="fa-solid fa-magnifying-glass"></i>
           <input type="text" name="searchQuery" placeholder="Search..." />
         </div>
-        <div>
+        <div class="navbar__menu_buttons">
           <button aria-label="Reset filter" class="button" id="filterMenuResetButton">
             <i class="icon fa-solid fa-rotate-left"></i>
           </button>
@@ -79,14 +79,18 @@
           <p>Välj kategorier</p>
           <ul class="navbar__dropdown_item_categories">
             <li class="checkbox">
-              <label class="checkbox__input"><input type="checkbox" name="filled" class="category-checkbox"/>Fyllning </label>
+              <label class="checkbox__input"
+                ><input type="checkbox" name="filled" class="category-checkbox" />Fyllning
+              </label>
             </li>
             <li class="checkbox">
-              <label class="checkbox__input"><input type="checkbox" name="glazed" class="category-checkbox"/>Glaserade </label>
+              <label class="checkbox__input"
+                ><input type="checkbox" name="glazed" class="category-checkbox" />Glaserade
+              </label>
             </li>
             <li class="checkbox">
               <label class="checkbox__input">
-                <input type="checkbox" name="sprinkles" class="category-checkbox"/>
+                <input type="checkbox" name="sprinkles" class="category-checkbox" />
                 Strössel
               </label>
             </li>
@@ -179,7 +183,7 @@
             </div>
             <label for="door-code">Ev. portkod (valfritt)</label>
             <div class="input-container">
-              <input type="text" name="door-code">
+              <input type="text" name="door-code" />
             </div>
             <label for="post-code">Postkod</label>
             <div class="input-container">
@@ -234,7 +238,7 @@
             </div>
             <div>
               <label for="newsletter">Vill du prenumerera på vårt nyhetsbrev?</label>
-              <input id="newsletter" type="checkbox" name="newsletter" checked/>
+              <input id="newsletter" type="checkbox" name="newsletter" checked />
             </div>
             <button type="submit" disabled id="order-btn">Beställ</button>
             <button type="reset">Rensa</button>
