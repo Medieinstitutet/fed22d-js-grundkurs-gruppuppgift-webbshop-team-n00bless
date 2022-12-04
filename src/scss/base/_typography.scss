@@ -1,0 +1,10 @@
+html {
+	font-family: 'Rubik', sans-serif;
+	color: #818285;
+}
+
+.text {
+	&--bold {
+		font-weight: bold;
+	}
+}

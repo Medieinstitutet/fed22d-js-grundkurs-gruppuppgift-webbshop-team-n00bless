@@ -1,0 +1,173 @@
+@use './functions' as fn;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  padding: 0 1rem;
+  background-image: url('../img/bgpattern.webp');
+  background-repeat: repeat;
+  background-size: 1500px;
+  background-attachment: fixed;
+  background-color: fn.getColor(white);
+}
+
+.christmas {
+  background-image: url('../img/christmasbg.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.hidden {
+  display: none;
+}
+
+input {
+  border: none;
+  color: fn.getColor(grey);
+  font-size: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+  &:focus-visible {
+    outline: max(2px, 0.15em) solid fn.getColor(orange);
+    outline-offset: max(2px, 0.15em);
+  }
+}
+
+input[type='number'] {
+  width: 50px;
+}
+
+input {
+  margin: 0 0.5rem;
+  border: 1px solid fn.getColor(grey, '200');
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  height: fit-content;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.checkbox {
+  &__input {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+
+    input[type='checkbox'] {
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: #fff;
+      margin: 0;
+      font: inherit;
+      color: currentColor;
+      width: 1.15em;
+      height: 1.15em;
+      border: 0.15em solid fn.getColor(grey, '200');
+      border-radius: 0.15em;
+      transform: translateY(-0.075em);
+      display: grid;
+      place-content: center;
+      margin-right: 0.25rem;
+
+      &:focus {
+        outline: max(2px, 0.15em) solid fn.getColor(orange);
+        outline-offset: max(2px, 0.15em);
+      }
+
+      &::before {
+        content: '';
+        width: 0.65em;
+        height: 0.65em;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 1em 1em fn.getColor(orange);
+      }
+
+      &:checked::before {
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.button {
+  background: unset;
+  border: unset;
+  height: fit-content;
+  padding: 0.5rem;
+
+  &--background {
+    background-color: fn.getColor(orange);
+    color: #fff;
+    border-radius: 0.5rem;
+  }
+}
+
+.icon {
+  font-size: 1.5rem;
+  color: fn.getColor(orange);
+}
+
+.icon[class*='arrow'] {
+  font-size: 1.5rem;
+  color: fn.getColor(white);
+}
+
+.icon__counter {
+  font-size: 2.5rem;
+  background-color: fn.getColor(pink);
+  // top: -0.6rem;
+  // right: -0.8rem;
+}
+
+.select {
+  background-color: fn.getColor(orange);
+  color: #fff;
+  border: unset;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  body,
+  header.navbar {
+    background-color: fn.getColor(grey, '400');
+  }
+
+  #cart,
+  footer {
+    background-color: fn.getColor(grey, '400');
+    color: fn.getColor(white);
+  }
+  .donuts__item {
+    background-color: fn.getColor(grey, '400');
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body,
+  header.navbar,
+  #cart,
+  .donuts__item,
+  footer {
+    background-color: fn.getColor(white);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body,
+  header.navbar,
+  #cart,
+  .donuts__item,
+  footer {
+    background-color: fn.getColor(white);
+  }
+}

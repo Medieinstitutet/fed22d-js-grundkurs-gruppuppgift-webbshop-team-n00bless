@@ -1,0 +1,31 @@
+{
+  "name": "fed22d-js-grundkurs-gruppuppgift-webbshop-team-n00bless",
+  "version": "1.0.0",
+  "description": "Gottfrids munkshop",
+  "homepage": "https://medieinstitutet.github.io/fed22d-js-grundkurs-gruppuppgift-webbshop-team-n00bless/",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Medieinstitutet/fed22d-js-grundkurs-gruppuppgift-webbshop-team-n00bless.git"
+  },
+  "devDependencies": {
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "gh-pages": "^4.0.0",
+    "prettier": "^2.8.0",
+    "sass": "^1.56.1",
+    "vite": "^3.2.4"
+  },
+  "dependencies": {
+    "gsap": "^3.11.3"
+  }
+}

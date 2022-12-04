@@ -1,0 +1,6 @@
+@use '../abstracts/colors' as *;
+
+@function getColor($base, $shade: '300') {
+	$color: map-get(map-get($colors, $base), $shade);
+	@return $color;
+}
