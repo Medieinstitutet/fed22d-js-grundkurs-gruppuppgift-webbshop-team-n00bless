@@ -172,15 +172,6 @@ const donutIncreaseCount = (id) => {
 
   const price = donutObject.price * currentCount >= 0 ? donutObject.price * currentCount : donutObject.price;
   donutEl.querySelector('.donuts__item_addcart span').innerText = price;
-
-  // for (const donut of cartItems) {
-  //   if (donut.id === id && donut.count > 0) {
-  //     donut.count -= 1;
-  //     donut.totPrice = donut.count * donut.price;
-  //     console.log(cartItems);
-  //     renderCart();
-  //   }
-  // }
 };
 
 const donutDecreaseCount = (id) => {
@@ -197,15 +188,6 @@ const donutDecreaseCount = (id) => {
 
   const price = donutObject.price * currentCount >= 0 ? donutObject.price * currentCount : donutObject.price;
   donutEl.querySelector('.donuts__item_addcart span').innerText = price;
-
-  // for (const donut of cartItems) {
-  //   if (donut.id === id && donut.count > 0) {
-  //     donut.count -= 1;
-  //     donut.totPrice = donut.count * donut.price;
-  //     console.log(cartItems);
-  //     renderCart();
-  //   }
-  // }
 };
 
 const donutAddToCart = (id) => {
@@ -221,13 +203,7 @@ const donutAddToCart = (id) => {
     }
 
     const totalCartSum = cartItems.reduce((accumulator, donut) => accumulator + donut.totPrice, 0);
-    // console.log(totalCartSum);
-    // let donutsCost;
-    // for (const donut of donutsArray) {
-    //   if (donut.id === id) {
-    //     donutsCost = donut.price * currentCount;
-    //   }
-    // }
+
     document.querySelector(`[data-id="${id}"] .donuts__item_quantity input`).value = '0';
 
     if (totalCartSum + donutsCost > 2000) {
@@ -350,13 +326,6 @@ const checkForSpecialRules = (cartSum, cartCount) => {
     style: 'currency',
     currency: 'SEK',
   }).format(freightSum);
-  /* const cartSumInSEK = new Intl.NumberFormat('sv-SE', {
-          style: 'currency', currency: 'SEK'
-      }).format(cartSum); <-- never displayed */
-  // const cartSumAndFreightSumInSEK = new Intl.NumberFormat('sv-SE', {
-  //   style: 'currency',
-  //   currency: 'SEK',
-  // }).format(cartSumAndFreightSum);
 
   cartSumDisplay.textContent = `Totalpris: ${formatSumAndFreight(cartSumAndFreightSum)}.`;
   freightSumDisplay.textContent = `Frakt: ${FreightSumInSEK}.`;
@@ -854,19 +823,6 @@ const searchQuery = (query) => {
   }
 };
 
-// const updatePriceRangeFilter = (e) => {
-//   const value = Number(e.target.value);
-//   console.log(e);
-
-//   if (e.target.id === 'priceMinRange') {
-//     currentMinPrice = value;
-//   } else {
-//     currentMaxPrice = value;
-//   }
-
-//   generateDonuts();
-// };
-
 filterButton.addEventListener('click', () => {
   filterButton.setAttribute('aria-expanded', !filterMenuVisible);
   filterMenuVisible = JSON.parse(filterButton.getAttribute('aria-expanded'));
@@ -909,9 +865,6 @@ document.addEventListener('keydown', (e) => {
     searchQuery(searchInput.value);
   }
 });
-
-// priceInputMin.addEventListener('change', updatePriceRangeFilter);
-// priceInputMax.addEventListener('change', updatePriceRangeFilter);
 
 // eslint-disable-next-line no-unused-vars
 const addCategorySort = (category) => {
