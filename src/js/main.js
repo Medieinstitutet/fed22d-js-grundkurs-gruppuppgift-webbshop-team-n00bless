@@ -409,7 +409,7 @@ const checkForSpecialRules = (cartSum, cartCount) => {
     cartSumAndFreightSum = cartSum + freightSum;
   }
   /* Night deliver time rule */
-  if (hour >= 0 && hour <= 5)) {
+  if (hour >= 0 && hour <= 5) {
     deliveryTime.textContent = 'Beställningen skickas 45 minuter efter orderläggning.';
   }
 
